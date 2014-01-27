@@ -31,11 +31,12 @@ void fill(execution_policy &&exec,
         // divide the iteration space.
         const unsigned int segment_size = 
            distance(first, last) > (thread::hardware_concurrency()) ?
-           distance(first, last) / (thread::hardware_concurrency()) : 1;
+           distance(first, last) / (thread::hardware_concurrency()) : 
+           distance(first, last);
 
         // thread pool
         vector<thread> pool; 
-        pool.reserve(segment_size);
+        pool.reserve((distance(first, last) / segment_size) + 1);
 
         // divide the iteration space and delegate to threads.
         ForwardIt it = first;
@@ -77,18 +78,19 @@ OutputIt fill_n(execution_policy &&exec,
         // divide the iteration space.
         const unsigned int segment_size = 
            count > (thread::hardware_concurrency()) ?
-           count / (thread::hardware_concurrency()) : 1;
+           count / (thread::hardware_concurrency()) : 
+           count;
 
         // thread pool
         vector<thread> pool; 
-        pool.reserve(segment_size);
+        pool.reserve((count / segment_size) + 1);
 
         // divide the iteration space and delegate to threads.
         OutputIt it = first, end = it + count;
         for(; it < end - segment_size; it += segment_size){
             pool.emplace_back(thread(__fill_n, it, segment_size, value));
         }
-        pool.push_back(std::thread(__fill_n, it, count - segment_size, value));
+        pool.push_back(std::thread(__fill_n, it, end, value));
 
         // wait for the pool to finish
         for(auto &t : pool) t.join();

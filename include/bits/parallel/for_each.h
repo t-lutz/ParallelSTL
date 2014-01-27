@@ -31,11 +31,12 @@ UnaryFunction for_each(execution_policy &&exec,
         // divide the iteration space.
         const unsigned int segment_size = 
            distance(first, last) > (thread::hardware_concurrency()) ?
-           distance(first, last) / (thread::hardware_concurrency()) : 1;
+           distance(first, last) / (thread::hardware_concurrency()) : 
+           segment_size; // is not even one per proc, we don't divide
 
         // thread pool
         vector<thread> pool; 
-        pool.reserve(segment_size);
+        pool.reserve((distance(first, last) / segment_size) + 1);
 
         // divide the iteration space and delegate to threads.
         InputIterator it = first;

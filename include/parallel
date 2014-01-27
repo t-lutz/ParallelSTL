@@ -13,6 +13,7 @@ typedef enum class execution_policy { seq, par } execution_policy;
 
 #include "bits/parallel/for_each.h"
 #include "bits/parallel/fill.h"
+#include "bits/parallel/generate.h"
 
 #endif
 

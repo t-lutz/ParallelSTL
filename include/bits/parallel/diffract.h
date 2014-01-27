@@ -29,6 +29,7 @@ inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
 }
 
 // This implementation is not functional yet
+#if 0
 template<class Iterator, class Functor, RetType R, class BinaryGather, typename ... Args>
 inline R diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args){
    // segment the iteration space: if there is not enough elements we do not
@@ -63,7 +64,7 @@ inline R diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather 
 
   return std::accumulate(gather.begin()+1, gather.end(), gather.begin(), g);
 }
-
+#endif
 }
 }
 

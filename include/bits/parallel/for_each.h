@@ -8,12 +8,17 @@
 namespace std {
 
 /**
- * @brief Parallel implementation of std::for_each.
- * @param exec The preferred execution policy
- * @param first Beginning of the range.
- * @param last End of the range.
- * @param f The functor to apply.
- * @return The applied function.
+ * @brief Applies the given function object f to the result of dereferencing 
+ *        every iterator in the range [first, last), in an unspecified order.
+ *
+ *        If InputIt is a mutable iterator, f may modify the elements of the range 
+ *        through the dereferenced iterator. If f returns a result, the result 
+ *        is ignored.
+ * @param exec the Execution Policy.
+ * @param first the beginning of the range.
+ * @param last the end of the range.
+ * @param f the unary function object to be applied.
+ * @return std::move(f)
  */
 template<class InputIterator, class UnaryFunction>
 UnaryFunction for_each(execution_policy &&exec,
@@ -27,28 +32,7 @@ UnaryFunction for_each(execution_policy &&exec,
     case execution_policy::seq:
         return std::move(__for_each(first, last, f));
     case execution_policy::par:
-        // segment the iteration space: if there is not enough elements we do not
-        // divide the iteration space.
-        const unsigned int segment_size = 
-           distance(first, last) > (thread::hardware_concurrency()) ?
-           distance(first, last) / (thread::hardware_concurrency()) : 
-           segment_size; // is not even one per proc, we don't divide
-
-        // thread pool
-        vector<thread> pool; 
-        pool.reserve((distance(first, last) / segment_size) + 1);
-
-        // divide the iteration space and delegate to threads.
-        InputIterator it = first;
-        for(; it < last - segment_size; it += segment_size){
-            pool.emplace_back(thread(__for_each, it, it + segment_size, std::move(f)));
-        }
-        pool.push_back(std::thread(__for_each, it, last, std::move(f)));
-
-        // wait for the pool to finish
-        for(auto &t : pool) t.join();
-
-        // inplace algo, nothing to do here.
+        detail::diffract(first, last, __for_each, std::move(f));
 
         // return functor
         return std::move(f);

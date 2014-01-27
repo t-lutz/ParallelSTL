@@ -27,26 +27,7 @@ void fill(execution_policy &&exec,
         __fill(first, last, value);
         break;
     case execution_policy::par:
-        // segment the iteration space: if there is not enough elements we do not
-        // divide the iteration space.
-        const unsigned int segment_size = 
-           distance(first, last) > (thread::hardware_concurrency()) ?
-           distance(first, last) / (thread::hardware_concurrency()) : 
-           distance(first, last);
-
-        // thread pool
-        vector<thread> pool; 
-        pool.reserve((distance(first, last) / segment_size) + 1);
-
-        // divide the iteration space and delegate to threads.
-        ForwardIt it = first;
-        for(; it < last - segment_size; it += segment_size){
-            pool.emplace_back(thread(__fill, it, it + segment_size, value));
-        }
-        pool.push_back(std::thread(__fill, it, last, value));
-
-        // wait for the pool to finish
-        for(auto &t : pool) t.join();
+        detail::diffract(first, last, __fill, value);
 
         // inplace algo, nothing to do here.
         break;
@@ -66,37 +47,21 @@ OutputIt fill_n(execution_policy &&exec,
                 OutputIt first, Size count, 
                 const T& value){
     // function to wrap
-    static const std::function<OutputIt(OutputIt, Size, const T&)> __fill_n =
-      (OutputIt(*)(OutputIt, Size, const T&))&fill_n<OutputIt, Size, T>;
+    //static const std::function<OutputIt(OutputIt, Size, const T&)> __fill_n =
+    //  (OutputIt(*)(OutputIt, Size, const T&))&fill_n<OutputIt, Size, T>;
+
+    static const std::function<void(OutputIt, OutputIt, const T&)> __fill =
+      (void(*)(OutputIt, OutputIt, const T&))&fill<OutputIt, T>;
 
     switch (exec) {
     case execution_policy::seq:
-        __fill_n(first, count, value);
-        break;
+        __fill(first, first + count, value);
+        return std::max(first, first + count);
     case execution_policy::par:
-        // segment the iteration space: if there is not enough elements we do not
-        // divide the iteration space.
-        const unsigned int segment_size = 
-           count > (thread::hardware_concurrency()) ?
-           count / (thread::hardware_concurrency()) : 
-           count;
-
-        // thread pool
-        vector<thread> pool; 
-        pool.reserve((count / segment_size) + 1);
-
-        // divide the iteration space and delegate to threads.
-        OutputIt it = first, end = it + count;
-        for(; it < end - segment_size; it += segment_size){
-            pool.emplace_back(thread(__fill_n, it, segment_size, value));
-        }
-        pool.push_back(std::thread(__fill_n, it, end, value));
-
-        // wait for the pool to finish
-        for(auto &t : pool) t.join();
+        detail::diffract(first, first + count, __fill, value);
 
         // inplace algo, nothing to do here.
-        break;
+        return std::max(first, first + count);
     }
 }
 

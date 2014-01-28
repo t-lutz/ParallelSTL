@@ -18,15 +18,17 @@ reduce(InputIterator first, InputIterator last){
 template<class ExecutionPolicy, class InputIterator>
 typename iterator_traits<InputIterator>::value_type
 reduce(ExecutionPolicy &&exec, InputIterator first, InputIterator last){
+    typedef typename iterator_traits<InputIterator>::value_type T;
     //static auto __acc = 
     //    (typename iterator_traits<InputIterator>::value_type(*)(InputIterator first, InputIterator last, )
     switch (exec) {
     case execution_policy::seq:
-        return std::accumulate(first, last, typename iterator_traits<InputIterator>::value_type{0});
+        return std::accumulate(first, last, T{0});
     case execution_policy::par:
         return detail::diffract_gather(first, last, 
-                                       std::accumulate<InputIterator, typename iterator_traits<InputIterator>::value_type>, 
-                                       std::plus<typename iterator_traits<InputIterator>::value_type>());
+                                       std::accumulate<InputIterator,T>, 
+                                       std::plus<T>(),
+                                       T{0});
     }
 
 }

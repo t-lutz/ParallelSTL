@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 
+#include <iostream>
+
 namespace std {
 namespace detail {
 
@@ -14,25 +16,39 @@ inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
     distance(first, last) / (thread::hardware_concurrency()) :
     segment_size; // is not even one per proc, we don't divide
 
+  // number of segments
+  const unsigned pool_size = distance(first, last) / segment_size;
+
   // thread pool
   vector<thread> pool;
-  pool.reserve((distance(first, last) / segment_size) + 1);
+  pool.reserve(pool_size);
 
   // divide the iteration space and delegate to threads.
   Iterator it = first;
-  for(; it < last - segment_size; it += segment_size){
-    pool.emplace_back(thread(f, it, it + segment_size, args...));
+  for(unsigned i = 0; i < pool_size; ++i, it += segment_size){
+    // the last chunk takes care of the rounding error
+    const Iterator end = (i < pool_size - 1 ? it + segment_size : last);
+    // create the dedicated thread and push it in the pool
+    pool.emplace_back(thread{f, it, end, args...});
   }
-  pool.emplace_back(thread(f, it, last, args...));
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
 }
 
-// This implementation is not functional yet
+// it looks like the variadic capture in lambdas is still not working with gcc 4.8,
+// the following is a specialized functor used in place of a lambda in the
+// thread creation for diffract_gather
+template<typename T, typename Function, typename Iterator, typename ... Args>
+void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args ...args) {
+    result = f(begin, end, args...);
+}
+
 template<class Iterator, class Functor, class BinaryGather, typename ... Args>
 inline typename iterator_traits<Iterator>::value_type
 diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args){
+  typedef typename iterator_traits<Iterator>::value_type T;
+
    // segment the iteration space: if there is not enough elements we do not
   // divide the iteration space.
   const unsigned int segment_size =
@@ -40,29 +56,24 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
     distance(first, last) / (thread::hardware_concurrency()) :
     segment_size; // is not even one per proc, we don't divide
 
+  // number of segments
+  const unsigned pool_size = distance(first, last) / segment_size;
+
   // thread pool
   vector<thread> pool;
-  pool.reserve((distance(first, last) / segment_size) + 1);
+  pool.reserve(pool_size);
 
   // temporary space for accumulators
-  // TODO: fixme: compute the exact size
-  vector<typename iterator_traits<Iterator>::value_type> gather((distance(first, last) / segment_size) + 1); // The size should be exact
+  vector<typename iterator_traits<Iterator>::value_type> gather(pool_size); 
 
   // divide the iteration space and delegate to threads.
   Iterator it = first;
-  size_t counter = 0;
-  for(; it < last - segment_size; it += segment_size, ++counter){
-    pool.emplace_back(thread(
-      //[&, args...] mutable {
-      //  gather[counter] = f(it, it + segment_size, args...);
-      //}
-    ));
+  for(unsigned i = 0; i < pool_size; ++i, it += segment_size){
+    // the last chunk takes care of the rounding error
+    const Iterator end = (i < pool_size - 1 ? it + segment_size : last);
+    auto fct = &diffract_functor<T, Functor, Iterator, Args...>;
+    pool.emplace_back(thread{fct, std::ref(gather[i]), f, it, end, args...});
   }
-  pool.emplace_back(std::thread(
-    //[&, args...] mutable {
-    //  gather[counter] = f(it, last, args...);
-    //}
-  ));
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
@@ -70,6 +81,9 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
   // apply the collapse function and return
   return std::accumulate(gather.begin()+1, gather.end(), *gather.begin(), g);
 }
-}
-}
+
+
+
+} // ::detail
+} // ::std
 

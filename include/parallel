@@ -15,6 +15,7 @@ typedef enum class execution_policy { seq, par } execution_policy;
 #include "bits/parallel/fill.h"
 #include "bits/parallel/generate.h"
 #include "bits/parallel/replace.h"
+#include "bits/parallel/reduce.h"
 
 #endif
 

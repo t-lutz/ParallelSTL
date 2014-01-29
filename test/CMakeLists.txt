@@ -38,9 +38,12 @@ ExternalProject_Add(
 ExternalProject_Get_Property(googletest source_dir)
 include_directories(${source_dir}/include)
 
+file(GLOB_RECURSE ALL_TESTS
+     alg.modifying.operations/*.cpp alg.nonmodifying/*.cpp alg.sorting/*.cpp)
+
 # Add test executable target
 add_executable(MainTest 
-               ${PROJECT_SOURCE_DIR}/alg.nonmodifying/alg.gen.all_of/all_of.cpp 
+               ${ALL_TESTS}
                ${PROJECT_SOURCE_DIR}/main.cpp)
 
 # Create dependency of MainTest on googletest

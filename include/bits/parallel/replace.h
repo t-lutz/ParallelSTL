@@ -21,8 +21,6 @@ void replace(ExecutionPolicy &&exec,
         break;
     case execution_policy::par:
         detail::diffract(first, last, __replace, old_value, new_value);
-
-        // inplace algo, nothing to do here.
         break;
     }
 }
@@ -41,8 +39,6 @@ void replace_if(ExecutionPolicy &&exec,
         break;
     case execution_policy::par:
         detail::diffract(first, last, __replace_if, pred, new_value);
-
-        // inplace algo, nothing to do here.
         break;
     }
  

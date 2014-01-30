@@ -41,14 +41,6 @@ include_directories(${source_dir}/include)
 file(GLOB_RECURSE ALL_TESTS
      alg.modifying.operations/*.cpp alg.nonmodifying/*.cpp alg.sorting/*.cpp)
 
-# Add test executable target
-add_executable(MainTest 
-               ${ALL_TESTS}
-               ${PROJECT_SOURCE_DIR}/main.cpp)
-
-# Create dependency of MainTest on googletest
-add_dependencies(MainTest googletest)
-
 # Specify MainTest's link libraries
 ExternalProject_Get_Property(googletest binary_dir)
 if(MSVC)
@@ -57,13 +49,21 @@ else()
   set(Suffix ".a")
   set(Pthread "-pthread")
 endif()
-target_link_libraries(
-    MainTest
+
+set(TEST_LIBS 
     debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}
     optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}
     ${Pthread})
 
 enable_testing()
-add_test( MainTest MainTest )
+
+FOREACH (TEST ${ALL_TESTS})
+  GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
+  add_executable(test_${TESTNAME} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
+  add_dependencies(test_${TESTNAME} googletest)
+  target_link_libraries(test_${TESTNAME} ${TEST_LIBS})
+  add_test(std::${TESTNAME} test_${TESTNAME})
+ENDFOREACH(TEST)
+
 
 

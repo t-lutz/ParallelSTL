@@ -1,10 +1,11 @@
 #include "gtest/gtest.h"
 
-#include <algorithm>
 #include <vector>
 
-#ifndef EXECUTION_POLICY
+#ifdef EXECUTION_POLICY
 #include <parallel/algorithm>
+#else
+#include <algorithm>
 #endif
 
 TEST(for_each_n, Double){
@@ -14,8 +15,7 @@ TEST(for_each_n, Double){
 
   std::for_each_n(
                 EXECUTION_POLICY,
-                std::begin(v), std::end(v),
-                5,
+                std::begin(v), 5,
                 [](int &i){ i*= 2; });
 
   EXPECT_TRUE(v == golden);
@@ -31,8 +31,7 @@ TEST(for_each_n, Empty){
   
   std::for_each_n(
                 EXECUTION_POLICY,
-                0,
-                std::begin(v), std::end(v),
+                std::begin(v), 0,
                 [](int &i){ i = 0; });
 
   EXPECT_TRUE(v.empty());
@@ -49,8 +48,7 @@ TEST(for_each_n, Zero){
   
   std::for_each_n(
                 EXECUTION_POLICY,
-                0,
-                std::begin(v), std::end(v),
+                std::begin(v), 0,
                 [](int &i){ i = -1; });
 
   EXPECT_TRUE(v == golden);

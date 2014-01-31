@@ -37,6 +37,7 @@ ExternalProject_Add(
 # Specify include dir
 ExternalProject_Get_Property(googletest source_dir)
 include_directories(${source_dir}/include)
+include_directories(../include/)
 
 file(GLOB_RECURSE ALL_TESTS
      alg.modifying.operations/*.cpp alg.nonmodifying/*.cpp alg.sorting/*.cpp)
@@ -57,6 +58,7 @@ set(TEST_LIBS
 
 enable_testing()
 
+# standard algos
 FOREACH (TEST ${ALL_TESTS})
   GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
   add_executable(test_${TESTNAME} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
@@ -64,6 +66,18 @@ FOREACH (TEST ${ALL_TESTS})
   target_link_libraries(test_${TESTNAME} ${TEST_LIBS})
   add_test(std::${TESTNAME} test_${TESTNAME})
 ENDFOREACH(TEST)
+
+# std::seq policy
+add_definitions(-DEXECUTION_POLICY=std::parallel::policy::seq)
+FOREACH (TEST ${ALL_TESTS})
+  GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
+  set(UNITTEST test-seq_${TESTNAME})
+  add_executable(${UNITTEST} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
+  add_dependencies(${UNITTEST} googletest)
+  target_link_libraries(${UNITTEST} ${TEST_LIBS})
+  add_test(seq-std::${TESTNAME} ${UNITTEST})
+ENDFOREACH(TEST)
+
 
 
 

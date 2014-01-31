@@ -1,10 +1,11 @@
 #include "gtest/gtest.h"
 
-#include <algorithm>
 #include <vector>
 
-#ifndef EXECUTION_POLICY
+#ifdef EXECUTION_POLICY
 #include <parallel/algorithm>
+#else
+#include <algorithm>
 #endif
 
 TEST(find_if, Present_unique){

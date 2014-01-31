@@ -1,0 +1,229 @@
+namespace std {
+  template<class InputIterator>
+    typename iterator_traits<InputIterator>::value_type
+      reduce(InputIterator first, InputIterator last);
+  template<class ExecutionPolicy,
+           class InputIterator>
+    typename iterator_traits<InputIterator>::value_type
+      reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last);
+  template<class InputIterator, class T>
+    T reduce(InputIterator first, InputIterator last, T init);
+  template<class ExecutionPolicy,
+           class InputIterator, class T>
+    T reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last, T init);
+  template<class InputIterator, class T, class BinaryOperation>
+    T reduce(InputIterator first, InputIterator last, T init,
+             BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class T, class BinaryOperation>
+    T reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last, T init,
+             BinaryOperation binary_op);
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class InputIterator, class OutputIterator,
+           class T>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init);
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class InputIterator, class OutputIterator,
+           class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class BinaryOperation>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     BinaryOperation binary_op);
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+}
+
+#include <algorithm>
+
+// implementation
+namespace std {
+  template<class InputIterator>
+    typename iterator_traits<InputIterator>::value_type
+      reduce(InputIterator first, InputIterator last){
+    typedef typename iterator_traits<InputIterator>::value_type T;
+    return std::accumulate(first, last, T{0});
+  }
+
+  template<class ExecutionPolicy,
+           class InputIterator>
+    typename iterator_traits<InputIterator>::value_type
+      reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last){
+    return exec.reduce(first, last);
+  }
+
+  template<class InputIterator, class T>
+    T reduce(InputIterator first, InputIterator last, T init){
+    return std::accumulate(first, last, init);
+  }
+
+  template<class ExecutionPolicy,
+           class InputIterator, class T>
+    T reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last, T init){
+    return exec.reduce(first, last, init);
+  }
+
+  template<class InputIterator, class T, class BinaryOperation>
+    T reduce(InputIterator first, InputIterator last, T init,
+             BinaryOperation binary_op){
+    return std::accumulate(first, last, init, binary_op);
+  }
+
+  template<class ExecutionPolicy,
+           class InputIterator, class T, class BinaryOperation>
+    T reduce(ExecutionPolicy &&exec,
+             InputIterator first, InputIterator last, T init,
+             BinaryOperation binary_op){
+    return exec.reduce(first, last, init, binary_op);
+  }
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class InputIterator, class OutputIterator,
+           class T>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init);
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      exclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result);
+  template<class InputIterator, class OutputIterator,
+           class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class BinaryOperation>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     BinaryOperation binary_op);
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+  template<class ExecutionPolicy,
+           class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      inclusive_scan(ExecutionPolicy &&exec,
+                     InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+}
+
+#include <bits/parallel/policy_sequential.h>
+

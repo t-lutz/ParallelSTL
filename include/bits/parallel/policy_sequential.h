@@ -1,3 +1,6 @@
+#ifndef STD_PARALLEL_POLICY_SEQUENTIAL
+#define STD_PARALLEL_POLICY_SEQUENTIAL
+
 #include <algorithm>
 
 namespace std {
@@ -7,6 +10,8 @@ namespace parallel {
 namespace policy {
 
 static struct seq {
+  // Algorithm
+
   // non-modifying sequence operations:
   template<class InputIterator, class Predicate>
     bool all_of(InputIterator first, InputIterator last, Predicate pred){
@@ -292,7 +297,7 @@ static struct seq {
 
   template<class ForwardIterator, class T>
     void fill(ForwardIterator first, ForwardIterator last, const T& value){
-    std::fill(fill, last, value);
+    std::fill(first, last, value);
   }
 
 
@@ -760,7 +765,72 @@ static struct seq {
                               Compare comp){
     return std::lexicographical_compare(first1, last1, first2, last2, comp);
   }
+
+  // Utilities
+   template<class InputIterator>
+    typename iterator_traits<InputIterator>::value_type
+      reduce(InputIterator first, InputIterator last){
+    typedef typename iterator_traits<InputIterator>::value_type T;
+    return std::accumulate(first, last, T{0});
+  }
+
+  template<class InputIterator, class T>
+    T reduce(InputIterator first, InputIterator last, T init){
+    return std::accumulate(first, last, init);
+  }
+
+  template<class InputIterator, class T, class BinaryOperation>
+    T reduce(InputIterator first, InputIterator last, T init,
+             BinaryOperation binary_op){
+    return std::accumulate(first, last, init, binary_op);
+  }
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+  
+
+  template<class InputIterator, class OutputIterator,
+           class T>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init);
+  
+
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      exclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
+
+
+  template<class InputIterator, class OutputIterator>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result);
+
+  
+  template<class InputIterator, class OutputIterator,
+           class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     BinaryOperation binary_op);
+  
+
+  template<class InputIterator, class OutputIterator,
+           class T, class BinaryOperation>
+    OutputIterator
+      inclusive_scan(InputIterator first, InputIterator last,
+                     OutputIterator result,
+                     T init, BinaryOperation binary_op);
 } seq ; //
 } // ::policy
 } // ::parallel
 } // ::std 
+
+#endif
+

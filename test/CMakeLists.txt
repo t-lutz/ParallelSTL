@@ -52,8 +52,10 @@ else()
 endif()
 
 set(TEST_LIBS 
-    debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}
-    optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}
+    debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix} 
+    debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${Suffix}
+    optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix} 
+    optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${Suffix}
     ${Pthread})
 
 enable_testing()
@@ -61,7 +63,7 @@ enable_testing()
 # standard algos
 FOREACH (TEST ${ALL_TESTS})
   GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
-  add_executable(test_${TESTNAME} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
+  add_executable(test_${TESTNAME} ${TEST})
   add_dependencies(test_${TESTNAME} googletest)
   target_link_libraries(test_${TESTNAME} ${TEST_LIBS})
   add_test(std::${TESTNAME} test_${TESTNAME})
@@ -71,7 +73,7 @@ ENDFOREACH(TEST)
 FOREACH (TEST ${ALL_TESTS})
   GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
   set(UNITTEST test-seq_${TESTNAME})
-  add_executable(${UNITTEST} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
+  add_executable(${UNITTEST} ${TEST})
   set_target_properties(${UNITTEST} PROPERTIES COMPILE_DEFINITIONS 
                         "EXECUTION_POLICY=std::parallel::policy::seq")
   add_dependencies(${UNITTEST} googletest)

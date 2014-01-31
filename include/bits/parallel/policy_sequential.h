@@ -25,10 +25,8 @@ static struct seq {
     return std::none_of(first, last, pred);
   }
 
-  template<class ExecutionPolicy,
-           class InputIterator, class Function>
-    Function for_each(ExecutionPolicy &&exec,
-                      InputIterator first, InputIterator last,
+  template<class InputIterator, class Function>
+    Function for_each(InputIterator first, InputIterator last,
                       Function f){
     return std::for_each(first, last, f);
   }

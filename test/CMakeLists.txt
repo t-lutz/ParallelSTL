@@ -68,11 +68,12 @@ FOREACH (TEST ${ALL_TESTS})
 ENDFOREACH(TEST)
 
 # std::seq policy
-add_definitions(-DEXECUTION_POLICY=std::parallel::policy::seq)
 FOREACH (TEST ${ALL_TESTS})
   GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
   set(UNITTEST test-seq_${TESTNAME})
   add_executable(${UNITTEST} ${TEST} ${PROJECT_SOURCE_DIR}/main.cpp)
+  set_target_properties(${UNITTEST} PROPERTIES COMPILE_DEFINITIONS 
+                        "EXECUTION_POLICY=std::parallel::policy::seq")
   add_dependencies(${UNITTEST} googletest)
   target_link_libraries(${UNITTEST} ${TEST_LIBS})
   add_test(seq-std::${TESTNAME} ${UNITTEST})

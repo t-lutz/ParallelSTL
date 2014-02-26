@@ -18,41 +18,22 @@ static struct seq {
 
   // non-modifying sequence operations:
   template<class InputIterator, class Predicate>
-    bool all_of(InputIterator first, InputIterator last, Predicate pred){
-    return std::all_of(first, last, pred);
-  }
-
+    bool all_of(InputIterator first, InputIterator last, Predicate pred);
 
   template<class InputIterator, class Predicate>
-    bool any_of(InputIterator first, InputIterator last, Predicate pred){
-    return std::any_of(first, last, pred);
-  }
-
+    bool any_of(InputIterator first, InputIterator last, Predicate pred);
 
   template<class InputIterator, class Predicate>
-    bool none_of(InputIterator first, InputIterator last, Predicate pred){
-    return std::none_of(first, last, pred);
-  }
+    bool none_of(InputIterator first, InputIterator last, Predicate pred);
 
   template<class InputIterator, class Function>
-    Function for_each(InputIterator first, InputIterator last,
-                      Function f){
-    return std::for_each(first, last, f);
-  }
+    Function for_each(InputIterator first, InputIterator last, Function f);
 
   template<class InputIterator, class Size, class Function>
-    Function for_each_n(InputIterator first, Size n,
-                        Function f){
-    return std::for_each(first, first + n, f);
-  }
-
-
+    Function for_each_n(InputIterator first, Size n, Function f);
 
   template<class InputIterator, class T>
-    InputIterator find(InputIterator first, InputIterator last,
-                       const T& value){
-    return std::find(first, last, value);
-  }
+    InputIterator find(InputIterator first, InputIterator last, const T& value);
 
 
   template<class InputIterator, class Predicate>
@@ -835,6 +816,8 @@ static struct seq {
 } // ::policy
 } // ::parallel
 } // ::std 
+
+#include <bits/parallel/algos/sequential/for_each.h>
 
 #endif
 

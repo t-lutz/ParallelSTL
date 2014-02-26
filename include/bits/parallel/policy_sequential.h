@@ -383,9 +383,12 @@ static struct seq {
 
 
   template<class ForwardIterator>
-    void rotate(ForwardIterator first, ForwardIterator middle,
-                           ForwardIterator last){
+    ForwardIterator
+      rotate(ForwardIterator first, ForwardIterator middle,
+             ForwardIterator last){
     std::rotate(first, middle, last);
+    // only fine for random access operators
+    // TODO: extend for generic forward iterators
     return first + (last - middle);
   }
 

@@ -1,6 +1,9 @@
 #ifndef _EXPERIMENTAL_N3554_ALGORITHM
 #define _EXPERIMENTAL_N3554_ALGORITHM
 
+#include <utility> // std::pair
+#include <iterator>
+
 namespace std {
   // non-modifying sequence operations:
   template<class ExecutionPolicy,

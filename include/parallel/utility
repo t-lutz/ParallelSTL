@@ -1,6 +1,8 @@
 #ifndef _EXPERIMENTAL_N3554_UTILITY
 #define _EXPERIMENTAL_N3554_UTILITY
 
+#include <iterator> // std::iterator_traits
+
 namespace std {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type

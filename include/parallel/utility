@@ -1,3 +1,6 @@
+#ifndef _EXPERIMENTAL_N3554_UTILITY
+#define _EXPERIMENTAL_N3554_UTILITY
+
 namespace std {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
@@ -227,3 +230,4 @@ namespace std {
 
 #include <bits/parallel/policy_sequential.h>
 
+#endif

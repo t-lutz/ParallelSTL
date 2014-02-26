@@ -1,5 +1,9 @@
-#ifndef STD_PARALLEL_POLICY_SEQUENTIAL
-#define STD_PARALLEL_POLICY_SEQUENTIAL
+#if not defined _EXPERIMENTAL_N3554_ALGORITHM and not defined _EXPERIMENTAL_N3554_UTILITY
+#error Inlcude <parallel/algorithm> or <parallel/utility>
+#endif
+
+#ifndef _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
+#define _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 
 #include <algorithm>
 

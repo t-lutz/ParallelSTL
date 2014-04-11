@@ -8,7 +8,6 @@
 #include <algorithm>
 #endif
 
-<<<<<<< HEAD
 TEST(replace, Present_unique){
         std::vector<int> v{1,2,3,4,5,6, 7,8,9,10,11,12};
   const std::vector<int> g{1,2,3,4,5,6,77,8,9,10,11,12};
@@ -20,8 +19,9 @@ TEST(replace, Present_unique){
                std::begin(v), std::end(v),
                7, 77);
 
-  EXPECT_EQ(g, v); 
-=======
+  EXPECT_EQ(g, v);
+}
+
 TEST(replace, OldWithNew)
 {
   using namespace std;
@@ -70,7 +70,6 @@ TEST(replace, Empty)
       begin(v), end(v), oldVal, newVal);
 
   EXPECT_TRUE(v.empty());
->>>>>>> 4c787d8c248baec16899eac1ff8d253e022a5e61
 }
 
 TEST(replace, Present_multiple){
@@ -87,30 +86,4 @@ TEST(replace, Present_multiple){
   EXPECT_EQ(g, v); 
 }
 
-TEST(replace, Missing){
-        std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
-  const std::vector<int> g{1,2,3,4,5,6,7,8,9,10,11,12};
-
-  std::replace(
-#ifdef EXECUTION_POLICY
-               EXECUTION_POLICY,
-#endif
-               std::begin(v), std::end(v),
-               20, 0);
-
-  EXPECT_EQ(g, v); 
-}
-
-TEST(replace, Empty){
-  std::vector<int> v, g;
-
-  std::replace(
-#ifdef EXECUTION_POLICY
-               EXECUTION_POLICY,
-#endif
-               std::begin(v), std::end(v),
-               0, 1);
-
-  EXPECT_EQ(g, v); 
-}
 

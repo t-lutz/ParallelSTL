@@ -547,6 +547,7 @@ static struct seq {
 #include <bits/parallel/algos/seq/inplace_merge.h>
 #include <bits/parallel/algos/seq/is_partitioned.h>
 #include <bits/parallel/algos/seq/is_sorted.h>
+#include <bits/parallel/algos/seq/is_sorted_until.h>
 #include <bits/parallel/algos/seq/lexicographical_compare.h>
 #include <bits/parallel/algos/seq/max_element.h>
 #include <bits/parallel/algos/seq/merge.h>

@@ -5,16 +5,16 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class OutputIterator, class T>
     OutputIterator
-      seq::remove_copy(InputIterator first, InputIterator last,
+      sequential_execution_policy::remove_copy(InputIterator first, InputIterator last,
                   OutputIterator result, const T& value){
     return std::remove_copy(first, last, result, value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

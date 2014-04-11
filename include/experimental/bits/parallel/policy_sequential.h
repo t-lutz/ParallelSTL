@@ -6,12 +6,10 @@
 #define _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 
 namespace std {
-
+namespace experimental {
 namespace parallel {
 
-namespace policy {
-
-static struct seq {
+static struct sequential_execution_policy {
   // Algorithm
 
   // non-modifying sequence operations:
@@ -513,79 +511,79 @@ static struct seq {
                      OutputIterator result,
                      T init, BinaryOperation binary_op);
 } seq ; //
-} // ::policy
-} // ::parallel
-} // ::std 
+} // namespace parallel
+} // namespace experimental
+} // namespace std 
 
-#include <bits/parallel/algos/seq/adjacent_difference.h>
-#include <bits/parallel/algos/seq/adjacent_find.h>
-#include <bits/parallel/algos/seq/all_of.h>
-#include <bits/parallel/algos/seq/any_of.h>
-#include <bits/parallel/algos/seq/copy.h>
-#include <bits/parallel/algos/seq/copy_if.h>
-#include <bits/parallel/algos/seq/copy_n.h>
-#include <bits/parallel/algos/seq/count.h>
-#include <bits/parallel/algos/seq/count_if.h>
-#include <bits/parallel/algos/seq/equal.h>
-#include <bits/parallel/algos/seq/exclusive_scan.h>
-#include <bits/parallel/algos/seq/fill.h>
-#include <bits/parallel/algos/seq/fill_n.h>
-#include <bits/parallel/algos/seq/find.h>
-#include <bits/parallel/algos/seq/find_end.h>
-#include <bits/parallel/algos/seq/find_first_of.h>
-#include <bits/parallel/algos/seq/find_if.h>
-#include <bits/parallel/algos/seq/find_if_not.h>
-#include <bits/parallel/algos/seq/for_each.h>
-#include <bits/parallel/algos/seq/for_each_n.h>
-#include <bits/parallel/algos/seq/generate.h>
-#include <bits/parallel/algos/seq/generate_n.h>
-#include <bits/parallel/algos/seq/includes.h>
-#include <bits/parallel/algos/seq/inclusive_scan.h>
-#include <bits/parallel/algos/seq/inner_product.h>
-#include <bits/parallel/algos/seq/inplace_merge.h>
-#include <bits/parallel/algos/seq/is_partitioned.h>
-#include <bits/parallel/algos/seq/is_sorted.h>
-#include <bits/parallel/algos/seq/is_sorted_until.h>
-#include <bits/parallel/algos/seq/lexicographical_compare.h>
-#include <bits/parallel/algos/seq/max_element.h>
-#include <bits/parallel/algos/seq/merge.h>
-#include <bits/parallel/algos/seq/min_element.h>
-#include <bits/parallel/algos/seq/minmax_element.h>
-#include <bits/parallel/algos/seq/mismatch.h>
-#include <bits/parallel/algos/seq/move.h>
-#include <bits/parallel/algos/seq/none_of.h>
-#include <bits/parallel/algos/seq/nth_element.h>
-#include <bits/parallel/algos/seq/partial_sort_copy.h>
-#include <bits/parallel/algos/seq/partial_sort.h>
-#include <bits/parallel/algos/seq/partition_copy.h>
-#include <bits/parallel/algos/seq/partition.h>
-#include <bits/parallel/algos/seq/partition_point.h>
-#include <bits/parallel/algos/seq/reduce.h>
-#include <bits/parallel/algos/seq/remove_copy.h>
-#include <bits/parallel/algos/seq/remove_copy_if.h>
-#include <bits/parallel/algos/seq/remove.h>
-#include <bits/parallel/algos/seq/remove_if.h>
-#include <bits/parallel/algos/seq/replace_copy.h>
-#include <bits/parallel/algos/seq/replace_copy_if.h>
-#include <bits/parallel/algos/seq/replace.h>
-#include <bits/parallel/algos/seq/replace_if.h>
-#include <bits/parallel/algos/seq/reverse_copy.h>
-#include <bits/parallel/algos/seq/reverse.h>
-#include <bits/parallel/algos/seq/rotate_copy.h>
-#include <bits/parallel/algos/seq/rotate.h>
-#include <bits/parallel/algos/seq/search.h>
-#include <bits/parallel/algos/seq/search_n.h>
-#include <bits/parallel/algos/seq/set_difference.h>
-#include <bits/parallel/algos/seq/set_intersection.h>
-#include <bits/parallel/algos/seq/set_symmetric_difference.h>
-#include <bits/parallel/algos/seq/set_union.h>
-#include <bits/parallel/algos/seq/sort.h>
-#include <bits/parallel/algos/seq/stable_partition.h>
-#include <bits/parallel/algos/seq/stable_sort.h>
-#include <bits/parallel/algos/seq/swap_ranges.h>
-#include <bits/parallel/algos/seq/transform.h>
-#include <bits/parallel/algos/seq/unique_copy.h>
-#include <bits/parallel/algos/seq/unique.h>
+#include <experimental/bits/parallel/algos/seq/adjacent_difference.h>
+#include <experimental/bits/parallel/algos/seq/adjacent_find.h>
+#include <experimental/bits/parallel/algos/seq/all_of.h>
+#include <experimental/bits/parallel/algos/seq/any_of.h>
+#include <experimental/bits/parallel/algos/seq/copy.h>
+#include <experimental/bits/parallel/algos/seq/copy_if.h>
+#include <experimental/bits/parallel/algos/seq/copy_n.h>
+#include <experimental/bits/parallel/algos/seq/count.h>
+#include <experimental/bits/parallel/algos/seq/count_if.h>
+#include <experimental/bits/parallel/algos/seq/equal.h>
+#include <experimental/bits/parallel/algos/seq/exclusive_scan.h>
+#include <experimental/bits/parallel/algos/seq/fill.h>
+#include <experimental/bits/parallel/algos/seq/fill_n.h>
+#include <experimental/bits/parallel/algos/seq/find.h>
+#include <experimental/bits/parallel/algos/seq/find_end.h>
+#include <experimental/bits/parallel/algos/seq/find_first_of.h>
+#include <experimental/bits/parallel/algos/seq/find_if.h>
+#include <experimental/bits/parallel/algos/seq/find_if_not.h>
+#include <experimental/bits/parallel/algos/seq/for_each.h>
+#include <experimental/bits/parallel/algos/seq/for_each_n.h>
+#include <experimental/bits/parallel/algos/seq/generate.h>
+#include <experimental/bits/parallel/algos/seq/generate_n.h>
+#include <experimental/bits/parallel/algos/seq/includes.h>
+#include <experimental/bits/parallel/algos/seq/inclusive_scan.h>
+#include <experimental/bits/parallel/algos/seq/inner_product.h>
+#include <experimental/bits/parallel/algos/seq/inplace_merge.h>
+#include <experimental/bits/parallel/algos/seq/is_partitioned.h>
+#include <experimental/bits/parallel/algos/seq/is_sorted.h>
+#include <experimental/bits/parallel/algos/seq/is_sorted_until.h>
+#include <experimental/bits/parallel/algos/seq/lexicographical_compare.h>
+#include <experimental/bits/parallel/algos/seq/max_element.h>
+#include <experimental/bits/parallel/algos/seq/merge.h>
+#include <experimental/bits/parallel/algos/seq/min_element.h>
+#include <experimental/bits/parallel/algos/seq/minmax_element.h>
+#include <experimental/bits/parallel/algos/seq/mismatch.h>
+#include <experimental/bits/parallel/algos/seq/move.h>
+#include <experimental/bits/parallel/algos/seq/none_of.h>
+#include <experimental/bits/parallel/algos/seq/nth_element.h>
+#include <experimental/bits/parallel/algos/seq/partial_sort_copy.h>
+#include <experimental/bits/parallel/algos/seq/partial_sort.h>
+#include <experimental/bits/parallel/algos/seq/partition_copy.h>
+#include <experimental/bits/parallel/algos/seq/partition.h>
+#include <experimental/bits/parallel/algos/seq/partition_point.h>
+#include <experimental/bits/parallel/algos/seq/reduce.h>
+#include <experimental/bits/parallel/algos/seq/remove_copy.h>
+#include <experimental/bits/parallel/algos/seq/remove_copy_if.h>
+#include <experimental/bits/parallel/algos/seq/remove.h>
+#include <experimental/bits/parallel/algos/seq/remove_if.h>
+#include <experimental/bits/parallel/algos/seq/replace_copy.h>
+#include <experimental/bits/parallel/algos/seq/replace_copy_if.h>
+#include <experimental/bits/parallel/algos/seq/replace.h>
+#include <experimental/bits/parallel/algos/seq/replace_if.h>
+#include <experimental/bits/parallel/algos/seq/reverse_copy.h>
+#include <experimental/bits/parallel/algos/seq/reverse.h>
+#include <experimental/bits/parallel/algos/seq/rotate_copy.h>
+#include <experimental/bits/parallel/algos/seq/rotate.h>
+#include <experimental/bits/parallel/algos/seq/search.h>
+#include <experimental/bits/parallel/algos/seq/search_n.h>
+#include <experimental/bits/parallel/algos/seq/set_difference.h>
+#include <experimental/bits/parallel/algos/seq/set_intersection.h>
+#include <experimental/bits/parallel/algos/seq/set_symmetric_difference.h>
+#include <experimental/bits/parallel/algos/seq/set_union.h>
+#include <experimental/bits/parallel/algos/seq/sort.h>
+#include <experimental/bits/parallel/algos/seq/stable_partition.h>
+#include <experimental/bits/parallel/algos/seq/stable_sort.h>
+#include <experimental/bits/parallel/algos/seq/swap_ranges.h>
+#include <experimental/bits/parallel/algos/seq/transform.h>
+#include <experimental/bits/parallel/algos/seq/unique_copy.h>
+#include <experimental/bits/parallel/algos/seq/unique.h>
 
 
 #endif

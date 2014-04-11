@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator, class Predicate>
-    ForwardIterator seq::remove_if(ForwardIterator first, ForwardIterator last, Predicate pred){
+    ForwardIterator sequential_execution_policy::remove_if(ForwardIterator first, ForwardIterator last, Predicate pred){
     return std::remove_if(first, last, pred);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

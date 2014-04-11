@@ -5,16 +5,16 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator1, class ForwardIterator2>
     ForwardIterator2
-      seq::swap_ranges(ForwardIterator1 first1, ForwardIterator1 last1,
+      sequential_execution_policy::swap_ranges(ForwardIterator1 first1, ForwardIterator1 last1,
                        ForwardIterator1 first2){
     return std::swap_ranges(first1, last1, first2);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

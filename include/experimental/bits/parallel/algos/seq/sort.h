@@ -5,19 +5,19 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class RandomAccessIterator>
-    void seq::sort(RandomAccessIterator first, RandomAccessIterator last){
+    void sequential_execution_policy::sort(RandomAccessIterator first, RandomAccessIterator last){
     std::sort(first, last);
   }
 
   template<class RandomAccessIterator, class Compare>
-    void seq::sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp){
+    void sequential_execution_policy::sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp){
     std::sort(first, last, comp);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

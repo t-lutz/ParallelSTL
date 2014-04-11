@@ -5,17 +5,17 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class OutputIterator, class T>
     OutputIterator
-      seq::replace_copy(InputIterator first, InputIterator last,
+      sequential_execution_policy::replace_copy(InputIterator first, InputIterator last,
                         OutputIterator result,
                         const T& old_value, const T& new_value){
     return std::replace_copy(first, last, result, old_value, new_value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

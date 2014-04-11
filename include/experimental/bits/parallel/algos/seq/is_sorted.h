@@ -5,21 +5,21 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator>
-    bool seq::is_sorted(ForwardIterator first, ForwardIterator last){
+    bool sequential_execution_policy::is_sorted(ForwardIterator first, ForwardIterator last){
     return std::is_sorted(first, last);
   }
 
 
   template<class ForwardIterator, class Compare>
-    bool seq::is_sorted(ForwardIterator first, ForwardIterator last,
+    bool sequential_execution_policy::is_sorted(ForwardIterator first, ForwardIterator last,
                         Compare comp){
     return std::is_sorted(first, last, comp);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

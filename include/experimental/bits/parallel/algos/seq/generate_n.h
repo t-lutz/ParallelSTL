@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class OutputIterator, class Size, class Generator>
-    OutputIterator seq::generate_n(OutputIterator first, Size n, Generator gen){
+    OutputIterator sequential_execution_policy::generate_n(OutputIterator first, Size n, Generator gen){
     return std::generate_n(first, n, gen);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

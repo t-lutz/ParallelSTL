@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator, class Generator>
-    void seq::generate(ForwardIterator first, ForwardIterator last, Generator gen){
+    void sequential_execution_policy::generate(ForwardIterator first, ForwardIterator last, Generator gen){
     std::generate(first, last, gen);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

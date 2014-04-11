@@ -5,17 +5,17 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator, class Predicate>
     ForwardIterator
-      seq::partition(ForwardIterator first,
+      sequential_execution_policy::partition(ForwardIterator first,
                      ForwardIterator last, Predicate pred){
     return std::partition(first, last, pred);
   }
 
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

@@ -5,21 +5,21 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator>
-    ForwardIterator seq::adjacent_find(ForwardIterator first, ForwardIterator last){
+    ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, ForwardIterator last){
     return std::adjacent_find(first, last);
   }
 
 
   template<class ForwardIterator, class BinaryPredicate>
-    ForwardIterator seq::adjacent_find(ForwardIterator first, ForwardIterator last,
+    ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, ForwardIterator last,
                                   BinaryPredicate pred){
     return std::adjacent_find(first, last, pred);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

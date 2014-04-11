@@ -5,16 +5,16 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class OutputIterator>
     OutputIterator
-      seq::move(InputIterator first, InputIterator last,
+      sequential_execution_policy::move(InputIterator first, InputIterator last,
                 OutputIterator result){
     return std::move(first, last, result);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

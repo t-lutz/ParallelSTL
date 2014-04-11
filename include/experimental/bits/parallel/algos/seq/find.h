@@ -5,15 +5,15 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class T>
-    InputIterator seq::find(InputIterator first, InputIterator last,
+    InputIterator sequential_execution_policy::find(InputIterator first, InputIterator last,
                        const T& value){
     return std::find(first, last, value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

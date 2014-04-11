@@ -5,21 +5,21 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator>
     pair<ForwardIterator, ForwardIterator>
-      seq::minmax_element(ForwardIterator first, ForwardIterator last){
+      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last){
     return std::minmax_element(first, last);
   }
 
   template<class ForwardIterator, class Compare>
     pair<ForwardIterator, ForwardIterator>
-      seq::minmax_element(ForwardIterator first, ForwardIterator last, Compare comp){
+      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last, Compare comp){
     return std::minmax_element(first, last, comp);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

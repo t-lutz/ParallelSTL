@@ -1,3 +1,5 @@
+#include <type_traits>
+
 namespace std {
 namespace experimental {
 namespace parallel {
@@ -21,18 +23,18 @@ class vector_execution_policy;
 class execution_policy;
 
 // 2.9, standard execution policy objects
-extern const sequential_execution_policy seq;
-extern const parallel_execution_policy par;
-extern const vector_execution_policy vec;
+//extern const sequential_execution_policy seq;
+//extern const parallel_execution_policy par;
+//extern const vector_execution_policy vec;
 
 // parallel.execpol.type
 // **********************************************
 
 template<class T> struct is_execution_policy
-  : public std::integral_constant<bool, is_same<T, sequential_execution_policy>::value || 
-                                        is_same<T, parallel_execution_policy>::value || 
-                                        is_same<T, vector_execution_policy>::value ||
-                                        is_same<T, execution_policy>> { };
+  : public integral_constant<bool, is_same<T, sequential_execution_policy>::value || 
+                                   is_same<T, parallel_execution_policy>::value || 
+                                   is_same<T, vector_execution_policy>::value ||
+                                   is_same<T, execution_policy>::value > { };
 
 }
 } // namespace experimental

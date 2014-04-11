@@ -5,15 +5,15 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class Size, class Function>
-    Function seq::for_each_n(InputIterator first, Size n,
+    Function sequential_execution_policy::for_each_n(InputIterator first, Size n,
                         Function f){
     return std::for_each(first, first + n, f);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

@@ -5,8 +5,8 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class Size, class OutputIterator>
     OutputIterator copy_n(InputIterator first, Size n,
@@ -14,6 +14,6 @@ namespace policy {
     return std::copy_n(first, n, result);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

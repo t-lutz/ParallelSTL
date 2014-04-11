@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class OutputIterator, class Size, class T>
-    void seq::fill_n(OutputIterator first, Size n, const T& value){
+    void sequential_execution_policy::fill_n(OutputIterator first, Size n, const T& value){
     std::fill_n(first, n, value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

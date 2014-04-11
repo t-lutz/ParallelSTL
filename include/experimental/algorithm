@@ -4,16 +4,21 @@
 #include <utility> // std::pair
 #include <iterator>
 
+#include <experimental/execution_policy>
+
 // The policies have to be defined BEFORE the parallel versions of the 
 // algorithm library to avoid ambiguities.
-#include <bits/parallel/policy_sequential.h>
+#include <experimental/bits/parallel/policy_sequential.h>
 
 namespace std {
   // non-modifying sequence operations:
   template<class ExecutionPolicy,
            class InputIterator, class Predicate>
     bool all_of(ExecutionPolicy &&exec,
-                InputIterator first, InputIterator last, Predicate pred){
+                InputIterator first, InputIterator last, Predicate pred)
+  {
+    static_assert(experimental::parallel::is_execution_policy<typename decay<ExecutionPolicy>::type>::value, 
+                  "'exec' is not a valid execution policy");
     return exec.all_of(first, last, pred);
   }
 

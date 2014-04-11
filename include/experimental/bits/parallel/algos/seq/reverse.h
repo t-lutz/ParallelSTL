@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class BidirectionalIterator>
-    void seq::reverse(BidirectionalIterator first, BidirectionalIterator last){
+    void sequential_execution_policy::reverse(BidirectionalIterator first, BidirectionalIterator last){
     std::reverse(first, last);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

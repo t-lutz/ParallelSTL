@@ -5,12 +5,12 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class OutputIterator,
            class UnaryOperation>
-    OutputIterator seq::transform(InputIterator first, InputIterator last,
+    OutputIterator sequential_execution_policy::transform(InputIterator first, InputIterator last,
                                   OutputIterator result, UnaryOperation op){
     return std::transform(first, last, result, op);
   }
@@ -19,12 +19,12 @@ namespace policy {
   template<class InputIterator1, class InputIterator2, class OutputIterator,
            class BinaryOperation>
     OutputIterator
-      seq::transform(InputIterator1 first1, InputIterator1 last1,
+      sequential_execution_policy::transform(InputIterator1 first1, InputIterator1 last1,
                      InputIterator2 first2, OutputIterator result,
                      BinaryOperation binary_op){
     return std::transform(first1, last1, first2, result, binary_op);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

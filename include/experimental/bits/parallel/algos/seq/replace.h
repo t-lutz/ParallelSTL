@@ -5,15 +5,15 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator, class T>
-    void seq::replace(ForwardIterator first, ForwardIterator last,
+    void sequential_execution_policy::replace(ForwardIterator first, ForwardIterator last,
                       const T& old_value, const T& new_value){
     return std::replace(first, last, old_value, new_value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

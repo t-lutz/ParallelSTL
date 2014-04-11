@@ -5,15 +5,15 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class Predicate>
-    bool seq::any_of(InputIterator first, InputIterator last, Predicate pred){
+    bool sequential_execution_policy::any_of(InputIterator first, InputIterator last, Predicate pred){
     return std::any_of(first, last, pred);
   }
 
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

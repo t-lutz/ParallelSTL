@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class InputIterator, class Predicate>
-    bool seq::all_of(InputIterator first, InputIterator last, Predicate pred){
+    bool sequential_execution_policy::all_of(InputIterator first, InputIterator last, Predicate pred){
     return std::all_of(first, last, pred);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

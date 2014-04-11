@@ -5,15 +5,15 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
  template<class InputIterator, class OutputIterator>
-    OutputIterator seq::copy(InputIterator first, InputIterator last,
+    OutputIterator sequential_execution_policy::copy(InputIterator first, InputIterator last,
                              OutputIterator result){
     return std::copy(first, last, result);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

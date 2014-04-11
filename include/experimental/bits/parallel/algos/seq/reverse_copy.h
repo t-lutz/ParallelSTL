@@ -5,16 +5,16 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class BidirectionalIterator, class OutputIterator>
     OutputIterator
-      seq::reverse_copy(BidirectionalIterator first,
+      sequential_execution_policy::reverse_copy(BidirectionalIterator first,
                         BidirectionalIterator last, OutputIterator result){
     return std::reverse_copy(first, last, result);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

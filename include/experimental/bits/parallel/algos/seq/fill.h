@@ -5,14 +5,14 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class ForwardIterator, class T>
-    void seq::fill(ForwardIterator first, ForwardIterator last, const T& value){
+    void sequential_execution_policy::fill(ForwardIterator first, ForwardIterator last, const T& value){
     std::fill(first, last, value);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

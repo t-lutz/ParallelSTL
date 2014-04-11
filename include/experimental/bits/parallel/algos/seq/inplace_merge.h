@@ -5,11 +5,11 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class BidirectionalIterator>
-    void seq::inplace_merge(BidirectionalIterator first,
+    void sequential_execution_policy::inplace_merge(BidirectionalIterator first,
                             BidirectionalIterator middle,
                             BidirectionalIterator last){
     std::inplace_merge(first, middle, last);
@@ -18,12 +18,12 @@ namespace policy {
 
   template<class BidirectionalIterator,
            class Compare>
-    void seq::inplace_merge(BidirectionalIterator first,
+    void sequential_execution_policy::inplace_merge(BidirectionalIterator first,
                             BidirectionalIterator middle,
                             BidirectionalIterator last, Compare comp){
     std::inplace_merge(first, middle, last, comp);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

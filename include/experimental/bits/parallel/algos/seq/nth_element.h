@@ -5,22 +5,22 @@
 #include <algorithm>
 
 namespace std {
+namespace experimental {
 namespace parallel {
-namespace policy {
 
   template<class RandomAccessIterator>
-    void seq::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
+    void sequential_execution_policy::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
                           RandomAccessIterator last){
     std::nth_element(first, nth, last);
   }
 
 
   template<class RandomAccessIterator, class Compare>
-    void seq::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
+    void sequential_execution_policy::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
                           RandomAccessIterator last, Compare comp){
     std::nth_element(first, nth, last, comp);
   }
 
-} // namespace policy
 } // namespace parallel
+} // namespace experimental
 } // namespace std

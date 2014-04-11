@@ -4,6 +4,10 @@
 #include <utility> // std::pair
 #include <iterator>
 
+// The policies have to be defined BEFORE the parallel versions of the 
+// algorithm library to avoid ambiguities.
+#include <bits/parallel/policy_sequential.h>
+
 namespace std {
   // non-modifying sequence operations:
   template<class ExecutionPolicy,
@@ -767,7 +771,5 @@ namespace std {
     return exec.lexicographical_compare(first1, last1, first2, last2, comp);
   }
 }
-
-#include <bits/parallel/policy_sequential.h>
 
 #endif

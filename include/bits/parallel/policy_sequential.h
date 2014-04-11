@@ -5,8 +5,6 @@
 #ifndef _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 #define _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 
-#include <algorithm>
-
 namespace std {
 
 namespace parallel {

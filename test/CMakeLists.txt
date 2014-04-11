@@ -76,7 +76,7 @@ FOREACH (TEST ${ALL_TESTS})
   set(UNITTEST test-seq_${TESTNAME})
   add_executable(${UNITTEST} ${TEST})
   set_target_properties(${UNITTEST} PROPERTIES COMPILE_DEFINITIONS 
-                        "EXECUTION_POLICY=std::parallel::policy::seq")
+                        "EXECUTION_POLICY=std::experimental::parallel::seq")
   add_dependencies(${UNITTEST} googletest)
   target_link_libraries(${UNITTEST} ${TEST_LIBS})
   add_test(seq-std::${TESTNAME} ${UNITTEST})

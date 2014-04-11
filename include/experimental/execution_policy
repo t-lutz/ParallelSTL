@@ -1,0 +1,39 @@
+namespace std {
+namespace experimental {
+namespace parallel {
+
+// parallel.execpol.synop
+// **********************************************
+
+// 2.3, execution policy type trait
+template<class T> struct is_execution_policy;
+
+// 2.4, sequential execution policy
+class sequential_execution_policy;
+
+// 2.5, parallel execution policy
+class parallel_execution_policy;
+
+// 2.6, vector execution policy
+class vector_execution_policy;
+
+// 2.7, dynamic execution policy
+class execution_policy;
+
+// 2.9, standard execution policy objects
+extern const sequential_execution_policy seq;
+extern const parallel_execution_policy par;
+extern const vector_execution_policy vec;
+
+// parallel.execpol.type
+// **********************************************
+
+template<class T> struct is_execution_policy
+  : public std::integral_constant<bool, is_same<T, sequential_execution_policy>::value || 
+                                        is_same<T, parallel_execution_policy>::value || 
+                                        is_same<T, vector_execution_policy>::value ||
+                                        is_same<T, execution_policy>> { };
+
+}
+} // namespace experimental
+} // namespace std

@@ -1,3 +1,10 @@
+#if not defined _EXPERIMENTAL_N3554_ALGORITHM and not defined _EXPERIMENTAL_N3554_UTILITY
+#error Inlcude <parallel/algorithm> or <parallel/utility>
+#endif
+
+#ifndef _EXPERIMENTAL_N3554_POLICY_PARALLEL
+#define _EXPERIMENTAL_N3554_POLICY_PARALLEL
+
 #include <algorithm>
 
 namespace std {

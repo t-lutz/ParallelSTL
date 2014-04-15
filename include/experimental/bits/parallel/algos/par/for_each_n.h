@@ -3,21 +3,21 @@
 #endif
 
 #include <algorithm>
-#include <functional>
 #include <experimental/bits/parallel/algos/par/diffract.h>
 
 namespace std {
 namespace experimental {
 namespace parallel {
 
-  template<class InputIterator, class UnaryFunction>
-  UnaryFunction parallel_execution_policy::for_each(InputIterator first, InputIterator last, 
-                                                    UnaryFunction f) const 
-  { 
+  template<class InputIterator, class Size, class Function>
+    Function parallel_execution_policy::for_each_n(InputIterator first, Size n,
+                                                   Function f) const 
+  {
     //  diffract the range and forward
-    detail::diffract(first, last, std::for_each<InputIterator, UnaryFunction>, std::move(f));
+    detail::diffract(first, first + n, std::for_each<InputIterator, Function>, std::move(f));
     // return the function
     return std::move(f);
+
   }
 
 } // namespace parallel

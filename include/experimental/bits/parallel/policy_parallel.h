@@ -543,13 +543,13 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/exclusive_scan.h>
 #include <experimental/bits/parallel/algos/par/fill.h>
 #include <experimental/bits/parallel/algos/par/fill_n.h>
-//#include <experimental/bits/parallel/algos/par/find.h>
+#include <experimental/bits/parallel/algos/par/find.h>
 //#include <experimental/bits/parallel/algos/par/find_end.h>
 //#include <experimental/bits/parallel/algos/par/find_first_of.h>
-//#include <experimental/bits/parallel/algos/par/find_if.h>
-//#include <experimental/bits/parallel/algos/par/find_if_not.h>
+#include <experimental/bits/parallel/algos/par/find_if.h>
+#include <experimental/bits/parallel/algos/par/find_if_not.h>
 #include <experimental/bits/parallel/algos/par/for_each.h>
-//#include <experimental/bits/parallel/algos/par/for_each_n.h>
+#include <experimental/bits/parallel/algos/par/for_each_n.h>
 #include <experimental/bits/parallel/algos/par/generate.h>
 #include <experimental/bits/parallel/algos/par/generate_n.h>
 //#include <experimental/bits/parallel/algos/par/includes.h>

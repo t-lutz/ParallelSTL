@@ -6,10 +6,6 @@
 
 #include <experimental/execution_policy>
 
-// The policies have to be defined BEFORE the parallel versions of the 
-// algorithm library to avoid ambiguities.
-#include <experimental/bits/parallel/policy_sequential.h>
-
 namespace std { 
 
   // non-modifying sequence operations:

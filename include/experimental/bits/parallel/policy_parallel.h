@@ -2,8 +2,8 @@
 #error Inlcude <parallel/algorithm> or <parallel/utility>
 #endif
 
-#ifndef _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
-#define _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
+#ifndef _EXPERIMENTAL_N3554_POLICY_PARALLEL
+#define _EXPERIMENTAL_N3554_POLICY_PARALLEL
 
 namespace std {
 namespace experimental {

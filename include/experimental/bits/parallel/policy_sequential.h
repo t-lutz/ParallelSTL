@@ -319,6 +319,20 @@ static struct sequential_execution_policy {
                                     Compare comp);
 
   template<class RandomAccessIterator>
+  bool is_heap(RandomAccessIterator first, RandomAccessIterator last);
+
+  template<class RandomAccessIterator, class Compare>
+  bool is_heap(RandomAccessIterator first, RandomAccessIterator last,
+               Compare comp);
+
+  template<class RandomAccessIterator>
+  RandomAccessIterator is_heap_until(RandomAccessIterator first, RandomAccessIterator last);
+
+  template<class RandomAccessIterator, class Compare>
+  RandomAccessIterator is_heap_until(RandomAccessIterator first, RandomAccessIterator last,
+                                     Compare comp);
+
+  template<class RandomAccessIterator>
     void nth_element(RandomAccessIterator first, RandomAccessIterator nth,
                      RandomAccessIterator last);
 
@@ -544,6 +558,8 @@ static struct sequential_execution_policy {
 #include <experimental/bits/parallel/algos/seq/is_partitioned.h>
 #include <experimental/bits/parallel/algos/seq/is_sorted.h>
 #include <experimental/bits/parallel/algos/seq/is_sorted_until.h>
+#include <experimental/bits/parallel/algos/seq/is_heap.h>
+#include <experimental/bits/parallel/algos/seq/is_heap_until.h> 
 #include <experimental/bits/parallel/algos/seq/lexicographical_compare.h>
 #include <experimental/bits/parallel/algos/seq/max_element.h>
 #include <experimental/bits/parallel/algos/seq/merge.h>

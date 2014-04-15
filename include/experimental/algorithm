@@ -821,6 +821,48 @@ namespace std {
     return exec.is_sorted_until(first, last, comp);
   }
 
+  template<class ExecutionPolicy, class RandomAccessIterator>
+  bool is_heap(ExecutionPolicy &&exec, 
+               RandomAccessIterator first, RandomAccessIterator last)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
+
+    return exec.is_heap(first, last);
+  }
+
+  template<class ExecutionPolicy, class RandomAccessIterator, class Compare>
+  bool is_heap(ExecutionPolicy &&exec, 
+               RandomAccessIterator first, RandomAccessIterator last,
+               Compare comp)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
+
+    return exec.is_heap(first, last, comp);
+  }
+
+  template<class ExecutionPolicy, class RandomAccessIterator>
+  RandomAccessIterator is_heap_until(ExecutionPolicy &&exec, 
+                                     RandomAccessIterator first, RandomAccessIterator last)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
+
+    return exec.is_heap_until(first, last);
+  }
+
+  template<class ExecutionPolicy, class RandomAccessIterator, class Compare>
+  RandomAccessIterator is_heap_until(ExecutionPolicy &&exec, 
+                                     RandomAccessIterator first, RandomAccessIterator last,
+                                     Compare comp)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
+
+    return exec.is_heap_until(first, last, comp);
+  }
+
   template<class ExecutionPolicy,
            class RandomAccessIterator>
     void nth_element(ExecutionPolicy &&exec,

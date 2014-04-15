@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class OutputIterator, class Size, class Generator>
-    OutputIterator sequential_execution_policy::generate_n(OutputIterator first, Size n, Generator gen){
+    OutputIterator sequential_execution_policy::generate_n(OutputIterator first, Size n, Generator gen) const {
     return std::generate_n(first, n, gen);
   }
 

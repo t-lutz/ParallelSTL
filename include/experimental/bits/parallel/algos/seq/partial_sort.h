@@ -11,7 +11,7 @@ namespace parallel {
   template<class RandomAccessIterator>
     void sequential_execution_policy::partial_sort(RandomAccessIterator first,
                            RandomAccessIterator middle,
-                           RandomAccessIterator last){
+                           RandomAccessIterator last) const {
     std::partial_sort(first, middle, last);
   }
 
@@ -19,7 +19,7 @@ namespace parallel {
     void sequential_execution_policy::partial_sort(RandomAccessIterator first,
                            RandomAccessIterator middle,
                            RandomAccessIterator last,
-                           Compare comp){
+                           Compare comp) const {
     std::partial_sort(first, middle, last, comp);
   }
 

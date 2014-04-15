@@ -11,7 +11,7 @@ namespace parallel {
   template<class ForwardIterator, class Predicate>
     ForwardIterator
       sequential_execution_policy::partition(ForwardIterator first,
-                     ForwardIterator last, Predicate pred){
+                     ForwardIterator last, Predicate pred) const {
     return std::partition(first, last, pred);
   }
 

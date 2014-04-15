@@ -11,7 +11,7 @@ namespace parallel {
   template<class InputIterator, class OutputIterator, class T>
     OutputIterator
       sequential_execution_policy::remove_copy(InputIterator first, InputIterator last,
-                  OutputIterator result, const T& value){
+                  OutputIterator result, const T& value) const {
     return std::remove_copy(first, last, result, value);
   }
 

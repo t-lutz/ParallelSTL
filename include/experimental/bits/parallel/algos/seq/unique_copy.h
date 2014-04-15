@@ -11,7 +11,7 @@ namespace parallel {
   template<class InputIterator, class OutputIterator>
     OutputIterator
       sequential_execution_policy::unique_copy(InputIterator first, InputIterator last,
-                  OutputIterator result){
+                  OutputIterator result) const {
     return std::unique_copy(first, last, result);
   }
 
@@ -19,7 +19,7 @@ namespace parallel {
   template<class InputIterator, class OutputIterator, class BinaryPredicate>
     OutputIterator
       sequential_execution_policy::unique_copy(InputIterator first, InputIterator last,
-                  OutputIterator result, BinaryPredicate pred){
+                  OutputIterator result, BinaryPredicate pred) const {
     return std::unique_copy(first, last, result, pred);
   }
 

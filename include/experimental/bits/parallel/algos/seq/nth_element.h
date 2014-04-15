@@ -10,14 +10,14 @@ namespace parallel {
 
   template<class RandomAccessIterator>
     void sequential_execution_policy::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
-                          RandomAccessIterator last){
+                          RandomAccessIterator last) const {
     std::nth_element(first, nth, last);
   }
 
 
   template<class RandomAccessIterator, class Compare>
     void sequential_execution_policy::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
-                          RandomAccessIterator last, Compare comp){
+                          RandomAccessIterator last, Compare comp) const {
     std::nth_element(first, nth, last, comp);
   }
 

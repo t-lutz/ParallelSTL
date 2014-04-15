@@ -11,7 +11,7 @@ namespace parallel {
   template<class InputIterator, class OutputIterator>
     OutputIterator
       sequential_execution_policy::move(InputIterator first, InputIterator last,
-                OutputIterator result){
+                OutputIterator result) const {
     return std::move(first, last, result);
   }
 

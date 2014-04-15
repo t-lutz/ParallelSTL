@@ -10,7 +10,7 @@ namespace parallel {
 
   template<class InputIterator, class Size, class Function>
     Function sequential_execution_policy::for_each_n(InputIterator first, Size n,
-                        Function f){
+                        Function f) const {
     return std::for_each(first, first + n, f);
   }
 

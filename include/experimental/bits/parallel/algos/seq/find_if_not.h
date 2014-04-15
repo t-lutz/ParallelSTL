@@ -10,7 +10,7 @@ namespace parallel {
 
   template<class InputIterator, class Predicate>
     InputIterator sequential_execution_policy::find_if_not(InputIterator first, InputIterator last,
-                              Predicate pred){
+                              Predicate pred) const {
     return std::find_if_not(first, last, pred);
   }
 

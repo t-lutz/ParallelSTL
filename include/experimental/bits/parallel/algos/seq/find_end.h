@@ -11,7 +11,7 @@ namespace parallel {
   template<class ForwardIterator1, class ForwardIterator2>
     ForwardIterator1
       sequential_execution_policy::find_end(ForwardIterator1 first1, ForwardIterator1 last1,
-                    ForwardIterator2 first2, ForwardIterator2 last2){
+                    ForwardIterator2 first2, ForwardIterator2 last2) const {
     return std::find_end(first1, last1, first2, last2);
   }
 
@@ -20,7 +20,7 @@ namespace parallel {
     ForwardIterator1
       sequential_execution_policy::find_end(ForwardIterator1 first1, ForwardIterator1 last1,
                     ForwardIterator2 first2, ForwardIterator2 last2,
-                    BinaryPredicate pred){
+                    BinaryPredicate pred) const {
     return std::find_end(first1, last1, first2, last2, pred);
   }
 

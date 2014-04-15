@@ -10,13 +10,14 @@ namespace parallel {
 
   template<class ForwardIterator>
     pair<ForwardIterator, ForwardIterator>
-      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last){
+      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last) const {
     return std::minmax_element(first, last);
   }
 
   template<class ForwardIterator, class Compare>
     pair<ForwardIterator, ForwardIterator>
-      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last, Compare comp){
+      sequential_execution_policy::minmax_element(ForwardIterator first, ForwardIterator last, 
+                                                  Compare comp) const {
     return std::minmax_element(first, last, comp);
   }
 

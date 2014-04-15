@@ -10,7 +10,7 @@ namespace parallel {
 
   template<class ForwardIterator, class Predicate, class T>
     void sequential_execution_policy::replace_if(ForwardIterator first, ForwardIterator last,
-                         Predicate pred, const T& new_value){
+                         Predicate pred, const T& new_value) const {
     return std::replace_if(first, last, pred, new_value);
   }
 

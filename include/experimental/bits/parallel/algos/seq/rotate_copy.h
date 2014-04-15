@@ -11,7 +11,7 @@ namespace parallel {
   template<class ForwardIterator, class OutputIterator>
     OutputIterator
       sequential_execution_policy::rotate_copy(ForwardIterator first, ForwardIterator middle,
-                       ForwardIterator last, OutputIterator result){
+                       ForwardIterator last, OutputIterator result) const {
     return std::rotate_copy(first, middle, last, result);
   }
 

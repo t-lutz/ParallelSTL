@@ -11,7 +11,7 @@ namespace parallel {
   template<class BidirectionalIterator>
     void sequential_execution_policy::inplace_merge(BidirectionalIterator first,
                             BidirectionalIterator middle,
-                            BidirectionalIterator last){
+                            BidirectionalIterator last) const {
     std::inplace_merge(first, middle, last);
   }
 
@@ -20,7 +20,7 @@ namespace parallel {
            class Compare>
     void sequential_execution_policy::inplace_merge(BidirectionalIterator first,
                             BidirectionalIterator middle,
-                            BidirectionalIterator last, Compare comp){
+                            BidirectionalIterator last, Compare comp) const {
     std::inplace_merge(first, middle, last, comp);
   }
 

@@ -9,14 +9,14 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator>
-    ForwardIterator sequential_execution_policy::unique(ForwardIterator first, ForwardIterator last){
+    ForwardIterator sequential_execution_policy::unique(ForwardIterator first, ForwardIterator last) const {
     return std::unique(first, last);
   }
 
 
   template<class ForwardIterator, typename BinaryPredicate>
     ForwardIterator sequential_execution_policy::unique(ForwardIterator first, ForwardIterator last,
-                           BinaryPredicate pred){
+                           BinaryPredicate pred) const {
     return std::unique(first, last, pred);
   }
 

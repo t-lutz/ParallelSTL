@@ -12,7 +12,7 @@ namespace parallel {
     OutputIterator
       sequential_execution_policy::replace_copy_if(InputIterator first, InputIterator last,
                            OutputIterator result, Predicate pred,
-                           const T& new_value){
+                           const T& new_value) const {
     return std::replace_copy_if(first, last, result, pred, new_value);
   }
 

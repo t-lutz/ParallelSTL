@@ -10,19 +10,19 @@ namespace parallel {
 
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
-      sequential_execution_policy::reduce(InputIterator first, InputIterator last){
+      sequential_execution_policy::reduce(InputIterator first, InputIterator last) const {
     typedef typename iterator_traits<InputIterator>::value_type T;
     return std::accumulate(first, last, T{0});
   }
 
   template<class InputIterator, class T>
-    T sequential_execution_policy::reduce(InputIterator first, InputIterator last, T init){
+    T sequential_execution_policy::reduce(InputIterator first, InputIterator last, T init) const {
     return std::accumulate(first, last, init);
   }
 
   template<class InputIterator, class T, class BinaryOperation>
     T sequential_execution_policy::reduce(InputIterator first, InputIterator last, T init,
-                  BinaryOperation binary_op){
+                  BinaryOperation binary_op) const {
     return std::accumulate(first, last, init, binary_op);
   }
 

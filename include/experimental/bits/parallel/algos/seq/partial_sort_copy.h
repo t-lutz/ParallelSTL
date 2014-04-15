@@ -12,7 +12,7 @@ namespace parallel {
     RandomAccessIterator
       sequential_execution_policy::partial_sort_copy(InputIterator first, InputIterator last,
                              RandomAccessIterator result_first,
-                             RandomAccessIterator result_last){
+                             RandomAccessIterator result_last) const {
     return std::partial_sort_copy(first, last, result_first, result_last);
   }
 
@@ -22,7 +22,7 @@ namespace parallel {
       sequential_execution_policy::partial_sort_copy(InputIterator first, InputIterator last,
                              RandomAccessIterator result_first,
                              RandomAccessIterator result_last,
-                             Compare comp){
+                             Compare comp) const {
     return std::partial_sort_copy(first, last, result_first, result_last);
   }
 

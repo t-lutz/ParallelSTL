@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class BidirectionalIterator>
-    void sequential_execution_policy::reverse(BidirectionalIterator first, BidirectionalIterator last){
+    void sequential_execution_policy::reverse(BidirectionalIterator first, BidirectionalIterator last) const {
     std::reverse(first, last);
   }
 

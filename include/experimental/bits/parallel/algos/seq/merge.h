@@ -13,7 +13,7 @@ namespace parallel {
     OutputIterator
       sequential_execution_policy::merge(InputIterator1 first1, InputIterator1 last1,
                  InputIterator2 first2, InputIterator2 last2,
-                 OutputIterator result){
+                 OutputIterator result) const {
     return std::merge(first1, last1, first2, last2, result);
   }
 
@@ -23,7 +23,7 @@ namespace parallel {
     OutputIterator
       sequential_execution_policy::merge(InputIterator1 first1, InputIterator1 last1,
                  InputIterator2 first2, InputIterator2 last2,
-                 OutputIterator result, Compare comp){
+                 OutputIterator result, Compare comp) const {
     return std::merge(first1, last1, first2, last2, result, comp);
   }
 

@@ -9,14 +9,16 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator>
-    ForwardIterator sequential_execution_policy::min_element(ForwardIterator first, ForwardIterator last){
+    ForwardIterator sequential_execution_policy::min_element(ForwardIterator first, 
+                                                             ForwardIterator last) const {
     return std::min_element(first, last);
   }
 
 
   template<class ForwardIterator, class Compare>
-    ForwardIterator sequential_execution_policy::min_element(ForwardIterator first, ForwardIterator last,
-                                Compare comp){
+    ForwardIterator sequential_execution_policy::min_element(ForwardIterator first, 
+                                                             ForwardIterator last,
+                                                             Compare comp) const {
     return std::min_element(first, last, comp);
   }
 

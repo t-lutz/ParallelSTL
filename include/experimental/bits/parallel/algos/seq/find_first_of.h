@@ -11,7 +11,7 @@ namespace parallel {
   template<class InputIterator, class ForwardIterator>
     InputIterator
       sequential_execution_policy::find_first_of(InputIterator first1, InputIterator last1,
-                         ForwardIterator first2, ForwardIterator last2){
+                         ForwardIterator first2, ForwardIterator last2) const {
     return std::find_first_of(first1, last1, first2, last2);
   }
 
@@ -21,7 +21,7 @@ namespace parallel {
     InputIterator
       sequential_execution_policy::find_first_of(InputIterator first1, InputIterator last1,
                          ForwardIterator first2, ForwardIterator last2,
-                         BinaryPredicate pred){
+                         BinaryPredicate pred) const {
     return std::find_first_of(first1, last1, first2, last2, pred);
   }
 

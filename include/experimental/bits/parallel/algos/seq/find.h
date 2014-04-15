@@ -10,7 +10,7 @@ namespace parallel {
 
   template<class InputIterator, class T>
     InputIterator sequential_execution_policy::find(InputIterator first, InputIterator last,
-                       const T& value){
+                       const T& value) const {
     return std::find(first, last, value);
   }
 

@@ -10,7 +10,7 @@ namespace parallel {
 
   template<class InputIterator1, class InputIterator2>
     bool sequential_execution_policy::includes(InputIterator1 first1, InputIterator1 last1,
-                       InputIterator2 first2, InputIterator2 last2){
+                       InputIterator2 first2, InputIterator2 last2) const {
     return std::includes(first1, last1, first2, last2);
   }
 
@@ -18,7 +18,7 @@ namespace parallel {
   template<class InputIterator1, class InputIterator2, class Compare>
     bool sequential_execution_policy::includes(InputIterator1 first1, InputIterator1 last1,
                        InputIterator2 first2, InputIterator2 last2,
-                       Compare comp){
+                       Compare comp) const {
     return std::includes(first1, last1, first2, last2, comp);
   }
 

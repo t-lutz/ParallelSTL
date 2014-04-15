@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Predicate>
-    bool sequential_execution_policy::any_of(InputIterator first, InputIterator last, Predicate pred){
+    bool sequential_execution_policy::any_of(InputIterator first, InputIterator last, Predicate pred) const{
     return std::any_of(first, last, pred);
   }
 

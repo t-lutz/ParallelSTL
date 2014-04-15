@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator, class Generator>
-    void sequential_execution_policy::generate(ForwardIterator first, ForwardIterator last, Generator gen){
+    void sequential_execution_policy::generate(ForwardIterator first, ForwardIterator last, Generator gen) const {
     std::generate(first, last, gen);
   }
 

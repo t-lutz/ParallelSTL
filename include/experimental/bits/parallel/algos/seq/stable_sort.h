@@ -9,13 +9,15 @@ namespace experimental {
 namespace parallel {
 
   template<class RandomAccessIterator>
-    void sequential_execution_policy::stable_sort(RandomAccessIterator first, RandomAccessIterator last){
+    void sequential_execution_policy::stable_sort(RandomAccessIterator first, 
+                                                  RandomAccessIterator last) const {
     std::stable_sort(first, last);
   }
 
   template<class RandomAccessIterator, class Compare>
-    void sequential_execution_policy::stable_sort(RandomAccessIterator first, RandomAccessIterator last,
-                          Compare comp){
+    void sequential_execution_policy::stable_sort(RandomAccessIterator first, 
+                                                  RandomAccessIterator last,
+                                                  Compare comp) const {
     std::stable_sort(first, last, comp);
   }
 

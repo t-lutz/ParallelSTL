@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Predicate>
-    bool sequential_execution_policy::is_partitioned(InputIterator first, InputIterator last, Predicate pred){
+    bool sequential_execution_policy::is_partitioned(InputIterator first, InputIterator last, Predicate pred) const {
     return std::is_partitioned(first, last, pred);
   }
 

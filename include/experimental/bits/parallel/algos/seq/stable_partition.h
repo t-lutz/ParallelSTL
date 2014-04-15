@@ -11,7 +11,7 @@ namespace parallel {
   template<class BidirectionalIterator, class Predicate>
     BidirectionalIterator
       sequential_execution_policy::stable_partition(BidirectionalIterator first,
-                            BidirectionalIterator last, Predicate pred){
+                            BidirectionalIterator last, Predicate pred) const {
     return std::stable_partition(first, last, pred);
   }
 

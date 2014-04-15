@@ -9,14 +9,15 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator>
-    ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, ForwardIterator last){
+    ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, 
+                                                               ForwardIterator last) const{
     return std::adjacent_find(first, last);
   }
 
 
   template<class ForwardIterator, class BinaryPredicate>
     ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, ForwardIterator last,
-                                  BinaryPredicate pred){
+                                  BinaryPredicate pred) const{
     return std::adjacent_find(first, last, pred);
   }
 

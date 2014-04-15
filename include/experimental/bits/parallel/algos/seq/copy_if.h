@@ -11,7 +11,7 @@ namespace parallel {
   template<class InputIterator, class OutputIterator, class Predicate>
     OutputIterator
       sequential_execution_policy::copy_if(InputIterator first, InputIterator last,
-                   OutputIterator result, Predicate pred){
+                   OutputIterator result, Predicate pred) const{
     return std::copy_if(first, last, result, pred);
   }
 

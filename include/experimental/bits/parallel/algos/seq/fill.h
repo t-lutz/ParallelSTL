@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator, class T>
-    void sequential_execution_policy::fill(ForwardIterator first, ForwardIterator last, const T& value){
+    void sequential_execution_policy::fill(ForwardIterator first, ForwardIterator last, const T& value) const {
     std::fill(first, last, value);
   }
 

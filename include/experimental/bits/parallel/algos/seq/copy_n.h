@@ -9,8 +9,8 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Size, class OutputIterator>
-    OutputIterator copy_n(InputIterator first, Size n,
-                          OutputIterator result){
+    OutputIterator sequential_execution_policy::copy_n(InputIterator first, Size n,
+                                                       OutputIterator result) const {
     return std::copy_n(first, n, result);
   }
 

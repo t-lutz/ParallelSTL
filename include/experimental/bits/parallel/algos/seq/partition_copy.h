@@ -13,7 +13,7 @@ namespace parallel {
   pair<OutputIterator1, OutputIterator2>
   sequential_execution_policy::partition_copy(InputIterator first, InputIterator last,
                       OutputIterator1 out_true, OutputIterator2 out_false,
-                      Predicate pred){
+                      Predicate pred) const {
     return partition_copy(first, last, out_true, out_false, pred);
   }
 

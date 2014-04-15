@@ -9,7 +9,7 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Predicate>
-    bool sequential_execution_policy::none_of(InputIterator first, InputIterator last, Predicate pred){
+    bool sequential_execution_policy::none_of(InputIterator first, InputIterator last, Predicate pred) const {
     return std::none_of(first, last, pred);
   }
 

@@ -10,7 +10,7 @@ namespace parallel {
 
  template<class InputIterator, class OutputIterator>
     OutputIterator sequential_execution_policy::copy(InputIterator first, InputIterator last,
-                             OutputIterator result){
+                             OutputIterator result) const{
     return std::copy(first, last, result);
   }
 

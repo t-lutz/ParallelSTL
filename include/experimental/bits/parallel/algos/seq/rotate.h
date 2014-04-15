@@ -11,7 +11,7 @@ namespace parallel {
   template<class ForwardIterator>
     ForwardIterator
       sequential_execution_policy::rotate(ForwardIterator first, ForwardIterator middle,
-                  ForwardIterator last){
+                  ForwardIterator last) const {
     std::rotate(first, middle, last);
     // only fine for random access operators
     // TODO: extend for generic forward iterators

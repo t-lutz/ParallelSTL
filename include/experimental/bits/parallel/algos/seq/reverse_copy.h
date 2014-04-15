@@ -11,7 +11,7 @@ namespace parallel {
   template<class BidirectionalIterator, class OutputIterator>
     OutputIterator
       sequential_execution_policy::reverse_copy(BidirectionalIterator first,
-                        BidirectionalIterator last, OutputIterator result){
+                        BidirectionalIterator last, OutputIterator result) const {
     return std::reverse_copy(first, last, result);
   }
 

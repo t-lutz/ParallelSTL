@@ -9,7 +9,9 @@ namespace experimental {
 namespace parallel {
 
   template<class ForwardIterator, class Predicate>
-    ForwardIterator sequential_execution_policy::remove_if(ForwardIterator first, ForwardIterator last, Predicate pred){
+    ForwardIterator sequential_execution_policy::remove_if(ForwardIterator first, 
+                                                           ForwardIterator last, 
+                                                           Predicate pred) const {
     return std::remove_if(first, last, pred);
   }
 

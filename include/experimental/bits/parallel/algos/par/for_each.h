@@ -12,12 +12,8 @@ namespace parallel {
 
   template<class InputIterator, class UnaryFunction>
   UnaryFunction parallel_execution_policy::for_each(InputIterator first, InputIterator last, UnaryFunction f) const { 
-    // function to wrap: we need the full type to avoid ambiguities
-    static const function<UnaryFunction(InputIterator, InputIterator, UnaryFunction)> __for_each =
-        (UnaryFunction(*)(InputIterator, InputIterator, UnaryFunction))&std::for_each<InputIterator, UnaryFunction>;
-  
     //  diffract the range and forward
-    detail::diffract(first, last, __for_each, std::move(f));
+    detail::diffract(first, last, std::for_each<InputIterator, UnaryFunction>, std::move(f));
     // return the function
     return std::move(f);
   }

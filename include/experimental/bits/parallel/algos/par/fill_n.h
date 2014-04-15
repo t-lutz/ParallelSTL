@@ -13,7 +13,7 @@ namespace parallel {
     void parallel_execution_policy::fill_n(OutputIterator first, Size n, const T& value) const {
       static const std::function<void(OutputIterator, OutputIterator, const T&)> __fill =
               (void(*)(OutputIterator, OutputIterator, const T&))&fill<OutputIterator, T>;
-      detail::diffract(first, first + count, __fill, value);
+      detail::diffract(first, first + count, std::fill<OutputIterator, T>, value);
       // return std::max(first, first + count);
   }
 

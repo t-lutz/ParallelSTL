@@ -11,10 +11,7 @@ namespace parallel {
 
   template<class ForwardIterator, class T>
     void parallel_execution_policy::fill(ForwardIterator first, ForwardIterator last, const T& value) const {
-      static const std::function<void(ForwardIterator, ForwardIterator, const T&)> __fill =
-        (void(*)(ForwardIterator, ForwardIterator, const T&))&fill<ForwardIterator, T>;
-
-      detail::diffract(first, last, __fill, value);
+      detail::diffract(first, last, std::fill<ForwardIterator, T>, value);
   }
 
 } // namespace parallel

@@ -532,8 +532,8 @@ constexpr struct parallel_execution_policy {
 
 //#include <experimental/bits/parallel/algos/par/adjacent_difference.h>
 //#include <experimental/bits/parallel/algos/par/adjacent_find.h>
-//#include <experimental/bits/parallel/algos/par/all_of.h>
-//#include <experimental/bits/parallel/algos/par/any_of.h>
+#include <experimental/bits/parallel/algos/par/all_of.h>
+#include <experimental/bits/parallel/algos/par/any_of.h>
 //#include <experimental/bits/parallel/algos/par/copy.h>
 //#include <experimental/bits/parallel/algos/par/copy_if.h>
 //#include <experimental/bits/parallel/algos/par/copy_n.h>
@@ -568,7 +568,7 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/minmax_element.h>
 //#include <experimental/bits/parallel/algos/par/mismatch.h>
 //#include <experimental/bits/parallel/algos/par/move.h>
-//#include <experimental/bits/parallel/algos/par/none_of.h>
+#include <experimental/bits/parallel/algos/par/none_of.h>
 //#include <experimental/bits/parallel/algos/par/nth_element.h>
 //#include <experimental/bits/parallel/algos/par/partial_sort_copy.h>
 //#include <experimental/bits/parallel/algos/par/partial_sort.h>

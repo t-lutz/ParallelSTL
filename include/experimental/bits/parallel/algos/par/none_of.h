@@ -14,8 +14,7 @@ namespace parallel {
   {
     return detail::diffract_gather(first, last, 
                                    std::none_of<InputIterator, Predicate>,
-                                   std::bit_and<bool>(),
-                                   true);
+                                   std::bit_and<bool>());
   }
 
 } // namespace parallel

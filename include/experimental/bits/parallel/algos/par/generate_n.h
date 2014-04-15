@@ -9,12 +9,11 @@ namespace std {
 namespace experimental {
 namespace parallel {
 
-  template<class InputIterator, class Predicate>
-    bool parallel_execution_policy::any_of(InputIterator first, InputIterator last, Predicate pred) const
+  template<class OutputIterator, class Size, class Generator>
+    OutputIterator parallel_execution_policy::generate_n(OutputIterator first, Size n, Generator gen) const 
   {
-    return detail::diffract_gather(first, last, 
-                                   std::any_of<InputIterator, Predicate>,
-                                   std::bit_or<bool>());
+    detail::diffract(first, first + n, std::generate_n<OutputIterator, Size, Generator>);
+    return n > 0 ? first + n : first;
   }
 
 } // namespace parallel

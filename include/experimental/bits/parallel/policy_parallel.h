@@ -537,8 +537,8 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/copy.h>
 //#include <experimental/bits/parallel/algos/par/copy_if.h>
 //#include <experimental/bits/parallel/algos/par/copy_n.h>
-//#include <experimental/bits/parallel/algos/par/count.h>
-//#include <experimental/bits/parallel/algos/par/count_if.h>
+#include <experimental/bits/parallel/algos/par/count.h>
+#include <experimental/bits/parallel/algos/par/count_if.h>
 //#include <experimental/bits/parallel/algos/par/equal.h>
 //#include <experimental/bits/parallel/algos/par/exclusive_scan.h>
 #include <experimental/bits/parallel/algos/par/fill.h>
@@ -550,8 +550,8 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/find_if_not.h>
 #include <experimental/bits/parallel/algos/par/for_each.h>
 //#include <experimental/bits/parallel/algos/par/for_each_n.h>
-//#include <experimental/bits/parallel/algos/par/generate.h>
-//#include <experimental/bits/parallel/algos/par/generate_n.h>
+#include <experimental/bits/parallel/algos/par/generate.h>
+#include <experimental/bits/parallel/algos/par/generate_n.h>
 //#include <experimental/bits/parallel/algos/par/includes.h>
 //#include <experimental/bits/parallel/algos/par/inclusive_scan.h>
 //#include <experimental/bits/parallel/algos/par/inner_product.h>
@@ -562,9 +562,9 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/is_heap.h>
 //#include <experimental/bits/parallel/algos/par/is_heap_until.h> 
 //#include <experimental/bits/parallel/algos/par/lexicographical_compare.h>
-//#include <experimental/bits/parallel/algos/par/max_element.h>
+#include <experimental/bits/parallel/algos/par/max_element.h>
 //#include <experimental/bits/parallel/algos/par/merge.h>
-//#include <experimental/bits/parallel/algos/par/min_element.h>
+#include <experimental/bits/parallel/algos/par/min_element.h>
 //#include <experimental/bits/parallel/algos/par/minmax_element.h>
 //#include <experimental/bits/parallel/algos/par/mismatch.h>
 //#include <experimental/bits/parallel/algos/par/move.h>

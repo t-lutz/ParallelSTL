@@ -559,13 +559,13 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/is_partitioned.h>
 //#include <experimental/bits/parallel/algos/par/is_sorted.h>
 //#include <experimental/bits/parallel/algos/par/is_sorted_until.h>
-//#include <experimental/bits/parallel/algos/par/is_heap.h>
-//#include <experimental/bits/parallel/algos/par/is_heap_until.h> 
+#include <experimental/bits/parallel/algos/par/is_heap.h>
+#include <experimental/bits/parallel/algos/par/is_heap_until.h> 
 //#include <experimental/bits/parallel/algos/par/lexicographical_compare.h>
 #include <experimental/bits/parallel/algos/par/max_element.h>
 //#include <experimental/bits/parallel/algos/par/merge.h>
 #include <experimental/bits/parallel/algos/par/min_element.h>
-//#include <experimental/bits/parallel/algos/par/minmax_element.h>
+#include <experimental/bits/parallel/algos/par/minmax_element.h>
 //#include <experimental/bits/parallel/algos/par/mismatch.h>
 //#include <experimental/bits/parallel/algos/par/move.h>
 #include <experimental/bits/parallel/algos/par/none_of.h>

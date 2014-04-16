@@ -1,4 +1,4 @@
-#ifndef _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
+#ifndef _EXPERIMENTAL_N3554_POLICY_PARALLEL
 #error Include <parallel/algorithm> or <parallel/utility>
 #endif
 

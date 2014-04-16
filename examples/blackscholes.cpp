@@ -65,10 +65,10 @@ int main()
 
   std::cout << "Using seq: " 
             << BlackScholes(experimental::parallel::seq, options).count() 
-            << " ms" << std::endl;
+            << " us" << std::endl;
 
   std::cout << "Using par: " 
             << BlackScholes(experimental::parallel::par, options).count() 
-            << " ms" << std::endl;
+            << " us" << std::endl;
 }
 

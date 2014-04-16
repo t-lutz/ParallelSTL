@@ -4,6 +4,7 @@
 #include <iterator> // std::iterator_traits
 
 #include <experimental/bits/parallel/policy_sequential.h>
+#include <experimental/bits/parallel/policy_parallel.h>
 
 namespace std {
   template<class InputIterator>

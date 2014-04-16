@@ -52,7 +52,7 @@ TEST(is_sorted, Unsorted){
                          begin(v), end(v)));
 }
 
-bool myComp (int i,int j) { return i>j; }
+bool mySortingComp (int i,int j) { return i>j; }
 
 TEST(is_sorted, EmptyComp){
   using namespace std;
@@ -62,7 +62,7 @@ TEST(is_sorted, EmptyComp){
 #ifdef EXECUTION_POLICY
                         EXECUTION_POLICY,
 #endif
-                        begin(v), end(v), myComp));
+                        begin(v), end(v), mySortingComp));
 }
 
 TEST(is_sorted, SortedComp) {
@@ -73,7 +73,7 @@ TEST(is_sorted, SortedComp) {
 #ifdef EXECUTION_POLICY
                         EXECUTION_POLICY,
 #endif
-                        begin(v), end(v), myComp));
+                        begin(v), end(v), mySortingComp));
 }
 
 TEST(is_sorted, SortedDuplicatesComp){
@@ -84,7 +84,7 @@ TEST(is_sorted, SortedDuplicatesComp){
 #ifdef EXECUTION_POLICY
                         EXECUTION_POLICY,
 #endif
-                        begin(v), end(v), myComp));
+                        begin(v), end(v), mySortingComp));
 }
 
 TEST(is_sorted, UnsortedComp){
@@ -95,7 +95,7 @@ TEST(is_sorted, UnsortedComp){
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
-                         begin(v), end(v), myComp));
+                         begin(v), end(v), mySortingComp));
 }
 
 

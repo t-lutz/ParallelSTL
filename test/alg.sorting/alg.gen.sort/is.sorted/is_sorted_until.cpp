@@ -67,7 +67,7 @@ TEST(is_sorted_until, Unsorted){
 }
 
 
-bool myComp (int i,int j) { return (i>j); }
+bool SortedUntilComp (int i,int j) { return (i>j); }
 
 TEST(is_sorted_until, EmptyComp){
   using namespace std;
@@ -77,7 +77,7 @@ TEST(is_sorted_until, EmptyComp){
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              begin(v), end(v), myComp) == end(v));
+                              begin(v), end(v), SortedUntilComp) == end(v));
 }
 
 TEST(is_sorted_until, EmptyRangeComp) {
@@ -88,7 +88,7 @@ TEST(is_sorted_until, EmptyRangeComp) {
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              begin(v), begin(v)+1, myComp) == begin(v)+1);
+                              begin(v), begin(v)+1, SortedUntilComp) == begin(v)+1);
 }
 
 
@@ -100,7 +100,7 @@ TEST(is_sorted_until, SortedComp) {
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              begin(v), end(v), myComp) == end(v));
+                              begin(v), end(v), SortedUntilComp) == end(v));
 }
 
 TEST(is_sorted_until, SortedDuplicatesComp){
@@ -111,7 +111,7 @@ TEST(is_sorted_until, SortedDuplicatesComp){
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              begin(v), end(v), myComp) == end(v));
+                              begin(v), end(v), SortedUntilComp) == end(v));
 }
 
 TEST(is_sorted_until, UnsortedComp){
@@ -122,7 +122,7 @@ TEST(is_sorted_until, UnsortedComp){
 #ifdef EXECUTION_POLICY
                             EXECUTION_POLICY,
 #endif
-                            begin(v), end(v), myComp);
+                            begin(v), end(v), SortedUntilComp);
 
   EXPECT_TRUE(it - begin(v) == 5);
 }

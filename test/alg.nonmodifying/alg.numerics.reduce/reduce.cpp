@@ -4,10 +4,10 @@
 #include <cstdlib>
 
 #ifdef EXECUTION_POLICY
-#include <experimental/utility>
+#include <experimental/numeric>
 #else
 // this function is not in the standard
-#include <experimental/utility>
+#include <experimental/numeric>
 #endif
 
 //template<class InputIterator>

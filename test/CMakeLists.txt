@@ -12,6 +12,9 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+option (UNITY_BUILD
+  "Compact all test files into one compilation unit." OFF)
+
 # Set default ExternalProject root directory
 set_directory_properties(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/ThirdParty)
 
@@ -61,27 +64,48 @@ set(TEST_LIBS
 
 enable_testing()
 
-# standard algos
-FOREACH (TEST ${ALL_TESTS})
-  GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
-  add_executable(test_${TESTNAME} ${TEST})
-  add_dependencies(test_${TESTNAME} googletest)
-  target_link_libraries(test_${TESTNAME} ${TEST_LIBS})
-  add_test(std::${TESTNAME} test_${TESTNAME})
-ENDFOREACH(TEST)
+if( UNITY_BUILD )
+  
+  file(WRITE ${CMAKE_BINARY_DIR}/unity.cpp "/* Generated file, do not edit */\n" )
+  foreach(file ${ALL_TESTS})
+    file(APPEND ${CMAKE_BINARY_DIR}/unity.cpp "#include <${file}>\n")
+  endforeach()
 
-# std::seq policy
-FOREACH (TEST ${ALL_TESTS})
-  GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
-  set(UNITTEST test-seq_${TESTNAME})
-  add_executable(${UNITTEST} ${TEST})
-  set_target_properties(${UNITTEST} PROPERTIES COMPILE_DEFINITIONS 
+  add_executable(test_std ${CMAKE_BINARY_DIR}/unity.cpp)
+  add_dependencies(test_std googletest)
+  target_link_libraries(test_std ${TEST_LIBS})
+  add_test(std test_std)
+
+  add_executable(test_seq ${CMAKE_BINARY_DIR}/unity.cpp)
+  set_target_properties(test_seq PROPERTIES COMPILE_DEFINITIONS
                         "EXECUTION_POLICY=std::experimental::parallel::seq")
-  add_dependencies(${UNITTEST} googletest)
-  target_link_libraries(${UNITTEST} ${TEST_LIBS})
-  add_test(seq-std::${TESTNAME} ${UNITTEST})
-ENDFOREACH(TEST)
+  add_dependencies(test_seq googletest)
+  target_link_libraries(test_seq ${TEST_LIBS})
+  add_test(std::seq test_seq)
 
 
+else()
 
+  # standard algos
+  FOREACH (TEST ${ALL_TESTS})
+    GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
+    add_executable(test_${TESTNAME} ${TEST})
+    add_dependencies(test_${TESTNAME} googletest)
+    target_link_libraries(test_${TESTNAME} ${TEST_LIBS})
+    add_test(std::${TESTNAME} test_${TESTNAME})
+  ENDFOREACH(TEST)
+
+  # std::seq policy
+  FOREACH (TEST ${ALL_TESTS})
+    GET_FILENAME_COMPONENT(TESTNAME ${TEST} NAME_WE)
+    set(UNITTEST test-seq_${TESTNAME})
+    add_executable(${UNITTEST} ${TEST})
+    set_target_properties(${UNITTEST} PROPERTIES COMPILE_DEFINITIONS 
+                        "EXECUTION_POLICY=std::experimental::parallel::seq")
+    add_dependencies(${UNITTEST} googletest)
+    target_link_libraries(${UNITTEST} ${TEST_LIBS})
+    add_test(seq-std::${TESTNAME} ${UNITTEST})
+  ENDFOREACH(TEST)
+
+endif()
 

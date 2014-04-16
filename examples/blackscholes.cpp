@@ -42,11 +42,11 @@ auto BlackScholes(T && policy, const std::vector<Option> & options)
   auto start = chrono::high_resolution_clock::now();
   for_each(policy, begin(copy), end(copy), 
       [](Option & opt) {
-      const double d1 = (std::log(opt.S/opt.X)+(opt.r+opt.v*opt.v/2)*opt.T)/(opt.v*std::sqrt(opt.T));
-      const double d2 = d1-opt.v*sqrt(opt.T);
+        const double d1 = (std::log(opt.S/opt.X)+(opt.r+opt.v*opt.v/2)*opt.T)/(opt.v*std::sqrt(opt.T));
+        const double d2 = d1-opt.v*sqrt(opt.T);
 
-      opt.call = opt.S *CND(d1)-opt.X * exp(-opt.r*opt.T)*CND(d2);
-      opt.put = opt.X * exp(-opt.r * opt.T) * CND(-d2) - opt.S * CND(-d1);
+        opt.call = opt.S *CND(d1)-opt.X * exp(-opt.r*opt.T)*CND(d2);
+        opt.put = opt.X * exp(-opt.r * opt.T) * CND(-d2) - opt.S * CND(-d1);
       });
   auto finish = chrono::high_resolution_clock::now();
 
@@ -63,12 +63,12 @@ int main()
   // compute 5M options
   vector<Option> options(5000000);
 
-  std::cout << "Using seq: " 
-            << BlackScholes(experimental::parallel::seq, options).count() 
-            << " us" << std::endl;
+  cout << "Using seq: " 
+       << BlackScholes(experimental::parallel::seq, options).count() 
+       << " us" << endl;
 
-  std::cout << "Using par: " 
-            << BlackScholes(experimental::parallel::par, options).count() 
-            << " us" << std::endl;
+  cout << "Using par: " 
+       << BlackScholes(experimental::parallel::par, options).count() 
+       << " us" << endl;
 }
 

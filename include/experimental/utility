@@ -3,6 +3,8 @@
 
 #include <iterator> // std::iterator_traits
 
+#include <experimental/execution_policy>
+
 #include <experimental/bits/parallel/policy_sequential.h>
 #include <experimental/bits/parallel/policy_parallel.h>
 
@@ -115,7 +117,8 @@ namespace std {
 namespace std {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
-      reduce(InputIterator first, InputIterator last){
+      reduce(InputIterator first, InputIterator last)
+  {
     typedef typename iterator_traits<InputIterator>::value_type T;
     return std::accumulate(first, last, T{0});
   }
@@ -124,25 +127,33 @@ namespace std {
            class InputIterator>
     typename iterator_traits<InputIterator>::value_type
       reduce(ExecutionPolicy &&exec,
-             InputIterator first, InputIterator last){
+             InputIterator first, InputIterator last)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
     return exec.reduce(first, last);
   }
 
   template<class InputIterator, class T>
-    T reduce(InputIterator first, InputIterator last, T init){
+    T reduce(InputIterator first, InputIterator last, T init)
+  {
     return std::accumulate(first, last, init);
   }
 
   template<class ExecutionPolicy,
            class InputIterator, class T>
     T reduce(ExecutionPolicy &&exec,
-             InputIterator first, InputIterator last, T init){
+             InputIterator first, InputIterator last, T init)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
     return exec.reduce(first, last, init);
   }
 
   template<class InputIterator, class T, class BinaryOperation>
     T reduce(InputIterator first, InputIterator last, T init,
-             BinaryOperation binary_op){
+             BinaryOperation binary_op)
+  {
     return std::accumulate(first, last, init, binary_op);
   }
 
@@ -150,7 +161,10 @@ namespace std {
            class InputIterator, class T, class BinaryOperation>
     T reduce(ExecutionPolicy &&exec,
              InputIterator first, InputIterator last, T init,
-             BinaryOperation binary_op){
+             BinaryOperation binary_op)
+  {
+    static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
+                  "exec is not a valid execution policy");
     return exec.reduce(first, last, init, binary_op);
   }
 

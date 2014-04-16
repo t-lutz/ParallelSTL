@@ -16,7 +16,7 @@ namespace parallel {
     return detail::diffract_gather(first, last, 
                                    std::accumulate<InputIterator, T>,
                                    std::plus<T>(),
-                                   T{0});
+                                   T{});
   }
 
   template<class InputIterator, class T>

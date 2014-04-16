@@ -12,7 +12,7 @@ namespace parallel {
     typename iterator_traits<InputIterator>::value_type
       sequential_execution_policy::reduce(InputIterator first, InputIterator last) const {
     typedef typename iterator_traits<InputIterator>::value_type T;
-    return std::accumulate(first, last, T{0});
+    return std::accumulate(first, last, T{});
   }
 
   template<class InputIterator, class T>

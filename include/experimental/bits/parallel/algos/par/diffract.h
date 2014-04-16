@@ -14,7 +14,7 @@
  * The diffract_gather function also combine the return values of each sub-range using
  * a collapse function.
  *
- * This is a really dumb approach, it doesn't have a pool thread per-se, it just 
+ * This is a really dumb approach, it doesn't have a thread pool per-se, it just 
  * keeps spawning threads. This is just a draft implementation for quick experiments.
  */
 

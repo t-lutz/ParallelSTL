@@ -21,29 +21,52 @@ namespace experimental {
 namespace parallel {
 namespace detail {
 
+/**
+ * @brief Split a range into partitions chunks. The sub-ranges are of equal size, except the
+ *        last one which might be slightly larger to account for rounding error.
+ *        If first == last or partitions < 2, the split function returns the range [first, last)
+ * @param first The beginning of the range.
+ * @param end The end of the range.
+ * @param partitions The number of partitions
+ **/
+template<class Iterator>
+inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last, size_t partitions){
+  vector<pair<Iterator,Iterator>> chunks;
+  chunks.reserve(partitions);
+
+  const unsigned segment_size = distance(first, last) / max(partitions, size_t{1}); 
+ 
+  // last element of the previous partition
+  Iterator end = first;
+
+  for(unsigned i = 0; i + 1 < partitions; ++i){
+    Iterator begin = end;
+    advance(end, segment_size);
+    chunks.push_back(make_pair(begin, end));
+  }
+  
+  // push the last chunk (either slightly larger because of rounding)
+  chunks.push_back(make_pair(end, last));
+
+  return chunks;
+}
+
+
 template<class Iterator, class Functor, typename ... Args>
 inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
-  // segment the iteration space: if there is not enough elements we do not
-  // divide the iteration space.
-  const unsigned int segment_size =
-    distance(first, last) > (thread::hardware_concurrency()) ?
-    distance(first, last) / (thread::hardware_concurrency()) :
-    segment_size; // is not even one per proc, we don't divide
-
   // number of segments
-  const unsigned pool_size = distance(first, last) / segment_size;
+  const size_t pool_size = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
+
+  // divide the range
+  auto subranges = split(first, last, pool_size);
 
   // thread pool
   vector<thread> pool;
   pool.reserve(pool_size);
 
   // divide the iteration space and delegate to threads.
-  Iterator it = first;
-  for(unsigned i = 0; i < pool_size; ++i, it += segment_size){
-    // the last chunk takes care of the rounding error
-    const Iterator end = (i < pool_size - 1 ? it + segment_size : last);
-    // create the dedicated thread and push it in the pool
-    pool.emplace_back(thread{f, it, end, args...});
+  for(const auto & range : subranges){
+    pool.emplace_back(thread{f, range.first, range.second, args...});
   }
 
   // wait for the pool to finish
@@ -64,18 +87,9 @@ inline auto
 diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args)
   -> decltype(f(first, last, args...))
 {
-  typedef typename iterator_traits<Iterator>::value_type T;
   typedef decltype(f(first, last, args...)) ret_type;
 
-  // segment the iteration space: if there is not enough elements we do not
-  // divide the iteration space.
-  const unsigned int segment_size =
-    distance(first, last) > (thread::hardware_concurrency()) ?
-    distance(first, last) / (thread::hardware_concurrency()) :
-    segment_size; // is not even one per proc, we don't divide
-
-  // number of segments
-  const unsigned pool_size = distance(first, last) / segment_size;
+  const size_t pool_size = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
 
   // thread pool
   vector<thread> pool;
@@ -84,13 +98,14 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
   // temporary space for accumulators
   vector<ret_type> gather(pool_size); 
 
+  // divide the range
+  auto subranges = split(first, last, pool_size);
+
   // divide the iteration space and delegate to threads.
-  Iterator it = first;
-  for(unsigned i = 0; i < pool_size; ++i, it += segment_size){
-    // the last chunk takes care of the rounding error
-    const Iterator end = (i < pool_size - 1 ? it + segment_size : last);
-    auto fct = &diffract_functor<ret_type, Functor, Iterator, Args...>;
-    pool.emplace_back(thread{fct, std::ref(gather[i]), f, it, end, args...});
+  auto fct = &diffract_functor<ret_type, Functor, Iterator, Args...>;
+  size_t counter = 0;
+  for(const auto & range : subranges){
+    pool.emplace_back(thread{fct, std::ref(gather[counter++]), f, range.first, range.second, args...});
   }
 
   // wait for the pool to finish

@@ -95,6 +95,7 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
   for(auto &t : pool) t.join();
 
   // apply the collapse function and return
+  // TODO: this could also be parallel
   return accumulate(gather.begin()+1, gather.end(), *gather.begin(), g);
 }
 

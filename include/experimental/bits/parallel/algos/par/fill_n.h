@@ -10,11 +10,10 @@ namespace experimental {
 namespace parallel {
 
   template<class OutputIterator, class Size, class T>
-    void parallel_execution_policy::fill_n(OutputIterator first, Size n, const T& value) const {
-      static const std::function<void(OutputIterator, OutputIterator, const T&)> __fill =
-              (void(*)(OutputIterator, OutputIterator, const T&))&fill<OutputIterator, T>;
+    OutputIterator parallel_execution_policy::fill_n(OutputIterator first, Size n, const T& value) const 
+  {
       detail::diffract(first, first + count, std::fill<OutputIterator, T>, value);
-      // return std::max(first, first + count);
+      return n > 0 ? first + n : first;
   }
 
 } // namespace parallel

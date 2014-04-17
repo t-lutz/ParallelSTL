@@ -9,8 +9,9 @@ namespace experimental {
 namespace parallel {
 
   template<class OutputIterator, class Size, class T>
-    void sequential_execution_policy::fill_n(OutputIterator first, Size n, const T& value) const {
-    std::fill_n(first, n, value);
+    OutputIterator sequential_execution_policy::fill_n(OutputIterator first, Size n, const T& value) const 
+  {
+    return std::fill_n(first, n, value);
   }
 
 } // namespace parallel

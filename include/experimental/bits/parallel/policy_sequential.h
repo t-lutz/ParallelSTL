@@ -179,7 +179,7 @@ constexpr struct sequential_execution_policy {
     void fill(ForwardIterator first, ForwardIterator last, const T& value) const;
 
   template<class OutputIterator, class Size, class T>
-    void fill_n(OutputIterator first, Size n, const T& value) const;
+    OutputIterator fill_n(OutputIterator first, Size n, const T& value) const;
 
   template<class ForwardIterator, class Generator>
     void generate(ForwardIterator first, ForwardIterator last, Generator gen) const;

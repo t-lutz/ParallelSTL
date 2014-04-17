@@ -443,13 +443,13 @@ namespace std {
   }
   template<class ExecutionPolicy,
            class OutputIterator, class Size, class T>
-    void fill_n(ExecutionPolicy &&exec,
+    OutputIterator fill_n(ExecutionPolicy &&exec,
                 OutputIterator first, Size n, const T& value)
   {
     static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
                   "exec is not a valid execution policy");
 
-    exec.fill_n(first, n, value);
+    return exec.fill_n(first, n, value);
   }
 
   template<class ExecutionPolicy,

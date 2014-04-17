@@ -594,7 +594,7 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/set_intersection.h>
 //#include <experimental/bits/parallel/algos/par/set_symmetric_difference.h>
 //#include <experimental/bits/parallel/algos/par/set_union.h>
-//#include <experimental/bits/parallel/algos/par/sort.h>
+#include <experimental/bits/parallel/algos/par/sort.h>
 //#include <experimental/bits/parallel/algos/par/stable_partition.h>
 //#include <experimental/bits/parallel/algos/par/stable_sort.h>
 //#include <experimental/bits/parallel/algos/par/swap_ranges.h>

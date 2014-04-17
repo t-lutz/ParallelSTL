@@ -30,7 +30,9 @@ namespace detail {
  * @param partitions The number of partitions
  **/
 template<class Iterator>
-inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last, size_t partitions){
+inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
+  const size_t partitions = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
+
   vector<pair<Iterator,Iterator>> chunks;
   chunks.reserve(partitions);
 
@@ -54,20 +56,16 @@ inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last, size
 
 template<class Iterator, class Functor, typename ... Args>
 inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
-  // number of segments
-  const size_t pool_size = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
-
   // divide the range
-  auto subranges = split(first, last, pool_size);
+  auto subranges = split(first, last);
 
   // thread pool
   vector<thread> pool;
-  pool.reserve(pool_size);
+  pool.reserve(subranges.size());
 
   // divide the iteration space and delegate to threads.
-  for(const auto & range : subranges){
+  for(const auto & range : subranges)
     pool.emplace_back(thread{f, range.first, range.second, args...});
-  }
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
@@ -89,24 +87,22 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
 {
   typedef decltype(f(first, last, args...)) ret_type;
 
-  const size_t pool_size = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
+  // divide the range
+  auto subranges = split(first, last);
 
   // thread pool
   vector<thread> pool;
-  pool.reserve(pool_size);
+  pool.reserve(subranges.size());
 
   // temporary space for accumulators
-  vector<ret_type> gather(pool_size); 
+  vector<ret_type> gather(subranges.size()); 
 
-  // divide the range
-  auto subranges = split(first, last, pool_size);
-
+  
   // divide the iteration space and delegate to threads.
   auto fct = &diffract_functor<ret_type, Functor, Iterator, Args...>;
   size_t counter = 0;
-  for(const auto & range : subranges){
+  for(const auto & range : subranges)
     pool.emplace_back(thread{fct, std::ref(gather[counter++]), f, range.first, range.second, args...});
-  }
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();

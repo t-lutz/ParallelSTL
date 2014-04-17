@@ -14,7 +14,7 @@ The goal is to make is as easy as possible for people to implement and test thei
 
 * [Official TS](http://isocpp.org/blog/2014/01/n3850), most recent one [here](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3960.pdf).
 * [Jared Hoberock's implementation](https://github.com/n3554/n3554) based on thrust.
-* [Microsoft's implementation](https://parallelstl.codeplex.com): not available yet but should be any day now.
+* [Microsoft's implementation](https://parallelstl.codeplex.com) using Windows Foundation utilities.
 * [GCC's parallel implementation](http://gcc.gnu.org/onlinedocs/libstdc++/manual/parallel_mode.html) of the STL algorithms.
 
 

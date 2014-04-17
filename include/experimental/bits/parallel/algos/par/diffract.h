@@ -4,8 +4,6 @@
 #include <vector>
 #include <algorithm>
 
-#include <iostream>
-
 /*
  * Utility functions to divide a range into chunks (one chunk per thread, as defined
  * by std::thread::hardware_concurrency) and spawn a thread per chunk, executing 
@@ -56,14 +54,18 @@ inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
 // the following is a specialized functor used in place of a lambda in the
 // thread creation for diffract_gather
 template<typename T, typename Function, typename Iterator, typename ... Args>
-void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args ...args) {
+void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args ...args) 
+{
     result = f(begin, end, args...);
 }
 
 template<class Iterator, class Functor, class BinaryGather, typename ... Args>
-inline typename iterator_traits<Iterator>::value_type
-diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args){
+inline auto
+diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args)
+  -> decltype(f(first, last, args...))
+{
   typedef typename iterator_traits<Iterator>::value_type T;
+  typedef decltype(f(first, last, args...)) ret_type;
 
   // segment the iteration space: if there is not enough elements we do not
   // divide the iteration space.
@@ -80,14 +82,14 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
   pool.reserve(pool_size);
 
   // temporary space for accumulators
-  vector<T> gather(pool_size); 
+  vector<ret_type> gather(pool_size); 
 
   // divide the iteration space and delegate to threads.
   Iterator it = first;
   for(unsigned i = 0; i < pool_size; ++i, it += segment_size){
     // the last chunk takes care of the rounding error
     const Iterator end = (i < pool_size - 1 ? it + segment_size : last);
-    auto fct = &diffract_functor<T, Functor, Iterator, Args...>;
+    auto fct = &diffract_functor<ret_type, Functor, Iterator, Args...>;
     pool.emplace_back(thread{fct, std::ref(gather[i]), f, it, end, args...});
   }
 

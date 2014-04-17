@@ -15,7 +15,8 @@ namespace parallel {
   {
     return detail::diffract_gather(first, last,
                                    std::count_if<InputIterator, Predicate>,
-                                   std::plus<typename iterator_traits<InputIterator>::difference_type>());
+                                   std::plus<typename iterator_traits<InputIterator>::difference_type>(),
+                                   pred);
   }
 
 } // namespace parallel

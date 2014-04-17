@@ -31,7 +31,7 @@ auto find_prime(t && policy, const std::vector<number_t> & numbers)
 {
   using namespace std;
   auto start = chrono::high_resolution_clock::now();
-  auto it = find_if(experimental::parallel::seq, begin(numbers), end(numbers), isPrime);
+  auto it = find_if(policy, begin(numbers), end(numbers), isPrime);
   auto finish = chrono::high_resolution_clock::now();
     
   cout << "contains at least one prime: " << boolalpha << (it != end(numbers)) << endl;
@@ -47,7 +47,7 @@ auto count_prime(t && policy, const std::vector<number_t> & numbers)
 {
   using namespace std;
   auto start = chrono::high_resolution_clock::now();
-  auto count = count_if(experimental::parallel::seq, begin(numbers), end(numbers), isPrime);
+  auto count = count_if(policy, begin(numbers), end(numbers), isPrime);
   auto finish = chrono::high_resolution_clock::now();
     
   cout << "Number of prime numbers: " << count << endl;

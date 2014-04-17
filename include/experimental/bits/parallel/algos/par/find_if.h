@@ -15,7 +15,10 @@ namespace parallel {
   {
     return detail::diffract_gather(first, last,
                                    std::find_if<InputIterator, Predicate>,
-                                   std::min<InputIterator>(),
+                                   [&](const InputIterator &a, const InputIterator &b){
+                                     return distance(first, a) < distance(first, b) ?
+                                            a : b;
+                                   },
                                    pred);
 
   }

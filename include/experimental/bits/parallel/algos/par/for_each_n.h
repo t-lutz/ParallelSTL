@@ -10,14 +10,15 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Size, class Function>
-    Function parallel_execution_policy::for_each_n(InputIterator first, Size n,
-                                                   Function f) const 
+    InputIterator parallel_execution_policy::for_each_n(InputIterator first, Size n,
+                                                        Function f) const 
   {
-    //  diffract the range and forward
-    detail::diffract(first, first + n, std::for_each<InputIterator, Function>, std::move(f));
-    // return the function
-    return std::move(f);
-
+    if(n < 0)
+      return first;
+    auto end = first;
+    advance(end, n);
+    detail::diffract(first, end, std::for_each<InputIterator, Function>, std::move(f));
+    return end;
   }
 
 } // namespace parallel

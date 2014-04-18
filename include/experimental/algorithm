@@ -50,21 +50,25 @@ namespace std {
   }
 
   template<class InputIterator, class Size, class Function>
-    Function for_each_n(InputIterator first, Size n,
-                        Function f)
+    InputIterator for_each_n(InputIterator first, Size n,
+                             Function f)
   {
-    return std::for_each(first, first + n, f);
+    if(n < 0)
+      return first;
+    auto end = first;
+    advance(end, n);
+    for_each(first, end, f);
+    return end;
   }
 
   template<class ExecutionPolicy,
            class InputIterator, class Size, class Function>
-    Function for_each_n(ExecutionPolicy &&exec,
-                        InputIterator first, Size n,
-                        Function f)
+    InputIterator for_each_n(ExecutionPolicy &&exec,
+                             InputIterator first, Size n,
+                             Function f)
   {
     static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
                   "exec is not a valid execution policy");
-
     return exec.for_each_n(first, n, f);
   }
 

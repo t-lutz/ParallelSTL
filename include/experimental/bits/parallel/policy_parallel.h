@@ -26,7 +26,7 @@ constexpr struct parallel_execution_policy {
     Function for_each(InputIterator first, InputIterator last, Function f) const;
 
   template<class InputIterator, class Size, class Function>
-    Function for_each_n(InputIterator first, Size n, Function f) const;
+    InputIterator for_each_n(InputIterator first, Size n, Function f) const;
 
   template<class InputIterator, class T>
     InputIterator find(InputIterator first, InputIterator last, const T& value) const;

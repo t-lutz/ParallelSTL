@@ -1,12 +1,3 @@
-/*
- * This program computes the histogram of an array of random values.
- *
- * The parallel version of std::for_each requires thread safe access to the counters,
- * so it is using atomics, while the sequential version uses plain ints.
- *
- * We test for high contention on the counters and lower contention.
- */
-
 #include <vector>
 #include <iostream>
 #include <chrono>
@@ -41,6 +32,7 @@ int main(){
   poisson_distribution<> d(10000);
 
   generate(begin(values), end(values), [&](){ return d(gen); });
+  cout << "Is sorted: " << boolalpha << is_sorted(begin(values), end(values)) << endl;
 
   cout << "Using seq: " << endl;
   auto time_seq = sort(experimental::parallel::seq, values);
@@ -49,7 +41,5 @@ int main(){
   cout << "Using par: " << endl;
   auto time_par = sort(experimental::parallel::par, values);
   cout << "par took " << time_par.count() << " us" << endl;
-
 }
-
 

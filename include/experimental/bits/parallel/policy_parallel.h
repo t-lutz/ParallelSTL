@@ -557,7 +557,7 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/inner_product.h>
 //#include <experimental/bits/parallel/algos/par/inplace_merge.h>
 //#include <experimental/bits/parallel/algos/par/is_partitioned.h>
-//#include <experimental/bits/parallel/algos/par/is_sorted.h>
+#include <experimental/bits/parallel/algos/par/is_sorted.h>
 //#include <experimental/bits/parallel/algos/par/is_sorted_until.h>
 #include <experimental/bits/parallel/algos/par/is_heap.h>
 #include <experimental/bits/parallel/algos/par/is_heap_until.h> 
@@ -596,7 +596,7 @@ constexpr struct parallel_execution_policy {
 //#include <experimental/bits/parallel/algos/par/set_union.h>
 #include <experimental/bits/parallel/algos/par/sort.h>
 //#include <experimental/bits/parallel/algos/par/stable_partition.h>
-//#include <experimental/bits/parallel/algos/par/stable_sort.h>
+#include <experimental/bits/parallel/algos/par/stable_sort.h>
 //#include <experimental/bits/parallel/algos/par/swap_ranges.h>
 //#include <experimental/bits/parallel/algos/par/transform.h>
 //#include <experimental/bits/parallel/algos/par/unique_copy.h>

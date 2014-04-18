@@ -53,12 +53,9 @@ int main(){
   cout << "Using seq: " << endl;
   auto time_seq = stable_sort(experimental::parallel::seq, values);
   cout << "seq took " << time_seq.count() << " us" << endl;
-
-  // stable sort is not implemented yet
-#if 0
+  
   cout << "Using par: " << endl;
   auto time_par = stable_sort(experimental::parallel::par, values);
   cout << "par took " << time_par.count() << " us" << endl;
-#endif
 }
 

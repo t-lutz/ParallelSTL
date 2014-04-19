@@ -138,7 +138,7 @@ int main(){
   sort(par, begin(v), end(v));    // this works
   sort(policy, begin(v), end(v)); // this works
 
-  // using sequential_policy
+  // using execution_policy
   execution_policy dyn = seq;
   sort(dyn, begin(v), end(v)); // this works
 

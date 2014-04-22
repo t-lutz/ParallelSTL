@@ -10,6 +10,9 @@
 
 TEST(is_sorted, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v;
   
   EXPECT_TRUE(is_sorted(
@@ -21,6 +24,9 @@ TEST(is_sorted, Empty){
 
 TEST(is_sorted, Sorted) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 1,2,3,4,5,7,8,9};
   
   EXPECT_TRUE(is_sorted(
@@ -32,6 +38,9 @@ TEST(is_sorted, Sorted) {
 
 TEST(is_sorted, SortedDuplicates){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 1,2,3,4,4,4,5,5,7,8,8,9};
   
   EXPECT_TRUE(is_sorted(
@@ -43,6 +52,9 @@ TEST(is_sorted, SortedDuplicates){
 
 TEST(is_sorted, Unsorted){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 8,4,6,7,1,5,9,4,57,2,1};
   
   EXPECT_FALSE(is_sorted(
@@ -56,6 +68,9 @@ bool mySortingComp (int i,int j) { return i>j; }
 
 TEST(is_sorted, EmptyComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v;
   
   EXPECT_TRUE(is_sorted(
@@ -67,6 +82,9 @@ TEST(is_sorted, EmptyComp){
 
 TEST(is_sorted, SortedComp) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = {9,8,7,6,5,4,3,2,1};
   
   EXPECT_TRUE(is_sorted(
@@ -78,6 +96,9 @@ TEST(is_sorted, SortedComp) {
 
 TEST(is_sorted, SortedDuplicatesComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = {9,8,8,7,6,6,6,5,4,4,3,2,2,2,1};
   
   EXPECT_TRUE(is_sorted(
@@ -89,6 +110,9 @@ TEST(is_sorted, SortedDuplicatesComp){
 
 TEST(is_sorted, UnsortedComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 8,4,6,7,1,5,9,4,57,2,1};
   
   EXPECT_FALSE(is_sorted(

@@ -10,6 +10,9 @@
 
 TEST(stable_sort, PlainSort){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   vector<int> v{1,4,8,7,2,1,5,4,6,5,7,2,5,1,0};
 
@@ -24,6 +27,9 @@ TEST(stable_sort, PlainSort){
 
 TEST(stable_sort, Sorted){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   vector<int> v{1,2,3,4,5,6,7,8,9,10};
 
@@ -39,6 +45,9 @@ TEST(stable_sort, Sorted){
 
 TEST(stable_sort, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   vector<int> v;
 
@@ -53,6 +62,9 @@ TEST(stable_sort, Empty){
 
 TEST(stable_sort, StableSortComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   vector<double> v{9.0, 8.5, 8.0, 7.75, 7.5, 7.25, 7.0, 6.5, 6.0, 5.5, 5.0};
 
@@ -73,6 +85,9 @@ TEST(stable_sort, StableSortComp){
 
 TEST(stable_sort, Sortable){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   struct Sortable {
     int payload;

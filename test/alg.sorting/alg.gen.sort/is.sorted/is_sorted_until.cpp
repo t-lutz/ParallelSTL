@@ -10,6 +10,9 @@
 
 TEST(is_sorted_until, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v;
   
   EXPECT_TRUE(is_sorted_until(
@@ -21,6 +24,9 @@ TEST(is_sorted_until, Empty){
 
 TEST(is_sorted_until, EmptyRange) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = {3,2,1,0};
   
   EXPECT_TRUE(is_sorted_until(
@@ -33,6 +39,9 @@ TEST(is_sorted_until, EmptyRange) {
 
 TEST(is_sorted_until, Sorted) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 1,2,3,4,5,7,8,9};
   
   EXPECT_TRUE(is_sorted_until(
@@ -44,6 +53,9 @@ TEST(is_sorted_until, Sorted) {
 
 TEST(is_sorted_until, SortedDuplicates){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 1,2,3,4,4,4,5,5,7,8,8,9};
   
   EXPECT_TRUE(is_sorted_until(
@@ -55,6 +67,9 @@ TEST(is_sorted_until, SortedDuplicates){
 
 TEST(is_sorted_until, Unsorted){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 1,4,6,7,1,5,9,4,57,2,1};
   
   auto it = is_sorted_until(
@@ -71,6 +86,9 @@ bool SortedUntilComp (int i,int j) { return (i>j); }
 
 TEST(is_sorted_until, EmptyComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v;
   
   EXPECT_TRUE(is_sorted_until(
@@ -82,6 +100,9 @@ TEST(is_sorted_until, EmptyComp){
 
 TEST(is_sorted_until, EmptyRangeComp) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = {3,2,1,0};
   
   EXPECT_TRUE(is_sorted_until(
@@ -94,6 +115,9 @@ TEST(is_sorted_until, EmptyRangeComp) {
 
 TEST(is_sorted_until, SortedComp) {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 9,8,7,6,5,4,3,2,1};
   
   EXPECT_TRUE(is_sorted_until(
@@ -105,6 +129,9 @@ TEST(is_sorted_until, SortedComp) {
 
 TEST(is_sorted_until, SortedDuplicatesComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 9,8,8,7,6,6,5,4,4,4,3,2,1,1,1};
   
   EXPECT_TRUE(is_sorted_until(
@@ -116,6 +143,9 @@ TEST(is_sorted_until, SortedDuplicatesComp){
 
 TEST(is_sorted_until, UnsortedComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v = { 6,5,4,4,1,5,9,4,57,2,1};
   
   auto it = is_sorted_until(

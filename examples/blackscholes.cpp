@@ -38,6 +38,7 @@ auto BlackScholes(T && policy, const std::vector<Option> & options)
   -> std::chrono::microseconds
 {
   using namespace std;
+  using namespace std::experimental;
   auto copy = options;
   auto start = chrono::high_resolution_clock::now();
   for_each(policy, begin(copy), end(copy), 

@@ -10,6 +10,9 @@
 
 TEST(unique, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v;
   vector<int> w = v;
   
@@ -26,6 +29,9 @@ TEST(unique, Empty){
 
 TEST(unique, Unique){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,4,5,6,7,8,9};
   vector<int> w = v;
   
@@ -42,6 +48,9 @@ TEST(unique, Unique){
 
 TEST(unique, NonConseqUnique){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,4,5,6,7,8,9,8,7,6,5,4,3,2,1};
   vector<int> w = v;
   
@@ -58,6 +67,9 @@ TEST(unique, NonConseqUnique){
 
 TEST(unique, Duplicates){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,2,2,4,4,5,6,7,7,8,9,2,4};
   vector<int> w = {1,2,    4,  5,6,7,  8,9,2,4};
 
@@ -78,6 +90,9 @@ bool myComp (int i, int j) { return i==j; }
 
 TEST(unique, EmptyComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v;
   vector<int> w = v;
   
@@ -94,6 +109,9 @@ TEST(unique, EmptyComp){
 
 TEST(unique, UniqueComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,4,5,6,7,8,9};
   vector<int> w = v;
   
@@ -110,6 +128,9 @@ TEST(unique, UniqueComp){
 
 TEST(unique, NonConseqUniqueComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,4,5,6,7,8,9,8,7,6,5,4,3,2,1};
   vector<int> w = v;
   
@@ -126,6 +147,9 @@ TEST(unique, NonConseqUniqueComp){
 
 TEST(unique, DuplicatesComp){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,2,2,4,4,5,6,7,7,8,9,2,4};
   vector<int> w = {1,2,    4,  5,6,7,  8,9,2,4};
 

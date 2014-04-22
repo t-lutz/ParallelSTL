@@ -10,6 +10,7 @@ auto sum_reduction(T && policy, const std::vector<double> & values)
   -> std::chrono::microseconds
 {
   using namespace std;
+  using namespace std::experimental; 
 
   auto start = chrono::high_resolution_clock::now();
   auto sum = reduce(policy, begin(values), end(values));

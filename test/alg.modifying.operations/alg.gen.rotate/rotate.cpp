@@ -11,6 +11,9 @@
 TEST(rotate, MoveToLast)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{2,3,4,5,6,7,8,9,10,11,12,1};
 
@@ -26,6 +29,9 @@ TEST(rotate, MoveToLast)
 TEST(rotate, MoveRangeToEnd)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{7,8,9,10,11,12,1,2,3,4,5,6};
 
@@ -45,6 +51,9 @@ TEST(rotate, MoveRangeToEnd)
 TEST(rotate, MoveRangeToMiddle)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{4,5,6,1,2,3,7,8,9,10,11,12};
 
@@ -68,6 +77,9 @@ TEST(rotate, MoveRangeToMiddle)
 TEST(rotate, Empty)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v;
 
   rotate(

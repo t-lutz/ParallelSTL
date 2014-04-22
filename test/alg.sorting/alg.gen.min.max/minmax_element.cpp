@@ -13,7 +13,11 @@
 //                            ForwardIterator first, ForwardIterator last);
 TEST(minmax_element, Unique) 
 {
-  using namespace std; 
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental; 
+#endif
+  
   vector<int> v{0,0,0,0,1,0,-1,0,0,0,0,0,0,0,0,0};
 
   {
@@ -46,6 +50,10 @@ TEST(minmax_element, Unique)
 TEST(minmax_element, Multiple) 
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
   vector<int> v{0,0,-1,0,1,1,1,1,1,1,-1,-1,0,0,0,0};
 
   {
@@ -78,6 +86,10 @@ TEST(minmax_element, Multiple)
 TEST(minmax_element, AllSame) 
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental;
+#endif
+  
   vector<int> v{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
   auto minmax = minmax_element(
 #ifdef EXECUTION_POLICY
@@ -92,13 +104,18 @@ TEST(minmax_element, AllSame)
 
 
 TEST(minmax_element, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
-  auto minmax = std::minmax_element(
+  auto minmax = minmax_element(
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              std::begin(v), std::end(v));
+                              begin(v), end(v));
   EXPECT_TRUE(minmax.first == end(v));
   EXPECT_TRUE(minmax.second == end(v));
 }
@@ -108,7 +125,11 @@ TEST(minmax_element, Empty){
 //                            ForwardIterator first, ForwardIterator last, Compare comp);
 TEST(minmax_element, UniqueComp) 
 {
-  using namespace std; 
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
   vector<int> v{0,0,0,0,1,0,-1,0,0,0,0,0,0,0,0,0};
 
   {
@@ -116,7 +137,7 @@ TEST(minmax_element, UniqueComp)
 #ifdef EXECUTION_POLICY
                                  EXECUTION_POLICY,
 #endif
-                                 begin(v), end(v), std::greater<int>());
+                                 begin(v), end(v), greater<int>());
 
     EXPECT_EQ(4, distance(begin(v), minmax.first));
     EXPECT_EQ(6, distance(begin(v), minmax.second));
@@ -129,7 +150,7 @@ TEST(minmax_element, UniqueComp)
 #ifdef EXECUTION_POLICY
                                  EXECUTION_POLICY,
 #endif
-                                 begin(v), end(v), std::greater<int>());
+                                 begin(v), end(v), greater<int>());
 
     EXPECT_EQ(2, distance(begin(v), minmax.first));
     EXPECT_EQ(8, distance(begin(v), minmax.second));
@@ -141,6 +162,10 @@ TEST(minmax_element, UniqueComp)
 TEST(minmax_element, MultipleComp) 
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental;
+#endif
+  
   vector<int> v{0,0,-1,0,1,1,1,1,1,1,-1,-1,0,0,0,0};
 
   {
@@ -148,7 +173,7 @@ TEST(minmax_element, MultipleComp)
 #ifdef EXECUTION_POLICY
                                  EXECUTION_POLICY,
 #endif
-                                 begin(v), end(v), std::greater<int>());
+                                 begin(v), end(v), greater<int>());
 
     EXPECT_EQ(4, distance(begin(v), minmax.first));
     EXPECT_EQ(11, distance(begin(v), minmax.second));
@@ -161,7 +186,7 @@ TEST(minmax_element, MultipleComp)
 #ifdef EXECUTION_POLICY
                                  EXECUTION_POLICY,
 #endif
-                                 begin(v), end(v), std::greater<int>());
+                                 begin(v), end(v), greater<int>());
 
     
     EXPECT_EQ(2, distance(begin(v), minmax.first));
@@ -173,12 +198,16 @@ TEST(minmax_element, MultipleComp)
 TEST(minmax_element, AllSameComp) 
 {
   using namespace std;
+#ifdef EXECUTION_POLICY 
+  using namespace experimental;
+#endif
+  
   vector<int> v{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
   auto minmax = minmax_element(
 #ifdef EXECUTION_POLICY
                                EXECUTION_POLICY,
 #endif
-                               begin(v), end(v), std::greater<int>());
+                               begin(v), end(v), greater<int>());
 
   EXPECT_EQ(minmax.first, begin(v)); 
   EXPECT_EQ(v.size()-1, distance(begin(v), minmax.second));
@@ -187,13 +216,18 @@ TEST(minmax_element, AllSameComp)
 
 
 TEST(minmax_element, EmptyComp){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
-  auto minmax = std::minmax_element(
+  auto minmax = minmax_element(
 #ifdef EXECUTION_POLICY
                               EXECUTION_POLICY,
 #endif
-                              std::begin(v), std::end(v), std::greater<int>());
+                              begin(v), end(v), greater<int>());
   EXPECT_TRUE(minmax.first == end(v));
   EXPECT_TRUE(minmax.second == end(v));
 }

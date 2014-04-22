@@ -10,6 +10,9 @@
 
 TEST(is_partitioned, Patitioned){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   const vector<int> v{1,3,5,7,9,11,2,4,6,8,10,12};
 
@@ -23,6 +26,9 @@ TEST(is_partitioned, Patitioned){
 
 TEST(is_partitioned, NotPatitioned){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   const vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
@@ -36,6 +42,9 @@ TEST(is_partitioned, NotPatitioned){
 
 TEST(is_partitioned, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
   const vector<int> v;
 

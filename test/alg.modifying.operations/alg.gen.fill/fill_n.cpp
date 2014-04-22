@@ -9,13 +9,18 @@
 #endif
 
 TEST(fill_n, Lambda){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
-  std::fill_n(
+  fill_n(
 #ifdef EXECUTION_POLICY
               EXECUTION_POLICY,
 #endif
-              std::begin(v), v.size(),
+              begin(v), v.size(),
               1);
 
   EXPECT_EQ(100, v.size());
@@ -26,13 +31,18 @@ TEST(fill_n, Lambda){
 
 
 TEST(fill_n, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
-  std::fill_n(
+  fill_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), 0,
+                  begin(v), 0,
                   1);
 
   EXPECT_TRUE(v.empty());
@@ -40,13 +50,18 @@ TEST(fill_n, Empty){
 
 
 TEST(fill_n, Negative){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
-  std::fill_n(
+  fill_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), -100,
+                  begin(v), -100,
                   1);
 
   EXPECT_EQ(100, v.size());

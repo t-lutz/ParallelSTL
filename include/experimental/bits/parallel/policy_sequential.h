@@ -5,11 +5,19 @@
 #ifndef _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 #define _EXPERIMENTAL_N3554_POLICY_SEQUENTIAL
 
+#include <functional>
+
 namespace std {
 namespace experimental {
 namespace parallel {
 
-constexpr struct sequential_execution_policy {
+#ifdef _WIN32
+static 
+#else
+constexpr
+#endif
+class sequential_execution_policy {
+public:
   // Algorithm
 
   // non-modifying sequence operations:

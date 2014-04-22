@@ -10,14 +10,19 @@
 #endif
 
 TEST(generate, Lambda){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
-  std::generate(
+  generate(
 #ifdef EXECUTION_POLICY
                 EXECUTION_POLICY,
 #endif
-                std::begin(v), std::end(v),
-                [](){ return std::rand() % 100 + 123; });
+                begin(v), end(v),
+                [](){ return rand() % 100 + 123; });
 
   EXPECT_EQ(100, v.size());
   for(auto i : v){
@@ -28,19 +33,24 @@ TEST(generate, Lambda){
 
 
 TEST(generate, Functor){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
   struct Functor {
     int operator()() {
-      return std::rand() % 100 + 123;
+      return rand() % 100 + 123;
     }
   } f;
 
-  std::generate(
+  generate(
 #ifdef EXECUTION_POLICY
                 EXECUTION_POLICY,
 #endif
-                std::begin(v), std::end(v),
+                begin(v), end(v),
                 f);
 
   EXPECT_EQ(100, v.size());
@@ -52,14 +62,19 @@ TEST(generate, Functor){
 
 
 TEST(generate, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
-  std::generate(
+  generate(
 #ifdef EXECUTION_POLICY
                 EXECUTION_POLICY,
 #endif
-                std::begin(v), std::end(v),
-                [](){ return std::rand() % 100 + 123; });
+                begin(v), end(v),
+                [](){ return rand() % 100 + 123; });
 
   EXPECT_TRUE(v.empty());
 }

@@ -20,6 +20,7 @@ auto Histogram(T && policy, const std::vector<unsigned> & values, const unsigned
   -> std::chrono::microseconds
 {
   using namespace std;
+  using namespace std::experimental;
   vector<Counter> hist(max);
 
   auto start = chrono::high_resolution_clock::now();

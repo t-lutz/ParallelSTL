@@ -9,14 +9,19 @@
 #endif
 
 TEST(replace, Present_unique){
-        std::vector<int> v{1,2,3,4,5,6, 7,8,9,10,11,12};
-  const std::vector<int> g{1,2,3,4,5,6,77,8,9,10,11,12};
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+ 
+  vector<int> v{1,2,3,4,5,6, 7,8,9,10,11,12};
+  const vector<int> g{1,2,3,4,5,6,77,8,9,10,11,12};
 
-  std::replace(
+  replace(
 #ifdef EXECUTION_POLICY
                EXECUTION_POLICY,
 #endif
-               std::begin(v), std::end(v),
+               begin(v), end(v),
                7, 77);
 
   EXPECT_EQ(g, v);
@@ -25,6 +30,10 @@ TEST(replace, Present_unique){
 TEST(replace, OldWithNew)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental;
+#endif
+  
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{1,2,3,4,0,6,7,8,9,10,11,12};
   int oldVal = 5;
@@ -42,6 +51,10 @@ TEST(replace, OldWithNew)
 TEST(replace, Missing)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental;
+#endif
+  
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{1,2,3,4,5,6,7,8,9,10,11,12};
   int oldVal = 0;
@@ -59,6 +72,10 @@ TEST(replace, Missing)
 TEST(replace, Empty)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace experimental;
+#endif
+  
   vector<int> v;
   int oldVal = 0;
   int newVal = 1;
@@ -73,14 +90,19 @@ TEST(replace, Empty)
 }
 
 TEST(replace, Present_multiple){
-        std::vector<int> v{1,2,3,4,5,6, 7,8,9,10, 7, 7};
-  const std::vector<int> g{1,2,3,4,5,6,77,8,9,10,77,77};
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v{1,2,3,4,5,6, 7,8,9,10, 7, 7};
+  const vector<int> g{1,2,3,4,5,6,77,8,9,10,77,77};
 
-  std::replace(
+  replace(
 #ifdef EXECUTION_POLICY
                EXECUTION_POLICY,
 #endif
-               std::begin(v), std::end(v),
+               begin(v), end(v),
                7, 77);
 
   EXPECT_EQ(g, v); 

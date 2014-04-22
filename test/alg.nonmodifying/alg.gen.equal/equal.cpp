@@ -12,6 +12,9 @@
 
 TEST(equal, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v, w;
   
   EXPECT_TRUE(equal(
@@ -24,6 +27,9 @@ TEST(equal, Empty){
 
 TEST(equal, Equal){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {1,2,3,4,5,6,7,8,9};
 
@@ -36,6 +42,9 @@ TEST(equal, Equal){
 
 TEST(equal, EqualSubset){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 
@@ -48,6 +57,9 @@ TEST(equal, EqualSubset){
 
 TEST(equal, NotEqual){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {8,4,2,1,7,3,6,8,4};
 
@@ -60,6 +72,9 @@ TEST(equal, NotEqual){
 
 TEST(equal, EmptyRange){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {8,4,7,4,5,1,23,4,7};
   vector<int> w = {1,2,3,4,5,6,7,8,9};
 
@@ -76,6 +91,9 @@ bool myPred(int a, int b) { return a == b; }
 
 TEST(equal, EmptyPred){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v, w;
   
   EXPECT_TRUE(equal(
@@ -87,6 +105,9 @@ TEST(equal, EmptyPred){
 
 TEST(equal, EqualPred){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {1,2,3,4,5,6,7,8,9};
 
@@ -99,6 +120,9 @@ TEST(equal, EqualPred){
 
 TEST(equal, EqualSubsetPred){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {1,2,3,4,5,6,7,8,9,10,11,12,13};
 
@@ -111,6 +135,9 @@ TEST(equal, EqualSubsetPred){
 
 TEST(equal, NotEqualPred){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {1,2,3,4,5,6,7,8,9};
   vector<int> w = {8,4,2,1,7,3,6,8,4};
 
@@ -123,6 +150,9 @@ TEST(equal, NotEqualPred){
 
 TEST(equal, EmptyRangePred){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v = {8,4,7,4,5,1,23,4,7};
   vector<int> w = {1,2,3,4,5,6,7,8,9};
 

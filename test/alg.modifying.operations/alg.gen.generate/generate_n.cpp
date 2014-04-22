@@ -10,14 +10,19 @@
 #endif
 
 TEST(generate_n, Lambda){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
-  std::generate_n(
+  generate_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), v.size(),
-                  [](){ return std::rand() % 100 + 123; });
+                  begin(v), v.size(),
+                  [](){ return rand() % 100 + 123; });
 
   EXPECT_EQ(100, v.size());
   for(auto i : v){
@@ -28,19 +33,24 @@ TEST(generate_n, Lambda){
 
 
 TEST(generate_n, Functor){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
   struct Functor {
     int operator()() {
-      return std::rand() % 100 + 123;
+      return rand() % 100 + 123;
     }
   } f;
 
-  std::generate_n(
+  generate_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), v.size(),
+                  begin(v), v.size(),
                   f);
 
   EXPECT_EQ(100, v.size());
@@ -52,13 +62,18 @@ TEST(generate_n, Functor){
 
 
 TEST(generate_n, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
-  std::generate_n(
+  generate_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), 0,
+                  begin(v), 0,
                   [](){ return 1; });
 
   EXPECT_TRUE(v.empty());
@@ -66,13 +81,18 @@ TEST(generate_n, Empty){
 
 
 TEST(generate_n, Negative){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v(100);
 
-  std::generate_n(
+  generate_n(
 #ifdef EXECUTION_POLICY
                   EXECUTION_POLICY,
 #endif
-                  std::begin(v), -100,
+                  begin(v), -100,
                   [](){ return 1; });
 
   EXPECT_EQ(100, v.size());

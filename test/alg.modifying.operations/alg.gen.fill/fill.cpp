@@ -9,13 +9,18 @@
 #endif
 
 TEST(fill, Simple){
-  std::vector<int> v(100);
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
-  std::fill(
+  vector<int> v(100);
+
+  fill(
 #ifdef EXECUTION_POLICY
             EXECUTION_POLICY,
 #endif
-            std::begin(v), std::end(v),
+            begin(v), end(v),
             123);
 
   EXPECT_EQ(100, v.size());
@@ -26,13 +31,18 @@ TEST(fill, Simple){
 
 
 TEST(fill, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
-  std::fill(
+  vector<int> v;
+
+  fill(
 #ifdef EXECUTION_POLICY
                 EXECUTION_POLICY,
 #endif
-                std::begin(v), std::end(v),
+                begin(v), end(v),
                 1);
 
   EXPECT_TRUE(v.empty());

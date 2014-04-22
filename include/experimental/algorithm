@@ -7,6 +7,8 @@
 #include <experimental/execution_policy>
 
 namespace std { 
+namespace experimental {
+namespace parallel {
 
   // non-modifying sequence operations:
   template<class ExecutionPolicy,
@@ -1176,6 +1178,8 @@ namespace std {
 
     return exec.lexicographical_compare(first1, last1, first2, last2, comp);
   }
-}
+} // namespace parallel
+} // namespace experimental
+} // namespace std
 
 #endif

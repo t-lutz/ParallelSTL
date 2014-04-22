@@ -11,6 +11,9 @@
 TEST(replace_copy_if, EvenWithNew)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v1{1,2,3,4,5,6,7,8,9,10,11,12};
   vector<int> v2; v2.resize(v1.size());
   const vector<int> gold{1,0,3,0,5,0,7,0,9,0,11,0};
@@ -29,6 +32,9 @@ TEST(replace_copy_if, EvenWithNew)
 TEST(replace_copy_if, Missing)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v1{1,2,3,4,5,6,7,8,9,10,11,12};
   vector<int> v2; v2.resize(v1.size());
   const vector<int> gold{1,2,3,4,5,6,7,8,9,10,11,12};
@@ -47,6 +53,9 @@ TEST(replace_copy_if, Missing)
 TEST(replace_copy_if, Empty)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   const vector<int> v1;
   vector<int> v2;
   auto func = [](int i) { return true; };

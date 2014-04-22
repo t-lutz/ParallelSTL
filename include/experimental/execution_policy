@@ -33,13 +33,41 @@ class execution_policy;
 // **********************************************
 
 template<class T> struct is_execution_policy
-  : public integral_constant<bool, is_same<typename decay<T>::type, sequential_execution_policy>::value || 
-                                   is_same<typename decay<T>::type, parallel_execution_policy>::value || 
-                                   is_same<typename decay<T>::type, vector_execution_policy>::value ||
-                                   is_same<typename decay<T>::type, execution_policy>::value > { };
+  : public integral_constant<bool, is_base_of<sequential_execution_policy, typename decay<T>::type>::value || 
+                                   is_base_of<parallel_execution_policy, typename decay<T>::type>::value || 
+                                   is_base_of<vector_execution_policy, typename decay<T>::type>::value ||
+                                   is_base_of<execution_policy, typename decay<T>::type>::value > { };
+
+
+namespace detail {
+template<class T, class U> struct __enable_if_parallel_alg_helper
+  : public enable_if<is_base_of<sequential_execution_policy, typename std::decay<T>::type>::value ||
+                     is_base_of<parallel_execution_policy, typename std::decay<T>::type>::value ||
+                     is_base_of<execution_policy, typename std::decay<T>::type>::value,
+                     U> { };
+
+template<class T, class U> struct __enable_if_execution_policy_helper
+  : public enable_if<is_base_of<execution_policy, typename std::decay<T>::type>::value, U> { };
+
+template<class T, class U> struct __enable_if_sequential_policy_helper
+  : public enable_if<is_base_of<sequential_execution_policy, typename std::decay<T>::type>::value, U> { };
+
+template<class T, class U> struct __enable_if_parallel_policy_helper
+  : public enable_if<is_base_of<parallel_execution_policy, typename std::decay<T>::type>::value, U> { };
+
+template<class T, class U> struct __enable_if_vector_policy_helper
+  : public enable_if<is_base_of<vector_execution_policy, typename std::decay<T>::type>::value, U> { };
+
+} // namespace detail
 
 // parallel.execpol.dynamic
 // **********************************************
+
+#ifdef _WIN32
+# define __NOEXCEPT
+#else
+# define __NOEXCEPT noexcept
+#endif
 
 class execution_policy{
 public:
@@ -48,10 +76,14 @@ public:
   template<class T> execution_policy& operator=(const T& exec);
 
   // 2.7.2, object access
-  const type_info& type() const noexcept;
-  template<class T> T* get() noexcept;
-  template<class T> const T* get() const noexcept;
+  const type_info& type() const __NOEXCEPT;
+
+  template<class T> T* get() __NOEXCEPT;
+
+  template<class T> const T* get() const __NOEXCEPT;
 };
+
+#undef __NOEXCEPT
 
 }
 } // namespace experimental

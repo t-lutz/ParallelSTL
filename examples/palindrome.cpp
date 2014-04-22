@@ -10,6 +10,7 @@ auto palindrome(T && policy, const std::string & str)
   -> std::chrono::microseconds
 {
   using namespace std;
+  using namespace std::experimental;
 
   auto start = chrono::high_resolution_clock::now();
   const auto pal = equal(policy, begin(str), begin(str) + str.length()/2, str.rbegin());

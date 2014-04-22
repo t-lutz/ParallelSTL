@@ -9,57 +9,77 @@
 #endif
 
 TEST(count, None){
-  std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
   auto value = 
-     std::count(
+     count(
 #ifdef EXECUTION_POLICY
-              EXECUTION_POLICY,
+           EXECUTION_POLICY,
 #endif
-              std::begin(v), std::end(v),
-              20);
+           begin(v), end(v),
+           20);
 
   EXPECT_EQ(0, value); 
 }
 
 TEST(count, One){
-  std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
   auto value = 
-     std::count(
+     count(
 #ifdef EXECUTION_POLICY
-              EXECUTION_POLICY,
+           EXECUTION_POLICY,
 #endif
-              std::begin(v), std::end(v),
-              1);
+           begin(v), end(v),
+           1);
 
   EXPECT_EQ(1, value); 
 }
 
 TEST(count, Many){
-  std::vector<int> v{1,2,3,4,5,1,7,8,9,10,1,1};
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v{1,2,3,4,5,1,7,8,9,10,1,1};
 
   auto value = 
-     std::count(
+     count(
 #ifdef EXECUTION_POLICY
-              EXECUTION_POLICY,
+           EXECUTION_POLICY,
 #endif
-              std::begin(v), std::end(v),
-              1);
+           begin(v), end(v),
+           1);
 
   EXPECT_EQ(4, value); 
 }
 
 TEST(count, Empty){
-  std::vector<int> v;
+  using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
+  
+  vector<int> v;
 
   auto value = 
-     std::count(
+     count(
 #ifdef EXECUTION_POLICY
-              EXECUTION_POLICY,
+           EXECUTION_POLICY,
 #endif
-              std::begin(v), std::end(v),
-              1);
+           begin(v), end(v),
+           1);
 
   EXPECT_EQ(0, value); 
 }

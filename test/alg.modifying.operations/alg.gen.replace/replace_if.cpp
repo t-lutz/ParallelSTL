@@ -10,6 +10,9 @@
 
 TEST(replace_if, Present_unique){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
         vector<int> v{1,2,3,4,5,6, 7,8,9,10,11,12};
   const vector<int> g{1,2,3,4,5,6,77,8,9,10,11,12};
 
@@ -26,6 +29,9 @@ TEST(replace_if, Present_unique){
 TEST(replace_if, EvenWithNew)
 {
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const vector<int> gold{1,0,3,0,5,0,7,0,9,0,11,0};
   auto even = [](int i) { return (i % 2) == 0; };
@@ -42,6 +48,9 @@ TEST(replace_if, EvenWithNew)
 
 TEST(replace_if, Present_multiple){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
         std::vector<int> v{1,2,3,4,5,6, 7,8,9,10, 7, 7};
   const std::vector<int> g{1,2,3,4,5,6,77,8,9,10,77,77};
 
@@ -57,6 +66,9 @@ TEST(replace_if, Present_multiple){
 
 TEST(replace_if, Missing){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
 
         std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
   const std::vector<int> g{1,2,3,4,5,6,7,8,9,10,11,12};
@@ -73,6 +85,9 @@ TEST(replace_if, Missing){
 
 TEST(replace_if, Empty){
   using namespace std;
+#ifdef EXECUTION_POLICY
+  using namespace std::experimental;
+#endif
   vector<int> v, g;
 
   replace_if(

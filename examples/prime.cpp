@@ -30,6 +30,8 @@ auto find_prime(t && policy, const std::vector<number_t> & numbers)
   -> std::chrono::microseconds
 {
   using namespace std;
+  using namespace std::experimental; 
+
   auto start = chrono::high_resolution_clock::now();
   auto it = find_if(policy, begin(numbers), end(numbers), isPrime);
   auto finish = chrono::high_resolution_clock::now();

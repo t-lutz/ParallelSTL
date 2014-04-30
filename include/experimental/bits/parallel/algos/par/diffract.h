@@ -44,20 +44,20 @@ inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
   for(unsigned i = 0; i + 1 < partitions; ++i){
     Iterator begin = end;
     advance(end, segment_size);
-    chunks.push_back(make_pair(begin, end));
+    chunks.emplace_back(make_pair(begin, end));
   }
   
   // push the last chunk (either slightly larger because of rounding)
-  chunks.push_back(make_pair(end, last));
+  chunks.emplace_back(make_pair(end, last));
 
   return chunks;
 }
 
 
 template<class Iterator, class Functor, typename ... Args>
-inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
+inline void diffract(Iterator first, Iterator last, const Functor f, Args ... args){
   // divide the range
-  auto subranges = split(first, last);
+  const auto subranges = split(first, last);
 
   // thread pool
   vector<thread> pool;
@@ -65,7 +65,9 @@ inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
 
   // divide the iteration space and delegate to threads.
   for(const auto & range : subranges)
-    pool.emplace_back(thread{f, range.first, range.second, args...});
+    pool.emplace_back(thread{std::forward<Functor>(f), 
+                             range.first, range.second, 
+                             std::forward<Args>(args)...});
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
@@ -77,18 +79,18 @@ inline void diffract(Iterator first, Iterator last, Functor f, Args ... args){
 template<typename T, typename Function, typename Iterator, typename ... Args>
 void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args ...args) 
 {
-    result = f(begin, end, args...);
+    result = f(begin, end, std::forward<Args>(args)...);
 }
 
 template<class Iterator, class Functor, class BinaryGather, typename ... Args>
 inline auto
-diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args ... args)
-  -> decltype(f(first, last, args...))
+diffract_gather(Iterator first, Iterator last, const Functor f, BinaryGather g, Args ... args)
+  -> typename std::result_of<Functor(Iterator, Iterator, Args...)>::type
 {
-  typedef decltype(f(first, last, args...)) ret_type;
+  using ret_type = typename std::result_of<Functor(Iterator, Iterator, Args...)>::type;
 
   // divide the range
-  auto subranges = split(first, last);
+  const auto subranges = split(first, last);
 
   // thread pool
   vector<thread> pool;
@@ -99,10 +101,13 @@ diffract_gather(Iterator first, Iterator last, Functor f, BinaryGather g, Args .
 
   
   // divide the iteration space and delegate to threads.
-  auto fct = &diffract_functor<ret_type, Functor, Iterator, Args...>;
+  auto fct = diffract_functor<ret_type, Functor, Iterator, Args...>;
   size_t counter = 0;
   for(const auto & range : subranges)
-    pool.emplace_back(thread{fct, std::ref(gather[counter++]), f, range.first, range.second, args...});
+    pool.emplace_back(thread{fct, std::ref(gather[counter++]), 
+                                  std::forward<Functor>(f), 
+                                  range.first, range.second, 
+                                  std::forward<Args>(args)...});
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();

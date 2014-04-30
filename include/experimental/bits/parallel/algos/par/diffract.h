@@ -28,6 +28,8 @@ namespace detail {
  * @param first The beginning of the range.
  * @param end The end of the range.
  * @param partitions The number of partitions
+ * @return A vector of iterator pairs for each sub-range. The list is guaranteed to contain at least
+ *         one range.
  **/
 template<class Iterator>
 inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
@@ -47,13 +49,21 @@ inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
     chunks.emplace_back(make_pair(begin, end));
   }
   
-  // push the last chunk (either slightly larger because of rounding)
+  // push the last chunk (could be slightly larger because of rounding or empty if first == last)
   chunks.emplace_back(make_pair(end, last));
 
   return chunks;
 }
 
 
+/**
+ * @brief Split a range between two iterators and apply a given function with the given
+ *        parameters on each sub-range.
+ * @param first Beginning of the range.
+ * @param last End of the range.
+ * @param f A callable object which can be called with a range and some given parameters.
+ * @param args Additional parameters for the callable object.
+ */
 template<class Iterator, class Functor, typename ... Args>
 inline void diffract(Iterator first, Iterator last, const Functor f, Args ... args){
   // divide the range
@@ -82,6 +92,18 @@ void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args
     result = f(begin, end, std::forward<Args>(args)...);
 }
 
+/**
+ * @brief Split a range between two iterators and apply a given function with the given
+ *        parameters on each sub-range. The return values of the function are combined
+ *        using a provided collapse function.
+ * @param first Beginning of the range.
+ * @param last End of the range.
+ * @param f A callable object which can be called with a range and some given parameters.
+ * @param g The collapse function. It takes two elements of the return type of f and returns
+ *          a single element of this type.
+ * @param args Additional parameters for the callable object.
+ * @return The result of the collapse reduction of the sub-ranges.
+ */
 template<class Iterator, class Functor, class BinaryGather, typename ... Args>
 inline auto
 diffract_gather(Iterator first, Iterator last, const Functor f, BinaryGather g, Args ... args)

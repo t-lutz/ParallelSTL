@@ -9,6 +9,8 @@
 #include <experimental/bits/parallel/policy_parallel.h>
 
 namespace std {
+namespace experimental {
+namespace parallel {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
       reduce(InputIterator first, InputIterator last);
@@ -110,11 +112,15 @@ namespace std {
                      OutputIterator result,
                      T init, BinaryOperation binary_op);
 }
+}
+}
 
 #include <algorithm>
 
 // implementation
 namespace std {
+namespace experimental {
+namespace parallel {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
       reduce(InputIterator first, InputIterator last)
@@ -246,5 +252,6 @@ namespace std {
                      OutputIterator result,
                      T init, BinaryOperation binary_op);
 }
-
+}
+}
 #endif

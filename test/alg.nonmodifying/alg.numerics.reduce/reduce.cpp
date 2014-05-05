@@ -20,7 +20,7 @@
 TEST(reduce, IntNoInit){
   const std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -43,7 +43,7 @@ TEST(reduce, CustomNoInit){
   // unititialized elements are 1, reduction should be 100
   const std::vector<Element> v(100);
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -56,7 +56,7 @@ TEST(reduce, CustomNoInit){
 TEST(reduce, IntNoInitEmptyRange){
   const std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -81,7 +81,7 @@ TEST(reduce, CustomNoInitEmptyRange){
     {2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}
   };
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -101,7 +101,7 @@ TEST(reduce, CustomNoInitEmptyRange){
 TEST(reduce, IntInit){
   const std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -124,7 +124,7 @@ TEST(reduce, CustomInit){
   // unititialized elements are 1, reduction should be 100
   const std::vector<Element> v(100);
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -137,7 +137,7 @@ TEST(reduce, CustomInit){
 TEST(reduce, IntInitEmptyRange){
   const std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -162,7 +162,7 @@ TEST(reduce, CustomInitEmptyRange){
     {2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13}
   };
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -183,7 +183,7 @@ TEST(reduce, CustomInitEmptyRange){
 //           BinaryOperation binary_op);
 TEST(reduce, IntInitBinary){
   const std::vector<int> v{2, 4, 3, 1, 5, 2, 3};
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -194,7 +194,7 @@ TEST(reduce, IntInitBinary){
 
   EXPECT_EQ(720, res);
 
-  res = std::reduce(
+  res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                     EXECUTION_POLICY,
 #endif
@@ -217,7 +217,7 @@ TEST(reduce, CustomInitBinary){
   // unititialized elements are 1, reduction should be 100
   const std::vector<Element> v{{2}, {4}, {3}, {1}, {5}, {2}, {3}};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif
@@ -233,7 +233,7 @@ TEST(reduce, CustomInitBinary){
 TEST(reduce, IntInitEmptyRangeBinary){
   const std::vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
 
-  auto res = std::reduce(
+  auto res = std::experimental::parallel::reduce(
 #ifdef EXECUTION_POLICY
                          EXECUTION_POLICY,
 #endif

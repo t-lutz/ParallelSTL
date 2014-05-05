@@ -75,9 +75,9 @@ inline void diffract(Iterator first, Iterator last, const Functor f, Args ... ar
 
   // divide the iteration space and delegate to threads.
   for(const auto & range : subranges)
-    pool.emplace_back(thread{std::forward<Functor>(f), 
+    pool.emplace_back(thread{f, 
                              range.first, range.second, 
-                             std::forward<Args>(args)...});
+                             forward<Args>(args)...});
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
@@ -107,9 +107,9 @@ void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args
 template<class Iterator, class Functor, class BinaryGather, typename ... Args>
 inline auto
 diffract_gather(Iterator first, Iterator last, const Functor f, BinaryGather g, Args ... args)
-  -> typename std::result_of<Functor(Iterator, Iterator, Args...)>::type
+  -> typename result_of<Functor(Iterator, Iterator, Args...)>::type
 {
-  using ret_type = typename std::result_of<Functor(Iterator, Iterator, Args...)>::type;
+  using ret_type = typename result_of<Functor(Iterator, Iterator, Args...)>::type;
 
   // divide the range
   const auto subranges = split(first, last);
@@ -126,10 +126,10 @@ diffract_gather(Iterator first, Iterator last, const Functor f, BinaryGather g, 
   auto fct = diffract_functor<ret_type, Functor, Iterator, Args...>;
   size_t counter = 0;
   for(const auto & range : subranges)
-    pool.emplace_back(thread{fct, std::ref(gather[counter++]), 
-                                  std::forward<Functor>(f), 
+    pool.emplace_back(thread{fct, ref(gather[counter++]), 
+                                  f, 
                                   range.first, range.second, 
-                                  std::forward<Args>(args)...});
+                                  forward<Args>(args)...});
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();

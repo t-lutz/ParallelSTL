@@ -11,8 +11,8 @@ struct SortA {
     typedef typename std::iterator_traits<RandomIt>::value_type it_type;
     std::cout << ">> SortA is sorting an array of type " << typeid(it_type).name() << std::endl; 
   }
- 
 };
+
 struct SortB {
   template<typename RandomIt>
   void sort(RandomIt, RandomIt) const {

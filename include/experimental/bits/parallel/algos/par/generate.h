@@ -12,7 +12,9 @@ namespace parallel {
   template<class ForwardIterator, class Generator>
     void parallel_execution_policy::generate(ForwardIterator first, ForwardIterator last, Generator gen) const 
   {
-    detail::diffract(first, last, std::generate<ForwardIterator, Generator>);
+    detail::diffract(first, last, 
+                     std::generate<ForwardIterator, Generator>, 
+                     std::forward<Generator>(gen));
   }
 
 } // namespace parallel

@@ -31,7 +31,7 @@ namespace parallel {
     // TODO: we could use the parallel version of std::inplace_merge
     
     // split the ranges
-    auto ranges = detail::split(first, last);
+    auto ranges = detail::splitRange(first, last);
 
     // begin/middle/end triple for inplace_merge
     struct Triple {RandomAccessIterator begin, middle, end;};

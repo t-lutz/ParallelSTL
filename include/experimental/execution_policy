@@ -1,6 +1,7 @@
 #pragma once
 
 #include <type_traits>
+#include <memory>
 
 namespace std {
 namespace experimental {
@@ -70,17 +71,49 @@ template<class T, class U> struct __enable_if_vector_policy_helper
 #endif
 
 class execution_policy{
+  shared_ptr<void> _instance;
+  const type_info *_type;
 public:
   // 2.7.1, construct/assign
-  template<class T> execution_policy(const T& exec);
-  template<class T> execution_policy& operator=(const T& exec);
+  template<class ExecutionPolicy>
+  execution_policy(const ExecutionPolicy& policy,
+                   typename enable_if<is_execution_policy<ExecutionPolicy>::value,
+                                                          ExecutionPolicy>::type* = nullptr)
+  {
+    _instance = std::make_shared<ExecutionPolicy>(policy);
+    _type = &typeid(ExecutionPolicy);
+  }
+
+  template<class ExecutionPolicy>
+  typename std::enable_if<is_execution_policy<ExecutionPolicy>::value, execution_policy>::type&
+  operator=(const ExecutionPolicy & policy) 
+  {
+    _instance = std::make_shared<ExecutionPolicy>(policy);
+    _type = &typeid(policy);
+    return *this;
+  }
 
   // 2.7.2, object access
-  const type_info& type() const __NOEXCEPT;
+  const type_info& type() const __NOEXCEPT 
+  {
+    return *_type;
+  }
 
-  template<class T> T* get() __NOEXCEPT;
+  template<class ExecutionPolicy> ExecutionPolicy* get() __NOEXCEPT
+  {
+    if (*_type != typeid(ExecutionPolicy)) return nullptr; 
+    return static_cast<ExecutionPolicy*>(_instance.get());
+  }
 
-  template<class T> const T* get() const __NOEXCEPT;
+  template<class ExecutionPolicy> const ExecutionPolicy* get() const __NOEXCEPT
+  {
+    if (*_type != typeid(ExecutionPolicy)) return nullptr;
+    return static_cast<ExecutionPolicy*>(_instance.get()); 
+  }
+
+  template<class RandomAccessIterator>
+    void sort(RandomAccessIterator first, RandomAccessIterator last) const;
+
 };
 
 #undef __NOEXCEPT
@@ -91,4 +124,4 @@ public:
 
 #include <experimental/bits/parallel/policy_sequential.h>
 #include <experimental/bits/parallel/policy_parallel.h>
-
+#include <experimental/bits/parallel/policy_dynamic.h>

@@ -7,26 +7,24 @@
 #include <experimental/numeric>
 using namespace std;
 
-struct PiCalculator {
-  double operator()(){
-    thread_local static random_device rd;
+double test_pi() {
+  thread_local static random_device rd;
 
-    constexpr unsigned samples = 10000;
-    mt19937_64 gen(rd());
-    uniform_real_distribution<double> dis(0,1);
-    
-    unsigned sum = 0;
-    for(unsigned i = 0; i < samples; ++i){
-      const double x = dis(gen), y = dis(gen);
-      double dist = sqrtf(x*x + y*y);
-      if(dist <= 1.0f) 
-        sum++;
-    }
-    
-    sum *= 4;
-    return (double)sum/(double)samples;
+  constexpr unsigned samples = 10000;
+  mt19937_64 gen(rd());
+  uniform_real_distribution<double> dis(0,1);
+  
+  unsigned sum = 0;
+  for(unsigned i = 0; i < samples; ++i){
+    const double x = dis(gen), y = dis(gen);
+    double dist = sqrtf(x*x + y*y);
+    if(dist <= 1.0f) 
+      sum++;
   }
-};
+  
+  sum *= 4;
+  return static_cast<double>(sum)/static_cast<double>(samples);
+}
 
 template<typename T>
 auto extimate_pi(T && policy)
@@ -38,7 +36,7 @@ auto extimate_pi(T && policy)
 
   auto start = chrono::high_resolution_clock::now();
   
-  parallel::generate(policy, begin(estimates), end(estimates), PiCalculator{});
+  parallel::generate(policy, begin(estimates), end(estimates), test_pi);
   auto pi = parallel::reduce(policy, begin(estimates), end(estimates)) / double{samples};
 
   auto finish = chrono::high_resolution_clock::now();

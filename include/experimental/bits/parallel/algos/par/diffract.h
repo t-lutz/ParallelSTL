@@ -27,32 +27,37 @@ namespace detail {
  *        If first == last or partitions < 2, the split function returns the range [first, last)
  * @param first The beginning of the range.
  * @param end The end of the range.
- * @param partitions The number of partitions
  * @return A vector of iterator pairs for each sub-range. The list is guaranteed to contain at least
  *         one range.
  **/
-template<class Iterator>
-inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
-  const size_t partitions = min((size_t)thread::hardware_concurrency(), (size_t)distance(first, last));
+template<class __Iterator> 
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>()
+#endif
+inline auto splitRange(__Iterator __first, __Iterator __last)
+  -> vector<pair<__Iterator,__Iterator>>
+{
+  const size_t __range_size = distance(__first, __last);
+  const size_t __partitions = min((size_t)thread::hardware_concurrency(), __range_size);
 
-  vector<pair<Iterator,Iterator>> chunks;
-  chunks.reserve(partitions);
+  vector<pair<__Iterator,__Iterator>> __chunks;
+  __chunks.reserve(__partitions);
 
-  const unsigned segment_size = distance(first, last) / max(partitions, size_t{1}); 
+  const size_t __segment_size = __range_size / max(__partitions, size_t{1}); 
  
   // last element of the previous partition
-  Iterator end = first;
+  __Iterator __end = __first;
 
-  for(unsigned i = 0; i + 1 < partitions; ++i){
-    Iterator begin = end;
-    advance(end, segment_size);
-    chunks.emplace_back(make_pair(begin, end));
+  for(unsigned __i = 0; __i + 1 < __partitions; ++__i){
+    __Iterator __begin = __end;
+    advance(__end, __segment_size);
+    __chunks.emplace_back(make_pair(__begin, __end));
   }
   
   // push the last chunk (could be slightly larger because of rounding or empty if first == last)
-  chunks.emplace_back(make_pair(end, last));
+  __chunks.emplace_back(make_pair(__end, __last));
 
-  return chunks;
+  return __chunks;
 }
 
 
@@ -64,10 +69,15 @@ inline vector<pair<Iterator,Iterator>> split(Iterator first, Iterator last){
  * @param f A callable object which can be called with a range and some given parameters.
  * @param args Additional parameters for the callable object.
  */
-template<class Iterator, class Functor, typename ... Args>
-inline void diffract(Iterator first, Iterator last, const Functor f, Args ... args){
+template<class __Iterator, class __Functor, typename ... __Args>
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>() &&
+           FunctionObject<__Functor>()
+#endif
+inline void diffract(__Iterator first, __Iterator last, const __Functor f, __Args ... args)
+{
   // divide the range
-  const auto subranges = split(first, last);
+  const auto subranges = splitRange(first, last);
 
   // thread pool
   vector<thread> pool;
@@ -77,7 +87,7 @@ inline void diffract(Iterator first, Iterator last, const Functor f, Args ... ar
   for(const auto & range : subranges)
     pool.emplace_back(thread{f, 
                              range.first, range.second, 
-                             forward<Args>(args)...});
+                             forward<__Args>(args)...});
 
   // wait for the pool to finish
   for(auto &t : pool) t.join();
@@ -86,10 +96,14 @@ inline void diffract(Iterator first, Iterator last, const Functor f, Args ... ar
 // it looks like the variadic capture in lambdas is still not working with gcc 4.8,
 // the following is a specialized functor used in place of a lambda in the
 // thread creation for diffract_gather
-template<typename T, typename Function, typename Iterator, typename ... Args>
-void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args ...args) 
+template<typename T, typename Function, typename __Iterator, typename ... __Args>
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>() &&
+           FunctionObject<__Functor>()
+#endif
+void diffract_functor(T & __result, Function __f, __Iterator __begin, __Iterator __end, __Args ...__args) 
 {
-    result = f(begin, end, std::forward<Args>(args)...);
+    __result = __f(__begin, __end, std::forward<__Args>(__args)...);
 }
 
 /**
@@ -104,39 +118,45 @@ void diffract_functor(T & result, Function f, Iterator begin, Iterator end, Args
  * @param args Additional parameters for the callable object.
  * @return The result of the collapse reduction of the sub-ranges.
  */
-template<class Iterator, class Functor, class BinaryGather, typename ... Args>
+template<class __Iterator, class __Functor, class __BinaryGather, typename ... __Args>
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>() &&
+           FunctionObject<__Functor>() &&
+           FunctionObject<__BinaryGather>() &&
+           DefaultConstructible<typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type>()
+#endif
 inline auto
-diffract_gather(Iterator first, Iterator last, const Functor f, BinaryGather g, Args ... args)
-  -> typename result_of<Functor(Iterator, Iterator, Args...)>::type
+diffract_gather(__Iterator __first, __Iterator __last, 
+                const __Functor __f, __BinaryGather __g, __Args ... __args)
+  -> typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type
 {
-  using ret_type = typename result_of<Functor(Iterator, Iterator, Args...)>::type;
+  using __Ret_type = typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type;
 
   // divide the range
-  const auto subranges = split(first, last);
+  const auto __subranges = splitRange(__first, __last);
 
   // thread pool
-  vector<thread> pool;
-  pool.reserve(subranges.size());
+  vector<thread> __pool;
+  __pool.reserve(__subranges.size());
 
   // temporary space for accumulators
-  vector<ret_type> gather(subranges.size()); 
-
+  vector<__Ret_type> __gather(__subranges.size()); 
   
   // divide the iteration space and delegate to threads.
-  auto fct = diffract_functor<ret_type, Functor, Iterator, Args...>;
+  auto __fct = diffract_functor<__Ret_type, __Functor, __Iterator, __Args...>;
   size_t counter = 0;
-  for(const auto & range : subranges)
-    pool.emplace_back(thread{fct, ref(gather[counter++]), 
-                                  f, 
-                                  range.first, range.second, 
-                                  forward<Args>(args)...});
+  for(const auto & __range : __subranges)
+    __pool.emplace_back(thread{__fct, ref(__gather[counter++]), 
+                                      __f, 
+                                      __range.first, __range.second, 
+                                      forward<__Args>(__args)...});
 
   // wait for the pool to finish
-  for(auto &t : pool) t.join();
+  for(auto &__t : __pool) __t.join();
 
   // apply the collapse function and return
   // TODO: this could also be parallel
-  return accumulate(gather.begin()+1, gather.end(), *gather.begin(), g);
+  return accumulate(__gather.begin()+1, __gather.end(), *__gather.begin(), __g);
 }
 
 } // namespace detail

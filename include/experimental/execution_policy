@@ -33,30 +33,34 @@ class execution_policy;
 // **********************************************
 
 template<class T> struct is_execution_policy
-  : public integral_constant<bool, is_base_of<sequential_execution_policy, typename decay<T>::type>::value || 
-                                   is_base_of<parallel_execution_policy, typename decay<T>::type>::value || 
-                                   is_base_of<vector_execution_policy, typename decay<T>::type>::value ||
-                                   is_base_of<execution_policy, typename decay<T>::type>::value > { };
+  : public integral_constant<bool, is_base_of<sequential_execution_policy, 
+                                              typename decay<T>::type>::value || 
+                                   is_base_of<parallel_execution_policy, 
+                                              typename decay<T>::type>::value || 
+                                   is_base_of<vector_execution_policy, 
+                                              typename decay<T>::type>::value ||
+                                   is_base_of<execution_policy, 
+                                              typename decay<T>::type>::value > { };
 
 
 namespace detail {
 template<class T, class U> struct __enable_if_parallel_alg_helper
-  : public enable_if<is_base_of<sequential_execution_policy, typename std::decay<T>::type>::value ||
-                     is_base_of<parallel_execution_policy, typename std::decay<T>::type>::value ||
-                     is_base_of<execution_policy, typename std::decay<T>::type>::value,
+  : public enable_if<is_base_of<sequential_execution_policy, typename decay<T>::type>::value ||
+                     is_base_of<parallel_execution_policy, typename decay<T>::type>::value ||
+                     is_base_of<execution_policy, typename decay<T>::type>::value,
                      U> { };
 
 template<class T, class U> struct __enable_if_execution_policy_helper
-  : public enable_if<is_base_of<execution_policy, typename std::decay<T>::type>::value, U> { };
+  : public enable_if<is_base_of<execution_policy, typename decay<T>::type>::value, U> { };
 
 template<class T, class U> struct __enable_if_sequential_policy_helper
-  : public enable_if<is_base_of<sequential_execution_policy, typename std::decay<T>::type>::value, U> { };
+  : public enable_if<is_base_of<sequential_execution_policy, typename decay<T>::type>::value, U> { };
 
 template<class T, class U> struct __enable_if_parallel_policy_helper
-  : public enable_if<is_base_of<parallel_execution_policy, typename std::decay<T>::type>::value, U> { };
+  : public enable_if<is_base_of<parallel_execution_policy, typename decay<T>::type>::value, U> { };
 
 template<class T, class U> struct __enable_if_vector_policy_helper
-  : public enable_if<is_base_of<vector_execution_policy, typename std::decay<T>::type>::value, U> { };
+  : public enable_if<is_base_of<vector_execution_policy, typename decay<T>::type>::value, U> { };
 
 } // namespace detail
 

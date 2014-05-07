@@ -1,3 +1,6 @@
+// since a51efe9959 you need c++14 support and to define _bleeding_edge. In gcc 4.9:
+// g++ -std=c++1y user_policies.cpp -o up -I../include -lpthread -D_bleeding_edge
+
 #include <iostream>
 #include <vector>
 #include <experimental/algorithm>

@@ -128,4 +128,6 @@ public:
 
 #include <experimental/bits/parallel/policy_sequential.h>
 #include <experimental/bits/parallel/policy_parallel.h>
-#include <experimental/bits/parallel/policy_dynamic.h>
+#ifdef _bleeding_edge
+# include <experimental/bits/parallel/policy_dynamic.h>
+#endif

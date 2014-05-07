@@ -102,7 +102,7 @@ struct for_each_t<false>
    */
   template< int N, typename Dispatcher, typename Key, typename ... Args>
   static auto execute(const Key &exec, Args ... args )
-    -> decltype(auto)
+    -> decltype(auto) // returns whatever the dispatcher returns
   {
     // The head of the typelist
     using _Type = typename PolicyRegistry<Key, N>::type;
@@ -152,8 +152,6 @@ namespace details {
  * The sort dispatcher calls the sort member function if it exists, does nothing otherwise.
  */
 struct SortDispatcher {
-  using Return = void;
-
   template< bool valid = false >
   struct Dispatch {
     template<typename P, typename ... Args>

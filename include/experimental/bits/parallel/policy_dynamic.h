@@ -102,14 +102,7 @@ struct for_each_t<false>
    */
   template< int N, typename Dispatcher, typename Key, typename ... Args>
   static auto execute(const Key &exec, Args ... args )
-    -> // decltype auto, where are you?
-       typename 
-       /* result_of<
-         decltype (&typename Dispatcher::template Dispatch<true>::dispatch)
-           (typename Dispatcher::template Dispatch<true>,
-            const typename PolicyRegistry<Key, N>::type&, Args...)
-       >::type*/
-       Dispatcher::Return
+    -> decltype(auto)
   {
     // The head of the typelist
     using _Type = typename PolicyRegistry<Key, N>::type;

@@ -25,6 +25,8 @@
 
 #pragma once
 
+#include <stdexcept>
+
 // The structure of this is as follow:
 // - first we declare a bunch of helper functions
 // - then for each algo, we declare a dispatcher for each algorithm, this contains:
@@ -83,7 +85,7 @@ struct for_each_t
   static auto execute(const Key &exec, Args ... args)
     -> typename Dispatcher::Return
   {
-    throw std::invalid_argument("Invalid execution policy.");
+    throw invalid_argument("Invalid execution policy.");
   }
 };
 
@@ -172,15 +174,12 @@ struct SortDispatcher {
   struct is_supported
   {
   private:
-    typedef std::true_type yes;
-    typedef std::false_type no;
-   
     template<typename P, typename ... Is> 
-    static auto test(int) -> decltype(std::declval<P>().template sort(std::declval<Is>()...), yes());
-    template<typename P, typename ... Is> static no test(...);
+    static auto test(int) -> decltype(std::declval<P>().template sort(std::declval<Is>()...), true_type());
+    template<typename P, typename ... Is> static false_type test(...);
    
   public:
-    static constexpr bool value = std::is_same<decltype(test<T,Args...>(0)),yes>::value;
+    static constexpr bool value = std::is_same<decltype(test<T,Args...>(0)),true_type>::value;
   };
 };
 

@@ -25,6 +25,7 @@ namespace detail {
  * @brief Split a range into partitions chunks. The sub-ranges are of equal size, except the
  *        last one which might be slightly larger to account for rounding error.
  *        If first == last or partitions < 2, the split function returns the range [first, last)
+ * @concept __Iterator must meet the requirements of InputIterator.
  * @param first The beginning of the range.
  * @param end The end of the range.
  * @return A vector of iterator pairs for each sub-range. The list is guaranteed to contain at least
@@ -64,6 +65,8 @@ inline auto splitRange(__Iterator __first, __Iterator __last)
 /**
  * @brief Split a range between two iterators and apply a given function with the given
  *        parameters on each sub-range.
+ * @concept __Iterator must meet the requirements of InputIterator.
+ * @concept __Functor must meet the requirements of FunctionObject.
  * @param first Beginning of the range.
  * @param last End of the range.
  * @param f A callable object which can be called with a range and some given parameters.
@@ -74,23 +77,24 @@ template<class __Iterator, class __Functor, typename ... __Args>
   requires InputIterator<__Iterator>() &&
            FunctionObject<__Functor>()
 #endif
-inline void diffract(__Iterator first, __Iterator last, const __Functor f, __Args ... args)
+inline void diffract(__Iterator __first, __Iterator __last, 
+                     const __Functor __f, __Args ... __args)
 {
   // divide the range
-  const auto subranges = splitRange(first, last);
+  const auto __subranges = splitRange(__first, __last);
 
   // thread pool
-  vector<thread> pool;
-  pool.reserve(subranges.size());
+  vector<thread> __pool;
+  __pool.reserve(__subranges.size());
 
   // divide the iteration space and delegate to threads.
-  for(const auto & range : subranges)
-    pool.emplace_back(thread{f, 
-                             range.first, range.second, 
-                             forward<__Args>(args)...});
+  for(const auto & __range : __subranges)
+    __pool.emplace_back(thread{__f, 
+                               __range.first, __range.second, 
+                               forward<__Args>(__args)...});
 
   // wait for the pool to finish
-  for(auto &t : pool) t.join();
+  for(auto &__t : __pool) __t.join();
 }
 
 // it looks like the variadic capture in lambdas is still not working with gcc 4.8,
@@ -110,6 +114,10 @@ void diffract_functor(T & __result, Function __f, __Iterator __begin, __Iterator
  * @brief Split a range between two iterators and apply a given function with the given
  *        parameters on each sub-range. The return values of the function are combined
  *        using a provided collapse function.
+ * @concept __Iterator must meet the requirements of InputIterator.
+ * @concept __Functor must meet the requirements of FunctionObject.
+ * @concept __BinaryGather must meet the requirements of FunctionObject.
+ * @concept The return type of the gather function must meet the requirements of DefaultConstructible.
  * @param first Beginning of the range.
  * @param last End of the range.
  * @param f A callable object which can be called with a range and some given parameters.

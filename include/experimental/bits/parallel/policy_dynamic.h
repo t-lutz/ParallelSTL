@@ -83,9 +83,11 @@ struct for_each_t
 {
   template< int N, typename Dispatcher, typename Key, typename ... Args>
   static auto execute(const Key &exec, Args ... args)
-    -> typename Dispatcher::Return
+    -> decltype(auto)
   {
     throw invalid_argument("Invalid execution policy.");
+    // dummy return for type deduction
+    return Dispatcher::template Dispatch<false>::template dispatch(exec, args...);
   }
 };
 
@@ -113,14 +115,12 @@ struct for_each_t<false>
     // if the type matches, we found the underlying type, undo type erasure and call dispatcher
     if(exec.type() == typeid(_Type)){
       const _Type & _ref = *exec.template get<_Type>();
-      using _TrueDispatch = typename Dispatcher::template Dispatch<_is_supported::value>;
-      return _TrueDispatch::dispatch(_ref, args ...);
+      return Dispatcher::template Dispatch<_is_supported::value>::template dispatch(_ref, args ...);
     }
     // otherwise move to the next type
     else {
-      using Next = typename PolicyRegistry<Key, N+1>::type;
-      using ForEach = typename details::for_each_t< std::is_same<Next,void>::value >;
-      ForEach::template execute<N+1, Dispatcher>(exec, args...);
+      using _Next = typename PolicyRegistry<Key, N+1>::type;
+      details::for_each_t< std::is_same<_Next,void>::value >::template execute<N+1, Dispatcher>(exec, args...);
     }
   }
 };
@@ -201,6 +201,20 @@ void execution_policy::sort(RandomIt first, RandomIt last) const
     // It is none of the basic policies, go though our type list and try to find its
     // true type
     details::for_each_type<execution_policy, details::SortDispatcher>(*this, first, last);
+  }
+}
+
+template<class RandomAccessIterator, class Compare>
+void execution_policy::sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp) const
+{
+  if(get<sequential_execution_policy>()){
+    get<sequential_execution_policy>()->sort(first, last, comp);
+  }
+  else if(get<parallel_execution_policy>()){
+    get<parallel_execution_policy>()->sort(first, last, comp);
+  }
+  else {
+    details::for_each_type<execution_policy, details::SortDispatcher>(*this, first, last, comp);
   }
 }
 

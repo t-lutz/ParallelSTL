@@ -118,6 +118,8 @@ public:
   template<class RandomAccessIterator>
     void sort(RandomAccessIterator first, RandomAccessIterator last) const;
 
+  template<class RandomAccessIterator, class Compare>
+    void sort(RandomAccessIterator first, RandomAccessIterator last, Compare comp) const;
 };
 
 #undef __NOEXCEPT

@@ -22,6 +22,13 @@ struct SortB {
     typedef typename std::iterator_traits<RandomIt>::value_type it_type;
     std::cout << ">> SortB is sorting an array of type " << typeid(it_type).name() << std::endl; 
   }
+
+  template<typename RandomIt, class Compare>
+  void sort(RandomIt, RandomIt, Compare) const {
+    typedef typename std::iterator_traits<RandomIt>::value_type it_type;
+    std::cout << ">> SortB is compare-sorting an array of type " << typeid(it_type).name() << std::endl; 
+  }
+ 
 };
 
 struct NoSort {
@@ -57,50 +64,65 @@ template<> struct PolicyRegistry<> { typedef DefaultedSort type; };
 
 // Usage example
 // *************
+
+// This calls sort using a dynamic policy
+void sortMe(std::vector<int> &v, 
+            std::experimental::parallel::execution_policy &exec, 
+            const std::string &desc)
+{
+  using namespace std::experimental;
+  std::cout << "Sorting using " << desc << ": " << std::endl;
+  parallel::sort(exec, std::begin(v), std::end(v));
+  std::cout << "done\n\n";
+}
+
 int main()
 {
   using namespace std::experimental;
   using namespace std;
 
   vector<int> v;
-  parallel::execution_policy exec = parallel::seq;
 
   // try the standard methods first
-  cout << "Sorting using std::parallel::seq:" << endl;
-  parallel::sort(exec, std::begin(v), std::end(v)); // doesn't print anything
-  cout << "done" << endl << endl; 
- 
+  parallel::execution_policy exec = parallel::seq;
+  sortMe(v, exec, "std::parallel::seq"); // prints nothing
+
   exec = parallel::par;
-  cout << "Sorting using std::parallel::par:" << endl;
-  parallel::sort(exec, std::begin(v), std::end(v)); // doesn't print anything
-  cout << "done" << endl << endl;
+  sortMe(v, exec, "std::parallel::par"); // prints nothing
 
   // try valid user policies
   exec = SortA{};
-  cout << "Sorting using my sort A:" << endl;
-  parallel::sort(exec, std::begin(v), std::end(v)); // prints ">> SortA is sorting..."
-  cout << "done" << endl << endl;
+  sortMe(v, exec, "my Sort A"); // prints ">> SortA is sorting..."
 
   exec = SortB{};
-  cout << "Sorting using my sort B:" << endl;
-  parallel::sort(exec, std::begin(v), std::end(v)); // prints ">> SortB is sorting..."
-  cout << "done" << endl << endl;
+  sortMe(v, exec, "my Sort B"); // prints ">> SortB is sorting..."
 
   // try invalid user policy (does not define sort)
   try {
     exec = NoSort{};
-    cout << "Sorting using a policy which does not support sort:" << endl;
-    parallel::sort(exec, std::begin(v), std::end(v)); // this throws since NoSort does not define sort
-    cout << "done" << endl << endl;
+    sortMe(v, exec, "a policy which does not support sort"); // throws an exception
   }
   catch(std::invalid_argument e){
     cout << "exception: " << e.what() << endl << endl;
   }
 
+  // A derived policy works as well
   exec = DefaultedSort{};
-  cout << "Sorting using a policy with a default sort:" << endl;
-  parallel::sort(exec, std::begin(v), std::end(v));
-  cout << "done" << endl;
+  sortMe(v, exec, "a policy with a default sort"); // prints nothing
+
+  // now let's try another sort
+  try {
+    exec = SortB{};
+    std::cout << "Another sort using Sort B" << std::endl;
+    parallel::sort(exec, std::begin(v), std::end(v), std::greater<int>()); // prints ">> SortB is compare-sorting..."
+    std::cout << "done\n\n";
+
+    exec = SortA{};
+    std::cout << "Another sort using Sort A" << std::endl;
+    parallel::sort(exec, std::begin(v), std::end(v), std::greater<int>()); // oops, this throws
+  } catch(std::invalid_argument e){
+    cout << "exception: " << e.what() << endl << endl;
+  }
 }
 
 

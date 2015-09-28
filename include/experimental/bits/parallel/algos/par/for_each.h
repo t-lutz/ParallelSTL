@@ -11,13 +11,11 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class UnaryFunction>
-  UnaryFunction parallel_execution_policy::for_each(InputIterator first, InputIterator last, 
-                                                    UnaryFunction f) const 
+  void parallel_execution_policy::for_each(InputIterator first, InputIterator last, 
+                                           UnaryFunction f) const 
   { 
     //  diffract the range and forward
-    detail::diffract(first, last, std::for_each<InputIterator, UnaryFunction>, std::move(f));
-    // return the function
-    return std::move(f);
+    detail::diffract(first, last, std::for_each<InputIterator, UnaryFunction>, std::forward(f));
   }
 
 } // namespace parallel

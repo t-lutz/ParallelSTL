@@ -9,8 +9,8 @@ namespace experimental {
 namespace parallel {
 
   template<class InputIterator, class Function>
-  Function sequential_execution_policy::for_each(InputIterator first, InputIterator last, Function f) const { 
-    return std::for_each(first, last, f);
+  void sequential_execution_policy::for_each(InputIterator first, InputIterator last, Function f) const { 
+    std::for_each(first, last, f);
   }
 
 } // namespace parallel

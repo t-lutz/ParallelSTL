@@ -25,11 +25,6 @@ int main()
 {
   using namespace std;
 
-  vector<double> values(5000000);
-  random_device rd;
-  mt19937 gen(rd());
-  uniform_real_distribution<> d(1, 2);
-
   // a six is a six is a six is a..
   string str = "asixis";
   for(unsigned i = 0; i < 22; ++i)

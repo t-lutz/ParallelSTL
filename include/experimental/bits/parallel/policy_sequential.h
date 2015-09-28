@@ -31,7 +31,7 @@ public:
     bool none_of(InputIterator first, InputIterator last, Predicate pred) const;
 
   template<class InputIterator, class Function>
-    Function for_each(InputIterator first, InputIterator last, Function f) const;
+    void for_each(InputIterator first, InputIterator last, Function f) const;
 
   template<class InputIterator, class Size, class Function>
     InputIterator for_each_n(InputIterator first, Size n, Function f) const;

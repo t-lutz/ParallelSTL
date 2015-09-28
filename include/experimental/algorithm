@@ -42,13 +42,13 @@ namespace parallel {
 
   template<class ExecutionPolicy,
            class InputIterator, class Function>
-    Function for_each(ExecutionPolicy &&exec,
-                      InputIterator first, InputIterator last,
-                      Function f)
+    void for_each(ExecutionPolicy &&exec,
+                  InputIterator first, InputIterator last,
+                  Function f)
   {
     static_assert(experimental::parallel::is_execution_policy<ExecutionPolicy>::value,
                   "exec is not a valid execution policy");
-    return exec.for_each(first, last, f);
+    exec.for_each(first, last, f);
   }
 
   template<class InputIterator, class Size, class Function>

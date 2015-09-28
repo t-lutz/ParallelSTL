@@ -50,23 +50,17 @@ TEST(for_each, Accumulate) {
   using namespace std::experimental;
 #endif
 
-  struct Accu {
-    unsigned int count;
-    unsigned int sum;
-    Accu():count{0}, sum{0}{}
-    void operator()(int& i) {count++; sum += i;} 
-  } Acc;
-
   vector<int> v{1,2,3,4,5,6,7,8,9,10,11,12};
+  const auto old = v;
 
-  auto res = for_each(
+  for_each(
 #ifdef EXECUTION_POLICY
-                      EXECUTION_POLICY,
+           EXECUTION_POLICY,
 #endif
-                      begin(v), end(v),
-                      Acc);
+           begin(v), end(v),
+           [](int i){ return i * 2; } );
 
-  EXPECT_EQ(v.size(), res.count);
-  EXPECT_EQ(78, res.sum);
+  for(int i = 0; i < v.size(); ++i)
+    EXPECT_EQ(v[i], 2*old[i]);
 }
 

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class OutputIterator, class T>
     OutputIterator
@@ -15,6 +16,7 @@ namespace parallel {
     return std::remove_copy(first, last, result, value);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class Predicate>
     ForwardIterator
@@ -15,7 +16,7 @@ namespace parallel {
     return std::partition(first, last, pred);
   }
 
-
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

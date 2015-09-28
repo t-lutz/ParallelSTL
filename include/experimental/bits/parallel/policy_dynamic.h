@@ -40,6 +40,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
 namespace details {
 
@@ -219,6 +220,8 @@ void execution_policy::sort(RandomAccessIterator first, RandomAccessIterator las
 }
 
 
-
-}}}
+} // namespace v1
+} // namespace parallel
+} // namespace experimental
+} // namespace std
 

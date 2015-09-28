@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator1, class ForwardIterator2>
     ForwardIterator2
@@ -15,6 +16,7 @@ namespace parallel {
     return std::swap_ranges(first1, last1, first2);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

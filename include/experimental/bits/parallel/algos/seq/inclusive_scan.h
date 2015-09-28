@@ -7,9 +7,10 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
 
-
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

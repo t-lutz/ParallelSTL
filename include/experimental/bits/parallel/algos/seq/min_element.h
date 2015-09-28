@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     ForwardIterator sequential_execution_policy::min_element(ForwardIterator first, 
@@ -22,6 +23,7 @@ namespace parallel {
     return std::min_element(first, last, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

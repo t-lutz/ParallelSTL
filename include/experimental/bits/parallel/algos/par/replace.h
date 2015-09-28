@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class T>
     void parallel_execution_policy::replace(ForwardIterator first, ForwardIterator last,
@@ -15,6 +16,7 @@ namespace parallel {
       detail::diffract(first, last, std::replace<ForwardIterator, T>, old_value, new_value);
     }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
@@ -26,6 +27,7 @@ namespace parallel {
     return std::accumulate(first, last, init, binary_op);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

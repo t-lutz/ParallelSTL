@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     ForwardIterator sequential_execution_policy::adjacent_find(ForwardIterator first, 
@@ -21,6 +22,7 @@ namespace parallel {
     return std::adjacent_find(first, last, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

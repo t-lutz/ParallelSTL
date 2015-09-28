@@ -11,6 +11,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
       reduce(InputIterator first, InputIterator last);
@@ -114,6 +115,7 @@ namespace parallel {
 }
 }
 }
+}
 
 #include <algorithm>
 
@@ -121,6 +123,8 @@ namespace parallel {
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
+
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
       reduce(InputIterator first, InputIterator last)
@@ -251,7 +255,8 @@ namespace parallel {
                      InputIterator first, InputIterator last,
                      OutputIterator result,
                      T init, BinaryOperation binary_op);
-}
-}
-}
+} // namespace v1
+} // namespace parallel
+} // namespace experimental
+} // namespace std
 #endif

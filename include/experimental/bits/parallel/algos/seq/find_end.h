@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator1, class ForwardIterator2>
     ForwardIterator1
@@ -24,6 +25,7 @@ namespace parallel {
     return std::find_end(first1, last1, first2, last2, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

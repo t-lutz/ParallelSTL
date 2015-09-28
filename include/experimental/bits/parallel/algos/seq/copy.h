@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
  template<class InputIterator, class OutputIterator>
     OutputIterator sequential_execution_policy::copy(InputIterator first, InputIterator last,
@@ -14,6 +15,7 @@ namespace parallel {
     return std::copy(first, last, result);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

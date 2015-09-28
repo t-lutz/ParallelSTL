@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class T>
     ForwardIterator sequential_execution_policy::remove(ForwardIterator first, 
@@ -15,6 +16,7 @@ namespace parallel {
     return std::remove(first, last, value);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

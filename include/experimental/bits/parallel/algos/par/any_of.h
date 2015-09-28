@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class Predicate>
     bool parallel_execution_policy::any_of(InputIterator first, InputIterator last, Predicate pred) const
@@ -17,6 +18,7 @@ namespace parallel {
                                    std::bit_or<bool>());
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

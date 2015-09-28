@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIt>
     pair<ForwardIt, ForwardIt>
@@ -31,6 +32,7 @@ namespace parallel {
                                    comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

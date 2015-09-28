@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     ForwardIterator
@@ -18,6 +19,7 @@ namespace parallel {
     return first;
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

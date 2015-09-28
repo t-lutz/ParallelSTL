@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class RandomAccessIterator>
     void sequential_execution_policy::nth_element(RandomAccessIterator first, RandomAccessIterator nth,
@@ -21,6 +22,7 @@ namespace parallel {
     std::nth_element(first, nth, last, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     bool parallel_execution_policy::is_sorted(ForwardIterator first, ForwardIterator last) const 
@@ -22,6 +23,7 @@ namespace parallel {
     return this->is_sorted_until(first, last, comp) == last;
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

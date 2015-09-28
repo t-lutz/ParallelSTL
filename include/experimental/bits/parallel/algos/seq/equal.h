@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator1, class InputIterator2>
     bool sequential_execution_policy::equal(InputIterator1 first1, InputIterator1 last1,
@@ -21,6 +22,7 @@ namespace parallel {
     return std::equal(first1, last1, first2, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

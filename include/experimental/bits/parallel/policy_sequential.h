@@ -10,6 +10,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
 #ifdef _WIN32
 static 
@@ -533,6 +534,7 @@ public:
                      OutputIterator result,
                      T init, BinaryOperation binary_op) const;
 } seq ; //
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std 

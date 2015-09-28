@@ -19,6 +19,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 namespace detail {
 
 /**
@@ -168,6 +169,7 @@ diffract_gather(__Iterator __first, __Iterator __last,
 }
 
 } // namespace detail
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

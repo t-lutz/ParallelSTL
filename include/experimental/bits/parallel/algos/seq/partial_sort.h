@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class RandomAccessIterator>
     void sequential_execution_policy::partial_sort(RandomAccessIterator first,
@@ -23,6 +24,7 @@ namespace parallel {
     std::partial_sort(first, middle, last, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

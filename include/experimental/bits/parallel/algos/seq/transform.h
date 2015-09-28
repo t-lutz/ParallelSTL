@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class OutputIterator,
            class UnaryOperation>
@@ -25,6 +26,7 @@ namespace parallel {
     return std::transform(first1, last1, first2, result, binary_op);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

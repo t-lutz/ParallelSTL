@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class T>
     void sequential_execution_policy::replace(ForwardIterator first, ForwardIterator last,
@@ -14,6 +15,7 @@ namespace parallel {
     return std::replace(first, last, old_value, new_value);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

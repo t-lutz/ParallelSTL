@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     pair<ForwardIterator, ForwardIterator>
@@ -21,6 +22,7 @@ namespace parallel {
     return std::minmax_element(first, last, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class OutputIterator>
     OutputIterator
@@ -15,6 +16,7 @@ namespace parallel {
     return std::rotate_copy(first, middle, last, result);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

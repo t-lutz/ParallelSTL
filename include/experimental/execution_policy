@@ -6,6 +6,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
 // parallel.execpol.synop
 // **********************************************
@@ -125,6 +126,7 @@ public:
 #undef __NOEXCEPT
 
 }
+} // namespace v1
 } // namespace experimental
 } // namespace std
 

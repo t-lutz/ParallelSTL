@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class BidirectionalIterator>
     void sequential_execution_policy::inplace_merge(BidirectionalIterator first,
@@ -24,6 +25,7 @@ namespace parallel {
     std::inplace_merge(first, middle, last, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

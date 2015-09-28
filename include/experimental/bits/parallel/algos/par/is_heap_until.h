@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     ForwardIterator parallel_execution_policy::is_heap_until(ForwardIterator first, ForwardIterator last) const 
@@ -29,7 +30,7 @@ namespace parallel {
 
   }
 
-
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

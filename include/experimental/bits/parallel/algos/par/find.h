@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class T>
     InputIterator parallel_execution_policy::find(InputIterator first, InputIterator last,
@@ -19,6 +20,7 @@ namespace parallel {
                                    value);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

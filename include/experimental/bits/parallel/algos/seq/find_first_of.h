@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class ForwardIterator>
     InputIterator
@@ -25,6 +26,7 @@ namespace parallel {
     return std::find_first_of(first1, last1, first2, last2, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

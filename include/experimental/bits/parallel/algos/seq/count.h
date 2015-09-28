@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class EqualityComparable>
     typename iterator_traits<InputIterator>::difference_type
@@ -15,6 +16,7 @@ namespace parallel {
     return std::count(first, last, value);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

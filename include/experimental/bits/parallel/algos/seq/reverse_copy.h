@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class BidirectionalIterator, class OutputIterator>
     OutputIterator
@@ -15,6 +16,7 @@ namespace parallel {
     return std::reverse_copy(first, last, result);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

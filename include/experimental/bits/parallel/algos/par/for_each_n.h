@@ -8,6 +8,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class Size, class Function>
     InputIterator parallel_execution_policy::for_each_n(InputIterator first, Size n,
@@ -21,6 +22,7 @@ namespace parallel {
     return end;
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

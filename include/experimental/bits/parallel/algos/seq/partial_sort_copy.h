@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator, class RandomAccessIterator>
     RandomAccessIterator
@@ -26,6 +27,7 @@ namespace parallel {
     return std::partial_sort_copy(first, last, result_first, result_last);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

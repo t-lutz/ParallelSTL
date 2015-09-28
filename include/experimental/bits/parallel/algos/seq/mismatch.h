@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator1, class InputIterator2>
     pair<InputIterator1,InputIterator2>
@@ -22,6 +23,7 @@ namespace parallel {
     return std::mismatch(first1, last1, first2, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class InputIterator1, class InputIterator2>
     bool sequential_execution_policy::includes(InputIterator1 first1, InputIterator1 last1,
@@ -22,6 +23,7 @@ namespace parallel {
     return std::includes(first1, last1, first2, last2, comp);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

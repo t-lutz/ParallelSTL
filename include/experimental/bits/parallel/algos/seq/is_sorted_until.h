@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator>
     ForwardIterator sequential_execution_policy::is_sorted_until(ForwardIterator first, 
@@ -21,7 +22,7 @@ namespace parallel {
     return std::is_sorted_until(first, last, comp);
   }
 
-
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

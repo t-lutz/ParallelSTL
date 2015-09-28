@@ -7,6 +7,7 @@
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
   template<class ForwardIterator, class Size, class T>
     ForwardIterator sequential_execution_policy::search_n(ForwardIterator first, ForwardIterator last, Size count,
@@ -20,6 +21,7 @@ namespace parallel {
     return std::search_n(first, last, count, value, pred);
   }
 
+} // namespace v1
 } // namespace parallel
 } // namespace experimental
 } // namespace std

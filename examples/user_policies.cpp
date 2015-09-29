@@ -44,6 +44,7 @@ struct DefaultedSort : public std::experimental::parallel::sequential_execution_
 namespace std {
 namespace experimental {
 namespace parallel {
+inline namespace v1 {
 
 template<> struct is_execution_policy<SortA> : true_type{};
 template<> struct is_execution_policy<SortB> : true_type{};
@@ -59,7 +60,7 @@ template<> struct PolicyRegistry<> { typedef NoSort type; };
 template<> struct PolicyRegistry<> { typedef DefaultedSort type; };
 }
 
-}}}
+}}}}
 
 
 // Usage example

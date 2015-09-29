@@ -13,6 +13,7 @@ inline namespace v1 {
 
 // 2.3, execution policy type trait
 template<class T> struct is_execution_policy;
+template<class T> constexpr bool is_execution_policy_v = is_execution_policy<T>::value;
 
 // 2.4, sequential execution policy
 class sequential_execution_policy;
@@ -21,7 +22,7 @@ class sequential_execution_policy;
 class parallel_execution_policy;
 
 // 2.6, vector execution policy
-class vector_execution_policy;
+class parallel_vector_execution_policy;
 
 // 2.7, dynamic execution policy
 class execution_policy;
@@ -29,42 +30,42 @@ class execution_policy;
 // 2.9, standard execution policy objects
 //extern const sequential_execution_policy seq;
 //extern const parallel_execution_policy par;
-//extern const vector_execution_policy vec;
+//extern const parallel_vector_execution_policy vec;
 
 // parallel.execpol.type
 // **********************************************
 
-template<class T> struct is_execution_policy
-  : public integral_constant<bool, is_base_of<sequential_execution_policy, 
-                                              typename decay<T>::type>::value || 
-                                   is_base_of<parallel_execution_policy, 
-                                              typename decay<T>::type>::value || 
-                                   is_base_of<vector_execution_policy, 
-                                              typename decay<T>::type>::value ||
-                                   is_base_of<execution_policy, 
-                                              typename decay<T>::type>::value > { };
+namespace _detail {
+template<typename T, typename U>
+constexpr bool is_decayed_base_of_v = is_base_of<T, typename decay<U>::type>::value;
 
-
-namespace detail {
 template<class T, class U> struct __enable_if_parallel_alg_helper
-  : public enable_if<is_base_of<sequential_execution_policy, typename decay<T>::type>::value ||
-                     is_base_of<parallel_execution_policy, typename decay<T>::type>::value ||
-                     is_base_of<execution_policy, typename decay<T>::type>::value,
+  : public enable_if<_detail::is_decayed_base_of_v<sequential_execution_policy, T> ||
+                     _detail::is_decayed_base_of_v<parallel_execution_policy, T> ||
+                     _detail::is_decayed_base_of_v<parallel_vector_execution_policy,T> ||
+                     _detail::is_decayed_base_of_v<execution_policy,T>,
                      U> { };
 
 template<class T, class U> struct __enable_if_execution_policy_helper
-  : public enable_if<is_base_of<execution_policy, typename decay<T>::type>::value, U> { };
+  : public enable_if<_detail::is_decayed_base_of_v<execution_policy,T>, U> { };
 
 template<class T, class U> struct __enable_if_sequential_policy_helper
-  : public enable_if<is_base_of<sequential_execution_policy, typename decay<T>::type>::value, U> { };
+  : public enable_if<_detail::is_decayed_base_of_v<sequential_execution_policy, T>, U> { };
 
 template<class T, class U> struct __enable_if_parallel_policy_helper
-  : public enable_if<is_base_of<parallel_execution_policy, typename decay<T>::type>::value, U> { };
+  : public enable_if<_detail::is_decayed_base_of_v<parallel_execution_policy, T>, U> { };
 
 template<class T, class U> struct __enable_if_vector_policy_helper
-  : public enable_if<is_base_of<vector_execution_policy, typename decay<T>::type>::value, U> { };
+  : public enable_if<_detail::is_decayed_base_of_v<parallel_vector_execution_policy,T>, U> { };
 
-} // namespace detail
+} // namespace _detail
+
+template<class T> struct is_execution_policy
+  : public integral_constant<bool, _detail::is_decayed_base_of_v<sequential_execution_policy, T> ||
+                                   _detail::is_decayed_base_of_v<parallel_execution_policy, T> ||
+                                   _detail::is_decayed_base_of_v<parallel_vector_execution_policy,T> ||
+                                   _detail::is_decayed_base_of_v<execution_policy,T> > { };
+
 
 // parallel.execpol.dynamic
 // **********************************************
@@ -82,7 +83,7 @@ public:
   // 2.7.1, construct/assign
   template<class ExecutionPolicy>
   execution_policy(const ExecutionPolicy& policy,
-                   typename enable_if<is_execution_policy<ExecutionPolicy>::value,
+                   typename enable_if<is_execution_policy_v<ExecutionPolicy>,
                                                           ExecutionPolicy>::type* = nullptr)
   {
     _instance = std::make_shared<ExecutionPolicy>(policy);
@@ -90,7 +91,7 @@ public:
   }
 
   template<class ExecutionPolicy>
-  typename std::enable_if<is_execution_policy<ExecutionPolicy>::value, execution_policy>::type&
+  typename std::enable_if<is_execution_policy_v<ExecutionPolicy>, execution_policy>::type&
   operator=(const ExecutionPolicy & policy) 
   {
     _instance = std::make_shared<ExecutionPolicy>(policy);

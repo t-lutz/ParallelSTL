@@ -47,32 +47,36 @@ namespace details {
 // The ugly guts
 // *************
 
-// counter facilities: this counts the number of instances of a template
-typedef char (&no_tag)[1]; 
-typedef char (&yes_tag)[2]; 
+template<typename T>
+struct register_execution_policy: public std::integral_constant<bool, true> {};
 
-template< typename U > no_tag test(U);
-template< typename T, long > struct instantiation_count; 
-template< typename T, long value_ = 
-          sizeof(decltype(test(static_cast<instantiation_count<T,0>*>(nullptr)))) +
-          sizeof(decltype(test(static_cast<instantiation_count<T,1>*>(nullptr)))) +
-          sizeof(decltype(test(static_cast<instantiation_count<T,2>*>(nullptr)))) +
-          sizeof(decltype(test(static_cast<instantiation_count<T,3>*>(nullptr)))) +
-          sizeof(decltype(test(static_cast<instantiation_count<T,4>*>(nullptr)))) +
-          sizeof(decltype(test(static_cast<instantiation_count<T,5>*>(nullptr))))
-> 
-struct instantiation_count 
-{ 
-    static constexpr long value = value_ - 7 + 1;
-    using _next_instantiation = instantiation_count<T, value>;
-    template<typename U>
-    friend yes_tag test(instantiation_count<U, value>*); 
-}; 
+template<int N> struct flag;
+template<int N> constexpr int adl_flag (flag<N>){ return N; }
+template<int N> struct flag 
+{ friend constexpr int adl_flag (flag<N>); };
+
+template<int N> struct writer {
+  static constexpr int value = N;
+  friend constexpr int adl_flag (flag<N>) { return N; }
+};
+
+template<int N, int = adl_flag (flag<N> {})>
+int constexpr reader (int, flag<N>) 
+{ return N; }
+
+template<int N>
+int constexpr reader (float, flag<N>, int R = reader (0, flag<N-1> {})) 
+{ return R; }
+
+int constexpr reader (float, flag<0>) 
+{ return 0; }
+template<int N = 1>
+int constexpr next (int R = writer<reader (0, flag<32> {}) + N>::value) 
+{ return R-1; }
 
 // MTP algorithms
 
-template <typename Key = std::experimental::parallel::execution_policy, 
-          int N = instantiation_count<Key>::value>
+template <typename Key = execution_policy, int N = next()>
 struct PolicyRegistry { typedef void type; };
 
 

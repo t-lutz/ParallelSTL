@@ -533,7 +533,7 @@ public:
       inclusive_scan(InputIterator first, InputIterator last,
                      OutputIterator result,
                      T init, BinaryOperation binary_op) const;
-} seq ; //
+} seq = {}; //
 } // namespace v1
 } // namespace parallel
 } // namespace experimental

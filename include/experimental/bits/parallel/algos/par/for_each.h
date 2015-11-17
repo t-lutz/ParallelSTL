@@ -12,6 +12,7 @@ namespace parallel {
 inline namespace v1 {
 
   template<class InputIterator, class UnaryFunction>
+    // requires CopyConstructible<UnaryFunction>
   void parallel_execution_policy::for_each(InputIterator first, InputIterator last, 
                                            UnaryFunction f) const 
   { 

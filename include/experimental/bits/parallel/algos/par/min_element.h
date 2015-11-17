@@ -15,8 +15,8 @@ inline namespace v1 {
                                                            ForwardIterator last) const 
   {
     return detail::diffract_gather(first, last,
-                                   min_element<ForwardIterator>,
-                                   std::min<ForwardIterator>());
+                                   ::std::min_element<ForwardIterator>,
+                                   ::std::min<ForwardIterator>());
   }
 
 
@@ -25,8 +25,8 @@ inline namespace v1 {
                                                            ForwardIterator last,
                                                            Compare comp) const {
     return detail::diffract_gather(first, last,
-                                   min_element<ForwardIterator, Compare>,
-                                   std::min<ForwardIterator>(),
+                                   ::std::min_element<ForwardIterator, Compare>,
+                                   ::std::min<ForwardIterator>(),
                                    comp);
   }
 

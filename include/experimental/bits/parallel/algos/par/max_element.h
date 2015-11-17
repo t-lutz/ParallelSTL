@@ -15,8 +15,8 @@ inline namespace v1 {
                                                            ForwardIterator last) const 
   {
     return detail::diffract_gather(first, last,
-                                   max_element<ForwardIterator>,
-                                   std::max<ForwardIterator>());
+                                   ::std::max_element<ForwardIterator>,
+                                   ::std::max<ForwardIterator>());
   }
 
 
@@ -25,8 +25,8 @@ inline namespace v1 {
                                                            ForwardIterator last,
                                                            Compare comp) const {
     return detail::diffract_gather(first, last,
-                                   max_element<ForwardIterator, Compare>,
-                                   std::max<ForwardIterator>(),
+                                   ::std::max_element<ForwardIterator, Compare>,
+                                   ::std::max<ForwardIterator>(),
                                    comp);
   }
 

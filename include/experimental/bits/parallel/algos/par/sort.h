@@ -26,7 +26,8 @@ inline namespace v1 {
     // - stage 2: tree reduction using std::inplace_merge
 
     // stage 1
-    detail::diffract(first, last, std::sort<RandomAccessIterator, Compare>, comp);
+    auto __sort_fct = (void(*)(RandomAccessIterator, RandomAccessIterator, Compare))::std::sort;
+    detail::diffract(first, last, __sort_fct, comp);
 
     // stage 2
     // TODO: we could use the parallel version of std::inplace_merge

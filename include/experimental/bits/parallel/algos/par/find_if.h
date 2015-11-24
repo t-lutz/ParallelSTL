@@ -14,11 +14,12 @@ inline namespace v1 {
     InputIterator parallel_execution_policy::find_if(InputIterator first, InputIterator last,
                                                      Predicate pred) const 
   {
-    return detail::diffract_gather(first, last,
+    return detail::diffract_gather2(first, last,
                                    std::find_if<InputIterator, Predicate>,
-                                   [&](const InputIterator &a, const InputIterator &b){
-                                     return distance(first, a) < distance(first, b) ?
-                                            a : b;
+                                   last,
+                                   [&](const InputIterator &a, const InputIterator &b, auto subrange){
+                                     return ((distance(first, b) < distance(first, a)) && (b != std::get<1>(subrange))) ?
+                                            b : a;
                                    },
                                    pred);
 

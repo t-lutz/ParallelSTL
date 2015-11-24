@@ -168,6 +168,76 @@ diffract_gather(__Iterator __first, __Iterator __last,
   return accumulate(__gather.begin()+1, __gather.end(), *__gather.begin(), __g);
 }
 
+/**
+ * @brief Split a range between two iterators and apply a given function with the given
+ *        parameters on each sub-range. The return values of the function are combined
+ *        using a provided collapse function. Unlike `diffract_gather` the collapse
+ *        function gets the corresponding subrange as pair of iterators as additional
+ *        third argument.
+ * @concept __Iterator must meet the requirements of InputIterator.
+ * @concept __Functor must meet the requirements of FunctionObject.
+ * @concept __ExtendedBinaryGather must meet the requirements of FunctionObject.
+ * @concept The return type of the gather function must meet the requirements of DefaultConstructible.
+ * @param first Beginning of the range.
+ * @param last End of the range.
+ * @param f A callable object which can be called with a range and some given parameters.
+ * @param g The collapse function. It takes two elements of the return type of f, a pair of
+ *          iterators indicating the corresponding subrange and returns a single element
+ *          of this type.
+ * @param args Additional parameters for the callable object.
+ * @return The result of the collapse reduction of the sub-ranges.
+ */
+template<class __Iterator, class __Functor, class __ExtendedBinaryGather, class __T, typename ... __Args>
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>() &&
+           FunctionObject<__Functor>() &&
+           FunctionObject<__ExtendedBinaryGather>() &&
+           DefaultConstructible<typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type>()
+#endif
+inline auto
+diffract_gather2(__Iterator __first, __Iterator __last, 
+                const __Functor __f, __T __init, __ExtendedBinaryGather __g, __Args ... __args)
+  -> typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type
+{
+  using __Ret_type = typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type;
+
+  // divide the range
+  const auto __subranges = splitRange(__first, __last);
+
+  // thread pool
+  vector<thread> __pool;
+  __pool.reserve(__subranges.size());
+
+  // temporary space for accumulators
+  vector<__Ret_type> __gather(__subranges.size()); 
+  
+  // divide the iteration space and delegate to threads.
+  auto __fct = diffract_functor<__Ret_type, __Functor, __Iterator, __Args...>;
+  size_t counter = 0;
+  for(const auto & __range : __subranges)
+    __pool.emplace_back(thread{__fct, ref(__gather[counter++]), 
+                                      __f, 
+                                      __range.first, __range.second, 
+                                      forward<__Args>(__args)...});
+
+  // wait for the pool to finish
+  for(auto &__t : __pool) __t.join();
+
+  // apply the collapse function and return
+  // TODO: this could also be parallel
+  // Extended accumulate: 
+  auto zip_accumulate = [](auto gather, auto ranges, auto init, auto func){
+	
+    for (size_t i = 0; i < gather.size(); i++)
+	  init = func(init, gather[i], ranges[i]);
+
+	return init;
+  };
+  
+  return zip_accumulate(__gather, __subranges, __init, __g);
+}
+
+
 } // namespace detail
 } // namespace v1
 } // namespace parallel

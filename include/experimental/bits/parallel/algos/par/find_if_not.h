@@ -3,7 +3,6 @@
 #endif
 
 #include <algorithm>
-#include <experimental/bits/parallel/algos/par/diffract.h>
 
 namespace std {
 namespace experimental {
@@ -14,10 +13,7 @@ inline namespace v1 {
     InputIterator parallel_execution_policy::find_if_not(InputIterator first, InputIterator last,
                               Predicate pred) const
   {
-    return detail::diffract_gather(first, last,
-                                   std::find_if_not<InputIterator, Predicate>,
-                                   std::min<InputIterator>(),
-                                   pred);
+    return parallel_execution_policy::find_if(first, last, not1(pred));
   }
 
 } // namespace v1

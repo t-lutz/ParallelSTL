@@ -135,6 +135,7 @@ template<class __Iterator, class __Functor, class __BinaryGather, typename ... _
            DefaultConstructible<typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type>()
 #endif
 inline auto
+// FIXME(tlutz): This should be called `diffract_gather_reduce` to make it distinct from `diffract_gather_compare`
 diffract_gather(__Iterator __first, __Iterator __last, 
                 const __Functor __f, __BinaryGather __g, __Args ... __args)
   -> typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type
@@ -166,6 +167,74 @@ diffract_gather(__Iterator __first, __Iterator __last,
   // apply the collapse function and return
   // TODO: this could also be parallel
   return accumulate(__gather.begin()+1, __gather.end(), *__gather.begin(), __g);
+}
+
+/**
+ * @brief Split a range between two iterators and apply a given function with the given
+ *        parameters on each sub-range. The return values of the function are combined
+ *        using a comparison operator taking two iterators and their subrange ends.
+ * @concept __Iterator must meet the requirements of InputIterator.
+ * @concept __Functor must meet the requirements of FunctionObject.
+ * @concept __Compare must meet the requirements of FunctionObject.
+ * @concept The return type of the gather function must meet the requirements of DefaultConstructible.
+ * @param first Beginning of the range.
+ * @param last End of the range.
+ * @param f A callable object which can be called with a range and some given parameters.
+ * @param comp The comparison operator used to select which temporary result to return. 
+ * @param args Additional parameters for the callable object.
+ * @return The result of the collapse reduction of the sub-ranges.
+ */
+template<class __Iterator, class __Functor, class __Compare, typename ... __Args>
+#ifdef __enable_concepts
+  requires InputIterator<__Iterator>() &&
+           FunctionObject<__Functor>() &&
+           FunctionObject<__Compare>() &&
+           DefaultConstructible<typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type>()
+#endif
+inline auto
+diffract_gather_compare(__Iterator __first, __Iterator __last, 
+                        const __Functor __f, __Compare __comp, __Args ... __args)
+  -> typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type
+{
+  using __Ret_type = typename result_of<__Functor(__Iterator, __Iterator, __Args...)>::type;
+
+  // divide the range
+  const auto __subranges = splitRange(__first, __last);
+
+  // thread pool
+  vector<thread> __pool;
+  __pool.reserve(__subranges.size());
+
+  // temporary space for accumulators
+  vector<__Ret_type> __gather(__subranges.size()); 
+  
+  // divide the iteration space and delegate to threads.
+  auto __fct = diffract_functor<__Ret_type, __Functor, __Iterator, __Args...>;
+  size_t counter = 0;
+  for(const auto & __range : __subranges)
+    __pool.emplace_back(thread{__fct, ref(__gather[counter++]), 
+                                      __f, 
+                                      __range.first, __range.second, 
+                                      forward<__Args>(__args)...});
+
+  // wait for the pool to finish
+  for(auto &__t : __pool) __t.join();
+
+  // Use the comparison function to get the final result
+  auto &it = __gather.front();                     // The first value
+  __Iterator it_end = __subranges.front().second;  // The end of the first range 
+
+  // Compare each pair
+  for (size_t i = 1; i < __gather.size(); i++) {
+    auto new_it = __comp(it, it_end, __gather[i], __subranges[i].second);
+    // If the iterator has changed, update it and its end iterator
+    if(new_it != it) {
+      it_end = __subranges[i].second;
+      swap(it, new_it); 
+    }
+  }
+  
+  return it;
 }
 
 } // namespace detail

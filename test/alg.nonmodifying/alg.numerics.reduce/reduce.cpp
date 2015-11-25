@@ -40,7 +40,7 @@ TEST(reduce, CustomNoInit){
     }
   };
   
-  // unititialized elements are 1, reduction should be 100
+  // unititialized elements are 1, reduction should be 101 (100 + init)
   const std::vector<Element> v(100);
 
   auto res = std::experimental::parallel::reduce(
@@ -49,7 +49,7 @@ TEST(reduce, CustomNoInit){
 #endif
                          std::begin(v), std::end(v));
 
-  EXPECT_EQ(100, res.value);
+  EXPECT_EQ(101, res.value);
 }
 
 
@@ -88,7 +88,7 @@ TEST(reduce, CustomNoInitEmptyRange){
                          std::begin(v), std::begin(v));
 
   // should return Element{0}
-  EXPECT_EQ(0, res.value);
+  EXPECT_EQ(1, res.value);
 }
 
 

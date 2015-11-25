@@ -130,7 +130,7 @@ inline namespace v1 {
       reduce(InputIterator first, InputIterator last)
   {
     typedef typename iterator_traits<InputIterator>::value_type T;
-    return std::accumulate(first, last, T{0});
+    return std::accumulate(first, last, T{});
   }
 
   template<class ExecutionPolicy,

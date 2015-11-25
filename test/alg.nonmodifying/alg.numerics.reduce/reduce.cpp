@@ -87,7 +87,7 @@ TEST(reduce, CustomNoInitEmptyRange){
 #endif
                          std::begin(v), std::begin(v));
 
-  // should return Element{0}
+  // should return Element{}
   EXPECT_EQ(1, res.value);
 }
 

@@ -139,7 +139,7 @@ inline namespace v1 {
     static_assert(experimental::parallel::is_execution_policy_v<ExecutionPolicy>,
                   "exec is not a valid execution policy");
 
-    return exec.find_end(first1, last1, first2, last2);
+    return exec.find_end(first1, last1, first2, last2, pred);
   }
 
   template<class ExecutionPolicy,

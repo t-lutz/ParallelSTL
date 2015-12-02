@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 project(n3554_TestSuite)
 
-set(CMAKE_CXX_FLAGS "-std=c++0x -g") # -std=c++0x is supported by g++-4.6 (-std=c++11 not)
-set(CMAKE_CXX_FLAGS_DEBUG "-std=c++0x -g -O0")
+set(CMAKE_CXX_FLAGS "-std=c++14 -g") # -std=c++0x is supported by g++-4.6 (-std=c++11 not)
+set(CMAKE_CXX_FLAGS_DEBUG "-std=c++14 -g -O0")
 
 # Enable ExternalProject CMake module
 include(ExternalProject)

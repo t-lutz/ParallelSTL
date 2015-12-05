@@ -150,7 +150,7 @@ public:
   template<class ForwardIterator1, class ForwardIterator2>
     ForwardIterator2
       swap_ranges(ForwardIterator1 first1, ForwardIterator1 last1,
-                  ForwardIterator1 first2) const;
+                  ForwardIterator2 first2) const;
 
   template<class InputIterator, class OutputIterator,
            class UnaryOperation>

@@ -112,6 +112,20 @@ inline namespace v1 {
                      InputIterator first, InputIterator last,
                      OutputIterator result,
                      T init, BinaryOperation binary_op);
+
+  template <class ExecutionPolicy, class InputIterator, class OutputIterator>
+    OutputIterator
+      adjacent_difference (ExecutionPolicy &&exec,
+                           InputIterator first, InputIterator last,
+                           OutputIterator result);
+
+  template <class ExecutionPolicy, class InputIterator,
+            class OutputIterator, class BinaryOperation>
+    OutputIterator
+      adjacent_difference (ExecutionPolicy &&exec, InputIterator first,
+                           InputIterator last, OutputIterator result,
+                           BinaryOperation binary_op);
+
 }
 }
 }
@@ -124,6 +138,24 @@ namespace std {
 namespace experimental {
 namespace parallel {
 inline namespace v1 {
+
+  template <class ExecutionPolicy, class InputIterator, class OutputIterator>
+    OutputIterator
+      adjacent_difference(ExecutionPolicy &&exec, InputIterator first,
+                          InputIterator last, OutputIterator result)
+  {
+    return exec.adjacent_difference(first, last, result);
+  }
+
+  template <class ExecutionPolicy, class InputIterator, class OutputIterator,
+            class BinaryOperation>
+    OutputIterator
+      adjacent_difference(ExecutionPolicy &&exec, InputIterator first,
+                          InputIterator last, OutputIterator result,
+                          BinaryOperation binary_op)
+  {
+    return exec.adjacent_difference(first, last, result, binary_op);
+  }
 
   template<class InputIterator>
     typename iterator_traits<InputIterator>::value_type
